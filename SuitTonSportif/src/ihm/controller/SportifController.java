@@ -21,12 +21,25 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.stage.Popup;
+import javafx.scene.layout.VBox;
+import ihm.PopUp;
 import javafx.stage.Stage;
 
 public class SportifController implements Initializable {
   @FXML
   private ListView<HBox> list;
+  @FXML
+  private Label nom;
+  @FXML
+  private Label prenom;
+  @FXML
+  private Label pseudo;
+  @FXML
+  private Label dateDeNaissance;
+  @FXML
+  private Label sports;
+  @FXML
+  private VBox information;
 
   private List<String> sportif = new ArrayList<String>();// TO DO : remplacer par les sportif qd ce
                                                          // sera créer
@@ -83,14 +96,20 @@ public class SportifController implements Initializable {
 
   @FXML
   public void ajoutSportif(MouseEvent mouseEvent) throws IOException {
-    final URL fxmlURL = getClass().getResource("../view/ajoutSportif.fxml");
-    final FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+    final URL fxmlUrl = getClass().getResource("../view/ajoutSportif.fxml");
+    final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
-    final Popup popup = new Popup();
-    popup.getContent().add(root);
-
-    popup.show((Stage) ((Node) mouseEvent.getSource()).getScene().getWindow());
+    PopUp popup = new PopUp(root, "Ajout d'un sportif");
+    popup.display();
+  }
+  
+  @FXML
+  public void afficherInformationSportif(MouseEvent mouseEvent)  {
+    information.setVisible(true);
+    HBox selected = list.getSelectionModel().getSelectedItem();
+    Label sportif = (Label) selected.getChildren().get(0);
+    pseudo.setText(sportif.getText());
   }
 
   public void modifier(String nom) {
