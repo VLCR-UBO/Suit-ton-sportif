@@ -28,8 +28,8 @@
             <DatePicker fx:id="dateNaissance" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#fermerPopUp" text="Retour" />
-                  <Button mnemonicParsing="false" onAction="#creationSportif" text="Valider" />
+                  <Button mnemonicParsing="false" onMouseClicked="#fermerPopUp" text="Retour" />
+                  <Button mnemonicParsing="false" onMouseClicked="#creationSportif" text="Valider" />
                </children>
             </HBox>
          </children>
