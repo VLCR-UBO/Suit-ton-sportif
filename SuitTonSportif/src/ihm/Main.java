@@ -10,19 +10,19 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
-	public static void main(String[] args) {
-		launch(args);
-	}
+  public static void main(String[] args) {
+    launch(args);
+  }
 
-	@Override
-	public void start(Stage primaryStage) throws IOException {
-		final URL fxmlURL = getClass().getResource("view/sportif.fxml");
-	    final FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
-	    Pane root = fxmlLoader.load();
+  @Override
+  public void start(Stage primaryStage) throws IOException {
+    final URL fxmlUrl = getClass().getResource("view/onglet.fxml");
+    final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+    Pane root = fxmlLoader.load();
 
-		primaryStage.setTitle("Suit ton sportif ");
-		primaryStage.setScene(new Scene(root));
-		primaryStage.centerOnScreen();
-		primaryStage.show();
-	}
+    primaryStage.setTitle("Suit ton sportif !!");
+    primaryStage.setScene(new Scene(root));
+    primaryStage.centerOnScreen();
+    primaryStage.show();
+  }
 }

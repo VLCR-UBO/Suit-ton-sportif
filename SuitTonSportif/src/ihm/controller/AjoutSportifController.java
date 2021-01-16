@@ -27,27 +27,32 @@ public class AjoutSportifController implements Initializable {
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    nom.setText("nom");
-    prenom.setText("prenom");
-    pseudo.setText("pseudo");
-    Date date = new Date(System.currentTimeMillis());
-    dateNaissance.setValue(
-        Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
+    if (SportifController.nomSelectionner != null) {
+      nom.setText("nom");
+      prenom.setText("prenom");
+      pseudo.setText("pseudo");
+      Date date = new Date(System.currentTimeMillis());
+      dateNaissance.setValue(
+          Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
+    }
   }
 
   /**
    * Ferme la PopUp sans éffectuer d'action.
+   * 
    * @param mouseEvent : clique de l'utilisateur
    * @throws IOException : en cas d'échec de l'ecture du fxml
    */
   @FXML
   public void fermerPopUp(MouseEvent mouseEvent) throws IOException {
+    SportifController.nomSelectionner = null;
     Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
     stage.close();
   }
 
   /**
    * Creer un sportif grâce aux informations saisie par l'utilisateur, puis ferme la PopUp.
+   * 
    * @param mouseEvent : clique de l'utilisateur
    * @throws IOException : en cas d'échec de l'ecture du fxml
    */

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.ReponseController">
+   <children>
+      <HBox layoutX="14.0" layoutY="14.0" prefHeight="332.0" prefWidth="567.0" spacing="50.0">
+         <children>
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Sportif : ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="listSportif" onMouseClicked="#selectionSportif" prefHeight="120.0" prefWidth="272.0" />
+                  <Label text="Questionnaire :">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="listQuestionnaire" onMouseClicked="#selectionQuestion" prefHeight="120.0" prefWidth="272.0" />
+                  <HBox spacing="5.0">
+                     <children>
+                        <Label text="Date :">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="date" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="reponse" prefHeight="368.0" prefWidth="245.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
