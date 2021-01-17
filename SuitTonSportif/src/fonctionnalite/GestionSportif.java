@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * La classe GestionSportif contient la liste des sportifs. Elle permet l'ajout, la modification, et
- * la suppression des sportifs.
+ * La classe GestionSportif contient la liste des sportifs. Elle permet l'ajout, la modification, la
+ * suppression et la consultation des sportifs.
  * 
  * @author ychan
  *
@@ -24,8 +24,8 @@ public class GestionSportif {
 
   /**
    * Cette méthode permet d'ajouter un sportif avec les paramètres qui lui sont fourni. L'ajout aura
-   * lieu si et seulement si les paramètres sont correct. Une valeur boolean sera retournée : true
-   * si le sportif à été ajouté, false sinon.
+   * lieu si et seulement si les paramètres sont correct et que le pseudo n'existe pas déjà. Une
+   * valeur boolean sera retournée : true si le sportif à été ajouté, false sinon.
    * 
    * @param nom : Chaine de caractères non null et non vide.
    * @param prenom : Chaine de caractères non null et non vide.
@@ -118,5 +118,26 @@ public class GestionSportif {
     leSportif.setMotDePasse(motDePasse);
     leSportif.setDateDeNaissance(dateDeNaissance);
     return true;
+  }
+
+  /**
+   * Cette méthode permet de recupérer un sportif parmi la liste. Celui-ci est identifié avec son
+   * pseudo.
+   * 
+   * @param pseudo : Chaine de caractères non null et non vide. Il s'agit du nouveau pseudo du
+   *        sportif.
+   * @return Retourne le sportif correspondant au pseudo, ou null s'il n'est pas trouvé.
+   */
+  public Sportif consulterSportif(String pseudo) {
+    if (pseudo == null || pseudo.length() < 1) {
+      return null; // parametres incorrects
+    }
+    int taille = this.listeDesSportifs.size();
+    for (int i = 0; i < taille; i++) {
+      if (this.listeDesSportifs.get(i).getPseudo().equals(pseudo)) {
+        return this.listeDesSportifs.get(i);
+      }
+    }
+    return null; // sportif absent
   }
 }
