@@ -43,7 +43,7 @@ public class Questionnaire {
    */
   public boolean ajouterQuestionBooleene(String intitule, boolean defaut) {
     boolean ret = false;
-    QuestionBooleene questionBool = new QuestionBooleene(intitule, defaut);
+    QuestionBoolenne questionBool = new QuestionBoolenne(intitule, defaut);
     if (!this.listeDeQuestions.contains(questionBool)) {
       this.listeDeQuestions.add(questionBool);
       ret = true;
@@ -64,18 +64,18 @@ public class Questionnaire {
       boolean defaut) {
     Iterator<Question> questionIterator = listeDeQuestions.iterator();
     Question question;
-    QuestionBooleene questionBool;
+    QuestionBoolenne questionBool;
     boolean verif = false;
     boolean ret = false;
 
     while (questionIterator.hasNext() && (!ret)) {
       question = questionIterator.next();
 
-      if ((question instanceof QuestionBooleene)
+      if ((question instanceof QuestionBoolenne)
           && (question.getIntituleQuestion() == ancienIntitule)) {
         this.listeDeQuestions.remove(question);
         if (verif) {
-          questionBool = (QuestionBooleene) question;
+          questionBool = (QuestionBoolenne) question;
           questionBool.setIntituleQuestion(nouveauIntitule);
           questionBool.setReponseQuestion(defaut);
           this.listeDeQuestions.add(questionBool);

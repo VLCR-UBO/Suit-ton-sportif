@@ -21,84 +21,79 @@ public class GestionQuestionnaire {
    * Une méthode pour ajouter un questionnaire depuis une liste de string utilisée pour créée les
    * questions.
    * 
+   * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire
    * @param questions : la liste de string utilisée pour créée les questions.
    */
   public boolean ajouterQuestionnaire(String nomQuestionnaire, List<String> questions) {
-    List<Question> listeQuestions = new ArrayList<Question>();
-    Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
-    Questionnaire questionnaireVerif;
     boolean ret = false;
-    boolean verif = false;
-
-    while (questionnaireIterator.hasNext() && (!verif)) {
-      questionnaireVerif = questionnaireIterator.next();
-
-      if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
-        verif = true;
+    if (nomQuestionnaire != null && nomQuestionnaire.length() > 0 && questions != null
+        && questions.size() > 0) {
+      List<Question> listeQuestions = new ArrayList<Question>();
+      Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
+      Questionnaire questionnaireVerif;
+      boolean verif = false;
+      while (questionnaireIterator.hasNext() && (!verif)) {
+        questionnaireVerif = questionnaireIterator.next();
+        if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+          verif = true;
+        }
+      }
+      if (!verif) {
+        for (String intitule : questions) {
+          Question question = new QuestionBoolenne(intitule, true);
+          listeQuestions.add(question);
+        }
+        Questionnaire questionnaire = new Questionnaire(nomQuestionnaire, listeQuestions);
+        if (!this.listeQuestionnaire.contains(questionnaire)) {
+          this.listeQuestionnaire.add(questionnaire);
+          ret = true;
+        }
       }
     }
-
-    if (!verif) {
-      for (String intitule : questions) {
-        Question question = new QuestionBooleene(intitule, true);
-        listeQuestions.add(question);
-
-      }
-      Questionnaire questionnaire = new Questionnaire(nomQuestionnaire, listeQuestions);
-      if (!this.listeQuestionnaire.contains(questionnaire)) {
-        this.listeQuestionnaire.add(questionnaire);
-        ret = true;
-      }
-    }
-
     return ret;
-
   }
 
   /**
    * Une méthode pour modifier un questionnaire depuis une liste de string utilisée pour créée le
    * nouveau questionnaire.
    * 
+   * @param nomQuestionnaire : L'identifiant unique pour retrouver notre questionnaire
    * @param questions : la liste de string utilisée pour le nouveau questionnaire
    * @return : vrai si le questionnaire à été modifié, faux sinon
    */
   public boolean modifierQuestionnaire(String nomQuestionnaire, List<String> questions) {
-    List<Question> listeQuestions = new ArrayList<Question>();
-    Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
-    Questionnaire questionnaireVerif;
     boolean ret = false;
-    boolean verif = false;
-
-    while (questionnaireIterator.hasNext() && (!verif)) {
-      questionnaireVerif = questionnaireIterator.next();
-
-      if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
-        verif = true;
-      }
-    }
-
-    if (!verif) {
-      for (String intitule : questions) {
-        Question question = new QuestionBooleene(intitule, true);
-        listeQuestions.add(question);
-
-      }
-    }
-
-    verif = false;
-    while (questionnaireIterator.hasNext() && (!verif)) {
-      questionnaireVerif = questionnaireIterator.next();
-
-      if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
-        this.listeQuestionnaire.remove(questionnaireVerif);
-        questionnaireVerif.setListeDeQuestions(listeQuestions);
-        questionnaireVerif.setNomQuestionnaire(nomQuestionnaire);
-
-        if (!this.listeQuestionnaire.contains(questionnaireVerif)) {
-          this.listeQuestionnaire.add(questionnaireVerif);
-          ret = true;
+    if (nomQuestionnaire != null && nomQuestionnaire.length() > 0 && questions != null
+        && questions.size() > 0) { 
+      List<Question> listeQuestions = new ArrayList<Question>();
+      Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
+      Questionnaire questionnaireVerif;
+      boolean verif = false;
+      while (questionnaireIterator.hasNext() && (!verif)) {
+        questionnaireVerif = questionnaireIterator.next();
+        if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+          verif = true;
         }
-        verif = true;
+      }
+      if (!verif) {
+        for (String intitule : questions) {
+          Question question = new QuestionBoolenne(intitule, true);
+          listeQuestions.add(question);
+        }
+      }
+      verif = false;
+      while (questionnaireIterator.hasNext() && (!verif)) {
+        questionnaireVerif = questionnaireIterator.next();
+        if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+          this.listeQuestionnaire.remove(questionnaireVerif);
+          questionnaireVerif.setListeDeQuestions(listeQuestions);
+          questionnaireVerif.setNomQuestionnaire(nomQuestionnaire);
+          if (!this.listeQuestionnaire.contains(questionnaireVerif)) {
+            this.listeQuestionnaire.add(questionnaireVerif);
+            ret = true;
+          }
+          verif = true;
+        }
       }
     }
     return ret;
@@ -107,25 +102,23 @@ public class GestionQuestionnaire {
   /**
    * Une méthode pour supprimer un questionnaire.
    * 
-   * @param nomQuestionnaire : L'intitulé du questionnaire à supprimer
+   * @param nomQuestionnaire : L'identifiant unique du questionnaire à supprimer
    * @return : vrai si le questionnaire à été supprimé, faux sinon
    */
   public boolean supprimerQuestionnaire(String nomQuestionnaire) {
-    Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
-    Questionnaire questionnaireVerif;
     boolean ret = false;
-
-    while (questionnaireIterator.hasNext() && (!ret)) {
-      questionnaireVerif = questionnaireIterator.next();
-
-      if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
-        this.listeQuestionnaire.remove(questionnaireVerif);
-        ret = true;
-
+    if (nomQuestionnaire != null && nomQuestionnaire.length() > 0) { 
+      Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
+      Questionnaire questionnaireVerif;
+      while (questionnaireIterator.hasNext() && (!ret)) {
+        questionnaireVerif = questionnaireIterator.next();
+        if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+          this.listeQuestionnaire.remove(questionnaireVerif);
+          ret = true;
+        }
       }
     }
     return ret;
-
   }
 
   /**
@@ -136,24 +129,20 @@ public class GestionQuestionnaire {
    */
   public List<Question> consulterListeQuestion(String nomQuestionnaire) {
     List<Question> question = new ArrayList<Question>();
-    Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
-    Questionnaire questionnaireVerif;
-    boolean verif = false;
-
-
-    while (questionnaireIterator.hasNext() && (!verif)) {
-      questionnaireVerif = questionnaireIterator.next();
-
-      if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
-        question = questionnaireVerif.getListeDeQuestions();
-
-        verif = true;
-
+    if (nomQuestionnaire != null && nomQuestionnaire.length() > 0) {
+      Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
+      Questionnaire questionnaireVerif;
+      boolean verif = false;
+      while (questionnaireIterator.hasNext() && (!verif)) {
+        questionnaireVerif = questionnaireIterator.next();
+        if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+          question = questionnaireVerif.getListeDeQuestions();
+          verif = true;
+        }
       }
     }
     return question;
   }
-
 
   public List<Questionnaire> getListeQuestionnaire() {
     return listeQuestionnaire;
