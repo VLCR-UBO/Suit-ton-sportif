@@ -24,39 +24,42 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 
-public class SportifController implements Initializable {
+public class QuestionnaireController implements Initializable {
   @FXML
   private ListView<HBox> list;
   @FXML
+  private ListView<HBox> list2;
+  @FXML
   private Label nom;
   @FXML
-  private Label prenom;
-  @FXML
-  private Label pseudo;
-  @FXML
-  private Label dateDeNaissance;
-  @FXML
-  private Label sports;
+  private Label intitule;
   @FXML
   private VBox information;
+  @FXML
+  private ListView<String> listQuestions;
 
-  private List<String> sportif = new ArrayList<String>(); // TO DO : remplacer par les sportif qd ce
-  // sera créer
+  private List<String> questionnaire = new ArrayList<String>();
+  private List<String> questions = new ArrayList<String>();
 
   private List<HBox> lignes;
+  private List<HBox> lignes2;
 
   public static String nomSelectionner = null;
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
     // récuperer la liste des sportif
-    sportif.add("patrick");
-    sportif.add("denis");
-    sportif.add("jp");
+    questionnaire.add("1");
+    questionnaire.add("2");
+    questionnaire.add("3");
+
+    questions.add("pouet");
+    questions.add("prout");
+    questions.add("boop");
 
     // remplir les hbox avec le nom et les bouton modifier et supprimer
     lignes = new ArrayList<HBox>();
-    for (String nom : sportif) {
+    for (String nom : questionnaire) {
       HBox ligne = new HBox();
       ligne.setSpacing(10);
 
@@ -95,25 +98,88 @@ public class SportifController implements Initializable {
       lignes.add(ligne);
     }
 
+
+    lignes2 = new ArrayList<HBox>();
+    for (String intitule : questions) {
+      HBox ligne = new HBox();
+      ligne.setSpacing(10);
+
+      Button modifier = new Button();
+      Image crayon = new Image(getClass().getResourceAsStream("../icon/crayon.png"));
+      ImageView image = new ImageView(crayon);
+      image.setFitWidth(20);
+      image.setPreserveRatio(true);
+      modifier.setGraphic(image);
+      modifier.setOnAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent e) {
+          try {
+            modifier(intitule);
+          } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+          }
+        }
+      });
+
+      Button supprimer = new Button();
+      Image pbl = new Image(getClass().getResourceAsStream("../icon/poubelle.png"));
+      ImageView image2 = new ImageView(pbl);
+      image2.setFitWidth(20);
+      image2.setPreserveRatio(true);
+      supprimer.setGraphic(image2);
+      supprimer.setOnAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent e) {
+          supprimer(intitule, ligne);
+        }
+      });
+
+      ligne.getChildren().addAll(new Label(intitule), modifier, supprimer);
+      lignes2.add(ligne);
+    }
+
     // créer la liste view avec les hbox
     ObservableList<HBox> items = FXCollections.observableArrayList();
     items.addAll(lignes);
     list.setItems(items);
+
+    ObservableList<HBox> items2 = FXCollections.observableArrayList();
+    System.out.println(items2);
+    System.out.println(list2);
+    items2.addAll(lignes2);
+    list2.setItems(items2);
   }
 
   /**
-   * Lance la PopUp pour ajouter un sportif à la liste.
+   * Lance la PopUp pour ajouter un questionnaire à la liste.
    *
    * @param mouseEvent : clique de l'utilisateur
    * @throws IOException : en cas d'échec de l'ecture du fxml
    */
   @FXML
-  public void ajoutSportif(MouseEvent mouseEvent) throws IOException {
-    final URL fxmlUrl = getClass().getResource("../view/ajoutSportif.fxml");
+  public void ajoutQuestionnaire(MouseEvent mouseEvent) throws IOException {
+    final URL fxmlUrl = getClass().getResource("../view/ajoutQuestionnaire.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
-    PopUp popup = new PopUp(root, "Ajout d'un sportif");
+    PopUp popup = new PopUp(root, "Ajout d'un questionnaire");
+    popup.display();
+  }
+
+  /**
+   * Lance la PopUp pour ajouter une question à la liste.
+   *
+   * @param mouseEvent : clique de l'utilisateur
+   * @throws IOException : en cas d'échec de l'ecture du fxml
+   */
+  @FXML
+  public void ajoutQuestions(MouseEvent mouseEvent) throws IOException {
+    final URL fxmlUrl = getClass().getResource("../view/ajoutQuestions.fxml");
+    final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+    Pane root = fxmlLoader.load();
+
+    PopUp popup = new PopUp(root, "Ajout d'une question");
     popup.display();
   }
 
@@ -124,11 +190,11 @@ public class SportifController implements Initializable {
    * @param mouseEvent : clique de l'utilisateur
    */
   @FXML
-  public void afficherInformationSportif(MouseEvent mouseEvent) {
+  public void afficherQuestions(MouseEvent mouseEvent) {
     information.setVisible(true);
     HBox selected = list.getSelectionModel().getSelectedItem();
-    Label sportif = (Label) selected.getChildren().get(0);
-    pseudo.setText(sportif.getText());
+    Label questionnaire = (Label) selected.getChildren().get(0);
+    nom.setText(questionnaire.getText());
   }
 
   /**
@@ -139,11 +205,11 @@ public class SportifController implements Initializable {
    */
   public void modifier(String nom) throws IOException {
     nomSelectionner = nom;
-    final URL fxmlUrl = getClass().getResource("../view/ajoutSportif.fxml");
+    final URL fxmlUrl = getClass().getResource("../view/ajoutQuestionnaire.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
-    PopUp popup = new PopUp(root, "Modification du sportif");
+    PopUp popup = new PopUp(root, "Modification du questionnaire");
     popup.display();
   }
 
@@ -154,7 +220,7 @@ public class SportifController implements Initializable {
    * @param hb : HBox à supprimer de la liste view
    */
   public void supprimer(String nom, HBox hb) {
-    sportif.remove(nom);
+    questionnaire.remove(nom);
     list.getItems().remove(hb);
   }
 }

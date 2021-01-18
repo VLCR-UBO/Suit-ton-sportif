@@ -15,25 +15,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class AjoutSportifController implements Initializable {
+public class AjoutQuestionnaireController implements Initializable {
   @FXML
   private TextField nom;
-  @FXML
-  private TextField prenom;
-  @FXML
-  private TextField pseudo;
-  @FXML
-  private DatePicker dateNaissance;
+
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
     if (SportifController.nomSelectionner != null) {
       nom.setText("nom");
-      prenom.setText("prenom");
-      pseudo.setText("pseudo");
-      Date date = new Date(System.currentTimeMillis());
-      dateNaissance.setValue(
-          Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
     }
   }
 
@@ -57,9 +47,7 @@ public class AjoutSportifController implements Initializable {
    * @throws IOException : en cas d'échec de l'ecture du fxml
    */
   @FXML
-  public void creationSportif(MouseEvent mouseEvent) throws IOException {
-    LocalDate naissance = dateNaissance.getValue();
-    Date date = Date.from(naissance.atStartOfDay(ZoneId.systemDefault()).toInstant());
+  public void creationQuestionnaire(MouseEvent mouseEvent) throws IOException {
     this.fermerPopUp(mouseEvent);
   }
 }
