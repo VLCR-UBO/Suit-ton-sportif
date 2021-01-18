@@ -13,7 +13,7 @@ public class QuestionBooleene extends Question {
 
   public QuestionBooleene(String intitule, boolean reponseQuestion) {
     super(intitule);
-    this.setReponseQuestion(reponseQuestion);
+    this.reponseQuestion = reponseQuestion;
     // TODO Auto-generated constructor stub
   }
 
