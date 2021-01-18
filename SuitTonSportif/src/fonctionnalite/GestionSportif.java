@@ -23,17 +23,17 @@ public class GestionSportif {
   }
 
   /**
-   * Cette méthode permet d'ajouter un sportif avec les paramètres qui lui sont fourni. L'ajout aura
-   * lieu si et seulement si les paramètres sont correct et que le pseudo n'existe pas déjà. Une
-   * valeur boolean sera retournée : true si le sportif à été ajouté, false sinon.
+   * Cette mï¿½thode permet d'ajouter un sportif avec les paramï¿½tres qui lui sont fourni. L'ajout aura
+   * lieu si et seulement si les paramï¿½tres sont correct et que le pseudo n'existe pas dï¿½jï¿½. Une
+   * valeur boolean sera retournï¿½e : true si le sportif ï¿½ ï¿½tï¿½ ajoutï¿½, false sinon.
    * 
-   * @param nom : Chaine de caractères non null et non vide.
-   * @param prenom : Chaine de caractères non null et non vide.
-   * @param pseudo : Chaine de caractères non null et non vide qui permet l'identification du
+   * @param nom : Chaine de caractï¿½res non null et non vide.
+   * @param prenom : Chaine de caractï¿½res non null et non vide.
+   * @param pseudo : Chaine de caractï¿½res non null et non vide qui permet l'identification du
    *        sportif.
-   * @param motDePasse : Chaine de caractères non null et non vide.
+   * @param motDePasse : Chaine de caractï¿½res non null et non vide.
    * @param dateDeNaissance : Une date non null.
-   * @return Retourne true si le sportif à été ajoutée, false sinon.
+   * @return Retourne true si le sportif ï¿½ ï¿½tï¿½ ajoutï¿½e, false sinon.
    */
   public boolean ajouterSportif(String nom, String prenom, String pseudo, String motDePasse,
       Date dateDeNaissance) {
@@ -53,12 +53,12 @@ public class GestionSportif {
   }
 
   /**
-   * Cette méthode permet de supprimer le sportif qui lui est passer en paramètre. Une valeur
-   * boolean sera retournée : true si le sportif à été supprimé, false sinon.
+   * Cette mï¿½thode permet de supprimer le sportif qui lui est passer en paramï¿½tre. Une valeur
+   * boolean sera retournï¿½e : true si le sportif ï¿½ ï¿½tï¿½ supprimï¿½, false sinon.
    * 
-   * @param pseudo : Chaine de caractères non null et non vide qui permet l'identification du
+   * @param pseudo : Chaine de caractï¿½res non null et non vide qui permet l'identification du
    *        sportif.
-   * @return Retourne true si le sportif à été supprimé, false sinon.
+   * @return Retourne true si le sportif ï¿½ ï¿½tï¿½ supprimï¿½, false sinon.
    */
   public boolean supprimerSportif(String pseudo) {
     if (pseudo == null || pseudo.length() < 1) {
@@ -71,26 +71,26 @@ public class GestionSportif {
         return true;
       }
     }
-    return false; // le sportif n'a pas été trouvé
+    return false; // le sportif n'a pas ï¿½tï¿½ trouvï¿½
   }
 
   /**
-   * Cette méthode permet de modifier les informations d'un sportif, celui-ci est identifié avec le
-   * paramètre ancienPseudo. Les informations de ce sportif sont modifié avec les autres paramètres
-   * fourni. Une valeur boolean sera retournée : true si le sportif à été modifié, false sinon.
+   * Cette mï¿½thode permet de modifier les informations d'un sportif, celui-ci est identifiï¿½ avec le
+   * paramï¿½tre ancienPseudo. Les informations de ce sportif sont modifiï¿½ avec les autres paramï¿½tres
+   * fourni. Une valeur boolean sera retournï¿½e : true si le sportif ï¿½ ï¿½tï¿½ modifiï¿½, false sinon.
    * 
-   * @param ancienPseudo : Chaine de caractères non null et non vide qui permet l'identification du
+   * @param ancienPseudo : Chaine de caractï¿½res non null et non vide qui permet l'identification du
    *        sportif.
-   * @param nom : Chaine de caractères non null et non vide. Il s'agit du nouveau nom du sportif.
-   * @param prenom : Chaine de caractères non null et non vide. Il s'agit du nouveau prenom du
+   * @param nom : Chaine de caractï¿½res non null et non vide. Il s'agit du nouveau nom du sportif.
+   * @param prenom : Chaine de caractï¿½res non null et non vide. Il s'agit du nouveau prenom du
    *        sportif.
-   * @param pseudo : Chaine de caractères non null et non vide. Il s'agit du nouveau pseudo du
+   * @param pseudo : Chaine de caractï¿½res non null et non vide. Il s'agit du nouveau pseudo du
    *        sportif.
-   * @param motDePasse : Chaine de caractères non null et non vide. Il s'agit du nouveau motDePasse
+   * @param motDePasse : Chaine de caractï¿½res non null et non vide. Il s'agit du nouveau motDePasse
    *        du sportif.
    * @param dateDeNaissance : une date non null. Il s'agit de la nouvelle dateDeNaissance du
    *        sportif.
-   * @return Retourne true si le sportif à été modifié, false sinon.
+   * @return Retourne true si le sportif ï¿½ ï¿½tï¿½ modifiï¿½, false sinon.
    */
   public boolean modifierSportif(String ancienPseudo, String nom, String prenom, String pseudo,
       String motDePasse, Date dateDeNaissance) {
@@ -110,7 +110,7 @@ public class GestionSportif {
       }
     }
     if (leSportif == null) {
-      return false; // Sportif non trouvé
+      return false; // Sportif non trouvï¿½
     }
     leSportif.setNom(nom);
     leSportif.setPrenom(prenom);
@@ -121,12 +121,12 @@ public class GestionSportif {
   }
 
   /**
-   * Cette méthode permet de recupérer un sportif parmi la liste. Celui-ci est identifié avec son
+   * Cette mï¿½thode permet de recupï¿½rer un sportif parmi la liste. Celui-ci est identifiï¿½ avec son
    * pseudo.
    * 
-   * @param pseudo : Chaine de caractères non null et non vide. Il s'agit du nouveau pseudo du
+   * @param pseudo : Chaine de caractï¿½res non null et non vide. Il s'agit du nouveau pseudo du
    *        sportif.
-   * @return Retourne le sportif correspondant au pseudo, ou null s'il n'est pas trouvé.
+   * @return Retourne le sportif correspondant au pseudo, ou null s'il n'est pas trouvï¿½.
    */
   public Sportif consulterSportif(String pseudo) {
     if (pseudo == null || pseudo.length() < 1) {
@@ -139,5 +139,9 @@ public class GestionSportif {
       }
     }
     return null; // sportif absent
+  }
+
+  public List<Sportif> getListeDesSportifs() {
+    return listeDesSportifs;
   }
 }

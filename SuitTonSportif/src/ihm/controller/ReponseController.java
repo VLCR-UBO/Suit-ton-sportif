@@ -96,7 +96,7 @@ public class ReponseController implements Initializable {
   public void afficherReponses() {
     if (this.sportifSelectioner != null && this.questionSelectionner != null
         && this.semaineSelectionner != 0) {
-      
+
     }
   }
 }
