@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="212.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.AjoutSportifController">
+<AnchorPane prefHeight="212.0" prefWidth="300.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.AjoutSportifController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" prefHeight="284.0" prefWidth="290.0" spacing="5.0">
          <children>
-            <Label text="Ajouter un sportif :">
+            <Label fx:id="titre" text="Titre">
                <font>
                   <Font size="18.0" />
                </font>

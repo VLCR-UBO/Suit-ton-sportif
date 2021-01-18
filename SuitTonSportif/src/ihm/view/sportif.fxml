@@ -8,24 +8,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.SportifController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="652.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.SportifController">
    <children>
-      <VBox layoutX="14.0" layoutY="19.0" prefHeight="351.0" prefWidth="301.0" spacing="5.0">
+      <VBox layoutX="14.0" layoutY="19.0" prefHeight="351.0" prefWidth="300.0" spacing="5.0">
          <children>
             <Label text="Sportifs :">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <ListView fx:id="list" onMouseClicked="#afficherInformationSportif" prefHeight="300.0" prefWidth="301.0" />
+            <ListView fx:id="list" onMouseClicked="#afficherInformationSportif" prefHeight="310.0" prefWidth="300.0" />
          </children>
       </VBox>
-      <Button layoutX="320.0" layoutY="327.0" mnemonicParsing="false" onMouseClicked="#ajoutSportif" text="+" />
+      <Button layoutX="320.0" layoutY="327.0" mnemonicParsing="false" onMouseClicked="#ajoutSportif" styleClass="boutonPlus" stylesheets="@../style/style.css" text="+">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
       <VBox fx:id="information" layoutX="349.0" layoutY="14.0" prefHeight="313.0" prefWidth="279.0" visible="false">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="Nom :">
+                  <Label styleClass="attribut" stylesheets="@../style/style.css" text="Nom :">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -35,7 +38,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="Prénom :">
+                  <Label styleClass="attribut" stylesheets="@../style/style.css" text="Prénom :">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -45,7 +48,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="Pseudo :">
+                  <Label styleClass="attribut" stylesheets="@../style/style.css" text="Pseudo :">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -55,7 +58,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="Date de naissance :">
+                  <Label styleClass="attribut" stylesheets="@../style/style.css" text="Date de naissance :">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -65,7 +68,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="Sports : ">
+                  <Label styleClass="attribut" stylesheets="@../style/style.css" text="Sports : ">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>

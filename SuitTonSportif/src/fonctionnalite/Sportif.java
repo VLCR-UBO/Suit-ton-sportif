@@ -1,12 +1,13 @@
 package fonctionnalite;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 /**
- * La classe Sportif permet la création d'un sportif et contient toutes les données de celui-ci. Des
- * Getters et des Setters permettent l'accès à ces informations.
+ * La classe Sportif permet la crï¿½ation d'un sportif et contient toutes les donnï¿½es de celui-ci. Des
+ * Getters et des Setters permettent l'accï¿½s ï¿½ ces informations.
  * 
  * @author ychan
  *
@@ -16,22 +17,22 @@ public class Sportif {
   private String prenom;
   private String pseudo;
   private String motDePasse;
-  private Date dateDeNaissance;
+  private Calendar dateDeNaissance;
   private List<ActiviteSportive> listeDesActivitesSportive;
 
   /**
-   * Constructeur de la classe Sportif. Il crée un nouveau sportif avec les paramètres qui lui sont
+   * Constructeur de la classe Sportif. Il crï¿½e un nouveau sportif avec les paramï¿½tres qui lui sont
    * fourni.
    * 
-   * @param nom : Chaine de caractères non null et non vide.
-   * @param prenom : Chaine de caractères non null et non vide.
-   * @param pseudo : Chaine de caractères non null et non vide qui permet l'identification du
+   * @param nom : Chaine de caractï¿½res non null et non vide.
+   * @param prenom : Chaine de caractï¿½res non null et non vide.
+   * @param pseudo : Chaine de caractï¿½res non null et non vide qui permet l'identification du
    *        sportif.
-   * @param motDePasse : Chaine de caractères non null et non vide.
+   * @param motDePasse : Chaine de caractï¿½res non null et non vide.
    * @param dateDeNaissance : une date non null.
    */
   public Sportif(String nom, String prenom, String pseudo, String motDePasse,
-      Date dateDeNaissance) {
+      Calendar dateDeNaissance) {
     this.nom = nom;
     this.prenom = prenom;
     this.pseudo = pseudo;
@@ -82,17 +83,16 @@ public class Sportif {
     this.motDePasse = motDePasse;
   }
 
-  public Date getDateDeNaissance() {
+  public Calendar getDateDeNaissance() {
     return dateDeNaissance;
   }
 
-  public void setDateDeNaissance(Date dateDeNaissance) {
+  public void setDateDeNaissance(Calendar dateDeNaissance) {
     this.dateDeNaissance = dateDeNaissance;
   }
-
 }
 
 // la liste de tout les sportif
 // A partir du pseudo recup un sportif
 // supprimer un spotif a partir de son pseudo
-// modifié les infos a partir du pseudo
+// modifiï¿½ les infos a partir du pseudo

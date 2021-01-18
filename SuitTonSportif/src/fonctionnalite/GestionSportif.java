@@ -1,7 +1,7 @@
 package fonctionnalite;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -36,7 +36,7 @@ public class GestionSportif {
    * @return Retourne true si le sportif � �t� ajout�e, false sinon.
    */
   public boolean ajouterSportif(String nom, String prenom, String pseudo, String motDePasse,
-      Date dateDeNaissance) {
+      Calendar dateDeNaissance) {
     if (nom == null || nom.length() < 1 || prenom == null || prenom.length() < 1 || pseudo == null
         || pseudo.length() < 1 || motDePasse == null || motDePasse.length() < 1
         || dateDeNaissance == null) {
@@ -93,7 +93,7 @@ public class GestionSportif {
    * @return Retourne true si le sportif � �t� modifi�, false sinon.
    */
   public boolean modifierSportif(String ancienPseudo, String nom, String prenom, String pseudo,
-      String motDePasse, Date dateDeNaissance) {
+      String motDePasse, Calendar dateDeNaissance) {
     if (ancienPseudo == null || ancienPseudo.length() < 1 || nom == null || nom.length() < 1
         || prenom == null || prenom.length() < 1 || pseudo == null || pseudo.length() < 1
         || motDePasse == null || motDePasse.length() < 1 || dateDeNaissance == null) {

@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -50,7 +51,7 @@ public class SportifController implements Initializable {
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
     // récuperer la liste des sportif
-    sportif.add("patrick");
+    sportif.add("paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaatrick");
     sportif.add("denis");
     sportif.add("jp");
 
@@ -58,7 +59,7 @@ public class SportifController implements Initializable {
     lignes = new ArrayList<HBox>();
     for (String nom : sportif) {
       HBox ligne = new HBox();
-      ligne.setSpacing(10);
+      ligne.setSpacing(5);
 
       Button modifier = new Button();
       Image crayon = new Image(getClass().getResourceAsStream("../icon/crayon.png"));
@@ -66,6 +67,8 @@ public class SportifController implements Initializable {
       image.setFitWidth(20);
       image.setPreserveRatio(true);
       modifier.setGraphic(image);
+      modifier.getStylesheets()
+          .add(getClass().getResource("../style/listView.css").toExternalForm());
       modifier.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
@@ -84,14 +87,18 @@ public class SportifController implements Initializable {
       image2.setFitWidth(20);
       image2.setPreserveRatio(true);
       supprimer.setGraphic(image2);
+      supprimer.getStylesheets()
+          .add(getClass().getResource("../style/listView.css").toExternalForm());
       supprimer.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
           supprimer(nom, ligne);
         }
       });
-
-      ligne.getChildren().addAll(new Label(nom), modifier, supprimer);
+      
+      Label label = new Label(nom);
+      label.setPrefWidth(193);
+      ligne.getChildren().addAll(label, modifier, supprimer);
       lignes.add(ligne);
     }
 

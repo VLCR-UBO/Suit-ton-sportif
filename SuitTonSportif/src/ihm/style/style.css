@@ -1,0 +1,50 @@
+
+.tab-pane{
+    -fx-tab-min-width:90px;
+}
+
+.tab{
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+.tab-pane .tab
+{
+    -fx-background-color: #9deb58
+
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #7bcd32;
+}
+
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label { 
+    -fx-alignment: CENTER;
+}
+
+.boutonPlus{
+	-fx-background-color: #7bcd32;
+	-fx-background-radius: 300;
+	-fx-text-fill : white;
+}
+
+.button {
+	-fx-background-color: #7bcd32;
+	-fx-background-radius: 5;
+	-fx-text-fill : white;
+}
+
+.attribut{
+	-fx-text-fill :#7bcd32;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #7bcd32;
+    -fx-text-fill: white;
+}

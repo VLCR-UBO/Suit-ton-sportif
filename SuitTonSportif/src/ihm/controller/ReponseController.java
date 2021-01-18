@@ -75,7 +75,7 @@ public class ReponseController implements Initializable {
   }
 
   /**
-   * Récupère le numero de la semaine grace à la date sélèctionner
+   * Récupère le numero de la semaine grace à la date sélèctionner.
    */
   public void selectionDate() {
     // create a GregorianCalendar with the Pacific Daylight time zone
@@ -96,7 +96,7 @@ public class ReponseController implements Initializable {
   public void afficherReponses() {
     if (this.sportifSelectioner != null && this.questionSelectionner != null
         && this.semaineSelectionner != 0) {
-
+      reponse.setVisible(true);
     }
   }
 }
