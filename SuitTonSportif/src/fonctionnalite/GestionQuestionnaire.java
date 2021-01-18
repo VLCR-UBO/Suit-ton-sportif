@@ -128,10 +128,37 @@ public class GestionQuestionnaire {
 
   }
 
+  /**
+   * Une méthode permettant d'obtenir la liste de questions grâce au nom du questionnaire.
+   * 
+   * @param nomQuestionnaire : le nom du questionnaire
+   * @return : la liste des question retournée
+   */
+  public List<Question> consulterListeQuestion(String nomQuestionnaire) {
+    List<Question> question = new ArrayList<Question>();
+    Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
+    Questionnaire questionnaireVerif;
+    boolean verif = false;
+
+
+    while (questionnaireIterator.hasNext() && (!verif)) {
+      questionnaireVerif = questionnaireIterator.next();
+
+      if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+        question = questionnaireVerif.getListeDeQuestions();
+
+        verif = true;
+
+      }
+    }
+    return question;
+  }
+
+
   public List<Questionnaire> getListeQuestionnaire() {
     return listeQuestionnaire;
   }
-  
+
   public void setListeQuestionnaire(List<Questionnaire> listeQuestionnaire) {
     this.listeQuestionnaire = listeQuestionnaire;
   }

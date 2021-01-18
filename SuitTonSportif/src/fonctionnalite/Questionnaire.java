@@ -1,5 +1,6 @@
 package fonctionnalite;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Questionnaire {
 
 
   /**
-   * Un constructeur qui génère un questionnaire grâce à un id et une liste de questions.
+   * Un constructeur qui génère un questionnaire grâce à un nom et une liste de questions.
    * 
    * @param nom : le nom du questionnaire
    * @param lesQuestions : la liste de questions du questionnaire
@@ -18,6 +19,18 @@ public class Questionnaire {
   public Questionnaire(String nom, List<Question> lesQuestions) {
     this.nomQuestionnaire = nom;
     this.listeDeQuestions = lesQuestions;
+
+  }
+
+  /**
+   * Un constructeur qui génère un questionnaire grâce à un nom. Le questionnaire est vide par
+   * défault. Il faut le remplir avec une liste de questions avec le setter dédié.
+   * 
+   * @param nom : le nom du questionnaire
+   */
+  public Questionnaire(String nom) {
+    this.nomQuestionnaire = nom;
+    this.listeDeQuestions = new ArrayList<Question>();
 
   }
 
