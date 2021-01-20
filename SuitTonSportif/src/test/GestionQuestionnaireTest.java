@@ -3,7 +3,9 @@ package test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import fonctionnalite.GestionQuestionnaire;
 import fonctionnalite.Question;
 import fonctionnalite.QuestionBoolenne;
@@ -99,17 +101,22 @@ public class GestionQuestionnaireTest {
     List<String> listeIntituleQuestions = new ArrayList<String>();
     listeIntituleQuestions.add("Aime tu le beurre salé ?");
     gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions);
-    
+
     List<String> listeIntituleQuestions2 = new ArrayList<String>();
     listeIntituleQuestions2.add("Aime tu le beurre doux ?");
     // Le fonctionnement normal fonctionne ?
-    /*assertTrue(gestionQuestionnaire.modifierQuestionnaire("Questionnaire", listeIntituleQuestions2),
-        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
-    assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 1,
-        "TestGestionQuestionnaire : Le questionnaire n'est pas présent dans la liste");
-    System.out.println(gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0).getIntituleQuestion());
-    assertTrue(gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0).getIntituleQuestion() == "Aime tu le beurre doux ?",
-        "TestGestionQuestionnaire : Le questionnaire n'a pas été mise à jour");*/
+    /*
+     * assertTrue(gestionQuestionnaire.modifierQuestionnaire("Questionnaire",
+     * listeIntituleQuestions2),
+     * "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+     * assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 1,
+     * "TestGestionQuestionnaire : Le questionnaire n'est pas présent dans la liste");
+     * System.out.println(gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().
+     * get(0).getIntituleQuestion());
+     * assertTrue(gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0).
+     * getIntituleQuestion() == "Aime tu le beurre doux ?",
+     * "TestGestionQuestionnaire : Le questionnaire n'a pas été mise à jour");
+     */
   }
 
   @Test
@@ -117,7 +124,7 @@ public class GestionQuestionnaireTest {
     // La suppression fonctionne t-elle s'il n'y a pas de questionnaire ?
     assertFalse(gestionQuestionnaire.supprimerQuestionnaire("Questionnaire"),
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
-    
+
     List<String> listeIntituleQuestions = new ArrayList<String>();
     listeIntituleQuestions.add("Aime tu le beurre salé ?");
     listeIntituleQuestions.add("Aime tu la pluie ?");
@@ -126,7 +133,7 @@ public class GestionQuestionnaireTest {
     listeIntituleQuestions2.add("Aime tu le beurre doux ?");
     listeIntituleQuestions2.add("Aime tu le soleil ?");
     gestionQuestionnaire.ajouterQuestionnaire("Questionnaire2", listeIntituleQuestions2);
-    
+
     // Verification de l'ajout
     assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 2,
         "TestGestionQuestionnaire : Le questionnaire est présent dans la liste");
@@ -135,7 +142,7 @@ public class GestionQuestionnaireTest {
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
     assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 1,
         "TestGestionQuestionnaire : Le questionnaire n'a pas été supprimer de la liste");
-    // La suppression est t-elle arreté si l'élément  n'est pas présent ?
+    // La suppression est t-elle arreté si l'élément n'est pas présent ?
     assertFalse(gestionQuestionnaire.supprimerQuestionnaire("Questionnaire3"),
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() == 0,
@@ -151,32 +158,35 @@ public class GestionQuestionnaireTest {
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() == 0,
         "TestGestionQuestionnaire : Le questionnaire a été supprimer de la liste");
   }
-  
+
   @Test
   public void consulterListeQuestion() {
     // La consultation fonctionne t-elle s'il n'y a pas de questionnaire ?
-    assertTrue(gestionQuestionnaire.consulterListeQuestion("Questionnaire").size() == 0,
+    assertNull(gestionQuestionnaire.consulterListeQuestion("Questionnaire"),
         "TestGestionQuestionnaire : La consultation d'un questionnaire à échouer anormalement");
-    
+
     List<String> listeIntituleQuestions = new ArrayList<String>();
     listeIntituleQuestions.add("Aime tu le beurre salé ?");
     listeIntituleQuestions.add("Aime tu la pluie ?");
     gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions);
- 
+
     // La consultation fonctionne t-elle ?
-    List<Question> liste = gestionQuestionnaire.consulterListeQuestion("Questionnaire");
+    Questionnaire questionnaire = gestionQuestionnaire.consulterListeQuestion("Questionnaire");
+    assertNotNull(gestionQuestionnaire.consulterListeQuestion("Questionnaire"),
+        "TestGestionQuestionnaire : La consultation d'un questionnaire à échouer anormalement");
+    List<Question> liste = questionnaire.getListeDeQuestions();
     assertTrue(liste.get(0).getIntituleQuestion() == "Aime tu le beurre salé ?",
         "TestGestionQuestionnaire : La consultation d'un questionnaire à échouer anormalement");
     assertTrue(liste.get(1).getIntituleQuestion() == "Aime tu la pluie ?",
         "TestGestionQuestionnaire : La consultation d'un questionnaire à échouer anormalement");
     // La consultation d'un élément inconnu fonctionne t-elle ?
-    assertTrue(gestionQuestionnaire.consulterListeQuestion("Questionnaire2").size() == 0,
+    assertNull(gestionQuestionnaire.consulterListeQuestion("Questionnaire2"),
         "TestGestionQuestionnaire : La consultation d'un questionnaire à échouer anormalement");
     // La consultation d'un élément null fonctionne t-elle ?
-    assertTrue(gestionQuestionnaire.consulterListeQuestion(null).size() == 0,
+    assertNull(gestionQuestionnaire.consulterListeQuestion(null),
         "TestGestionQuestionnaire : La consultation d'un questionnaire à échouer anormalement");
     // La consultation d'un élément vide fonctionne t-elle ?
-    assertTrue(gestionQuestionnaire.consulterListeQuestion("").size() == 0,
+    assertNull(gestionQuestionnaire.consulterListeQuestion(""),
         "TestGestionQuestionnaire : La consultation d'un questionnaire à échouer anormalement");
   }
 

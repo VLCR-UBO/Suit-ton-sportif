@@ -1,8 +1,9 @@
 package fonctionnalite;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -24,25 +25,26 @@ public class GestionReponses {
   }
 
   /**
-   * Cette méthode permet d'ajouter un objet reponses avec les paramètres qui lui sont fourni.
-   * L'ajout aura lieu si et seulement si les paramètres sont correct et si l'élément n'est pas déjà
-   * présent (même sportif, questionnaire, et semaine). Une valeur boolean sera retournée : true si
-   * la reponses à été ajouté, false sinon.
+   * Cette mï¿½thode permet d'ajouter un objet reponses avec les paramï¿½tres qui lui sont fourni.
+   * L'ajout aura lieu si et seulement si les paramï¿½tres sont correct et si l'ï¿½lï¿½ment n'est pas dï¿½jï¿½
+   * prï¿½sent (mï¿½me sportif, questionnaire, et semaine). Une valeur boolean sera retournï¿½e : true si
+   * la reponses ï¿½ ï¿½tï¿½ ajoutï¿½, false sinon.
    * 
-   * @param date : Il s'agit de la date de la dernière modification de la liste de reponses.
-   * @param listeReponses : Cette liste de Integer est la liste des reponses à un questionnaire.
-   * @param unSportif : Ces réponses correspondent à ce sportif.
-   * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
-   * @return Retourne true si la reponses à été ajoutée, false sinon.
+   * @param date : Il s'agit de la date de la derniï¿½re modification de la liste de reponses.
+   * @param listeReponses : Cette liste de Integer est la liste des reponses ï¿½ un questionnaire.
+   * @param unSportif : Ces rï¿½ponses correspondent ï¿½ ce sportif.
+   * @param unQuestionnaire : Ces rï¿½ponses correspondent ï¿½ ce questionnaire.
+   * @return Retourne true si la reponses ï¿½ ï¿½tï¿½ ajoutï¿½e, false sinon.
    */
   public boolean ajouterReponses(Date date, Sportif unSportif, Questionnaire unQuestionnaire,
       List<Integer> listeReponses) {
     if (date == null || unSportif == null || unQuestionnaire == null || listeReponses == null) {
       return false; // parametres incorrects
     }
-    SimpleDateFormat formater = new SimpleDateFormat("w");
-    System.out.println(formater.format(date));
-    Integer numeroSemaine = Integer.parseInt(formater.format(date));
+    Calendar calendar = new GregorianCalendar();
+    calendar.setTime(date);
+    Integer numeroSemaine = calendar.get(Calendar.WEEK_OF_YEAR);
+    
     int taille = this.listeDesReponses.size();
     for (int i = 0; i < taille; i++) {
       if (this.listeDesReponses.get(i).getUnSportif().equals(unSportif)
@@ -57,16 +59,16 @@ public class GestionReponses {
   }
 
   /**
-   * Cette méthode permet de modifier la listes de reponses d'un objet reponses (la date sera mise à
-   * jour également), Celui-ci est identifié avec les paramètres unSportif, unQuestionnaire, et le
-   * numéro de semaine.
+   * Cette mï¿½thode permet de modifier la listes de reponses d'un objet reponses (la date sera mise ï¿½
+   * jour ï¿½galement), Celui-ci est identifiï¿½ avec les paramï¿½tres unSportif, unQuestionnaire, et le
+   * numï¿½ro de semaine.
    * 
-   * @param date : Il s'agit de la date de la dernière modification de la liste de reponses.
-   * @param numeroSemaine : Contient le numéro de la semaine ou l'élément à été crée.
-   * @param listeReponses : Cette liste de Integer est la liste des reponses à un questionnaire.
-   * @param unSportif : Ces réponses correspondent à ce sportif.
-   * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
-   * @return Retourne true si la reponses à été modifiée, false sinon.
+   * @param date : Il s'agit de la date de la derniï¿½re modification de la liste de reponses.
+   * @param numeroSemaine : Contient le numï¿½ro de la semaine ou l'ï¿½lï¿½ment ï¿½ ï¿½tï¿½ crï¿½e.
+   * @param listeReponses : Cette liste de Integer est la liste des reponses ï¿½ un questionnaire.
+   * @param unSportif : Ces rï¿½ponses correspondent ï¿½ ce sportif.
+   * @param unQuestionnaire : Ces rï¿½ponses correspondent ï¿½ ce questionnaire.
+   * @return Retourne true si la reponses ï¿½ ï¿½tï¿½ modifiï¿½e, false sinon.
    */
   public boolean modifierReponses(Integer numeroSemaine, Date date, Sportif unSportif,
       Questionnaire unQuestionnaire, List<Integer> listeReponses) {
@@ -89,15 +91,15 @@ public class GestionReponses {
   }
 
   /**
-   * Cette méthode permet de recupérer un objet Reponses parmi la liste. Celui-ci est identifié avec
-   * les paramètres unSporti, unQuestionnaire, et le numéro de semaine.
+   * Cette mï¿½thode permet de recupï¿½rer un objet Reponses parmi la liste. Celui-ci est identifiï¿½ avec
+   * les paramï¿½tres unSporti, unQuestionnaire, et le numï¿½ro de semaine.
    * 
-   * @param numeroSemaine : Contient le numéro de la semaine ou l'élément à été crée.
-   * @param unSportif : Ces réponses correspondent à ce sportif.
-   * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
+   * @param numeroSemaine : Contient le numï¿½ro de la semaine ou l'ï¿½lï¿½ment ï¿½ ï¿½tï¿½ crï¿½e.
+   * @param unSportif : Ces rï¿½ponses correspondent ï¿½ ce sportif.
+   * @param unQuestionnaire : Ces rï¿½ponses correspondent ï¿½ ce questionnaire.
    * @return
    */
-  public Reponses consulterReponses(Integer numeroSemaine, Sportif unSportif,
+  public List<Integer> consulterReponses(Integer numeroSemaine, Sportif unSportif,
       Questionnaire unQuestionnaire) {
     if (numeroSemaine == null || numeroSemaine < 1 || unSportif == null
         || unQuestionnaire == null) {
@@ -108,7 +110,7 @@ public class GestionReponses {
       if (this.listeDesReponses.get(i).getUnSportif().equals(unSportif)
           && this.listeDesReponses.get(i).getUnQuestionnaire().equals(unQuestionnaire)
           && this.listeDesReponses.get(i).getNumeroSemaine() == numeroSemaine) {
-        return this.listeDesReponses.get(i);
+        return this.listeDesReponses.get(i).getListeReponses();
       }
     }
     return null; // reponses absente

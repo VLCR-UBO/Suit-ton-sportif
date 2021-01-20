@@ -127,8 +127,8 @@ public class GestionQuestionnaire {
    * @param nomQuestionnaire : le nom du questionnaire
    * @return : la liste des question retournée
    */
-  public List<Question> consulterListeQuestion(String nomQuestionnaire) {
-    List<Question> question = new ArrayList<Question>();
+  public Questionnaire consulterListeQuestion(String nomQuestionnaire) {
+    Questionnaire questionnaire = null;
     if (nomQuestionnaire != null && nomQuestionnaire.length() > 0) {
       Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
       Questionnaire questionnaireVerif;
@@ -136,12 +136,12 @@ public class GestionQuestionnaire {
       while (questionnaireIterator.hasNext() && (!verif)) {
         questionnaireVerif = questionnaireIterator.next();
         if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
-          question = questionnaireVerif.getListeDeQuestions();
+          questionnaire = questionnaireVerif;
           verif = true;
         }
       }
     }
-    return question;
+    return questionnaire;
   }
 
   public List<Questionnaire> getListeQuestionnaire() {

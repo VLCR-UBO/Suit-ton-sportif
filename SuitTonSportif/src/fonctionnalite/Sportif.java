@@ -2,7 +2,6 @@ package fonctionnalite;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -91,8 +90,3 @@ public class Sportif {
     this.dateDeNaissance = dateDeNaissance;
   }
 }
-
-// la liste de tout les sportif
-// A partir du pseudo recup un sportif
-// supprimer un spotif a partir de son pseudo
-// modifi� les infos a partir du pseudo
