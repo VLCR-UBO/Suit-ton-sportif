@@ -62,8 +62,7 @@ public class GestionQuestionnaire {
    */
   public boolean modifierQuestionnaire(String nomQuestionnaire, List<String> questions) {
     boolean ret = false;
-    if (nomQuestionnaire != null && nomQuestionnaire.length() > 0 && questions != null
-        && questions.size() > 0) {
+    if (nomQuestionnaire != null && nomQuestionnaire.length() > 0 && questions != null) {
       List<Question> listeQuestions = new ArrayList<Question>();
       Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
       Questionnaire questionnaireVerif;
