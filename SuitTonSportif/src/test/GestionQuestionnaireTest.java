@@ -88,12 +88,6 @@ public class GestionQuestionnaireTest {
         "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() > 1,
         "TestGestionQuestionnaire : Le questionnaire a été ajouté ànormalement à la liste");
-    // L'ajout est t-il arreté si la liste de question est vide ?
-    List<String> listeIntituleQuestions2 = new ArrayList<String>();
-    assertFalse(gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions2),
-        "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
-    assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() > 1,
-        "TestGestionQuestionnaire : Le questionnaire a été ajouté ànormalement à la liste");
   }
 
   @Test
