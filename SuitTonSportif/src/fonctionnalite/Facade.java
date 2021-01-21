@@ -203,6 +203,24 @@ public class Facade {
     return ret;
   }
 
+  /**
+   * Cette méthode retourne la liste de tout les nom des questionnaires.
+   * 
+   * @return la liste de tout les questionnaire, ou null en cas de problème.
+   */
+  public List<String> consulterLesQuestionnaire() {
+    if (gestionQuestionnaire == null) {
+      return null;
+    }
+    List<String> ret = new ArrayList<String>();
+    List<Questionnaire> l = gestionQuestionnaire.getListeQuestionnaire();
+    int taille = l.size();
+    for (int i = 0; i < taille; i++) {
+      ret.add(l.get(i).getNomQuestionnaire());
+    }
+    return ret;
+  }
+
   // Pour Alex
 
   /**
