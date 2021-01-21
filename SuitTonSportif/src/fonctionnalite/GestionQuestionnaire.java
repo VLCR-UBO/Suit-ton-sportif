@@ -80,19 +80,20 @@ public class GestionQuestionnaire {
           Question question = new QuestionBoolenne(intitule, true);
           listeQuestions.add(question);
         }
-      }
-      verif = false;
-      while (questionnaireIterator.hasNext() && (!verif)) {
-        questionnaireVerif = questionnaireIterator.next();
-        if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
-          this.listeQuestionnaire.remove(questionnaireVerif);
-          questionnaireVerif.setListeDeQuestions(listeQuestions);
-          questionnaireVerif.setNomQuestionnaire(nomQuestionnaire);
-          if (!this.listeQuestionnaire.contains(questionnaireVerif)) {
-            this.listeQuestionnaire.add(questionnaireVerif);
-            ret = true;
+      
+        verif = false;
+        while (questionnaireIterator.hasNext() && (!verif)) {
+          questionnaireVerif = questionnaireIterator.next();
+          if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+            this.listeQuestionnaire.remove(questionnaireVerif);
+            questionnaireVerif.setListeDeQuestions(listeQuestions);
+            questionnaireVerif.setNomQuestionnaire(nomQuestionnaire);
+            if (!(this.listeQuestionnaire.contains(questionnaireVerif))) {
+              this.listeQuestionnaire.add(questionnaireVerif);
+              ret = true;
+            }
+            verif = true;
           }
-          verif = true;
         }
       }
     }
