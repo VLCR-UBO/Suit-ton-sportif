@@ -39,7 +39,7 @@ public class Questionnaire {
    * @param defaut : la réponse par défaut de la question
    * @return : vrai si la question à été ajoutée, faux sinon
    */
-  public boolean ajouterQuestionBooleene(String intitule, boolean defaut) {
+  public boolean ajouterQuestionBoolenne(String intitule, boolean defaut) {
     boolean ret = false;
     if (intitule != null && intitule.length() > 0) {
       List<Question> l = getListeDeQuestions();
@@ -66,7 +66,7 @@ public class Questionnaire {
    * @param defaut : la nouvelle réponse par défault.
    * @return : vrai si la question à été modifiée, faux sinon
    */
-  public boolean modifierQuestionBooleene(String ancienIntitule, String nouveauIntitule,
+  public boolean modifierQuestionBoolenne(String ancienIntitule, String nouveauIntitule,
       boolean defaut) {
     if (ancienIntitule == null || ancienIntitule.length() < 1 || nouveauIntitule == null
         || nouveauIntitule.length() < 1) {

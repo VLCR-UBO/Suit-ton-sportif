@@ -301,7 +301,7 @@ public class Facade {
       return false;
     }
     return gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire)
-        .ajouterQuestionBooleene(intitule, false);
+        .ajouterQuestionBoolenne(intitule, false);
   }
 
   /**
@@ -321,7 +321,7 @@ public class Facade {
       return false;
     }
     return gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire)
-        .modifierQuestionBooleene(ancienIntitule, nouveauIntitule, valeur);
+        .modifierQuestionBoolenne(ancienIntitule, nouveauIntitule, valeur);
   }
 
   /**
