@@ -104,19 +104,53 @@ public class GestionQuestionnaireTest {
 
     List<String> listeIntituleQuestions2 = new ArrayList<String>();
     listeIntituleQuestions2.add("Aime tu le beurre doux ?");
+
     // Le fonctionnement normal fonctionne ?
-    /*
-     * assertTrue(gestionQuestionnaire.modifierQuestionnaire("Questionnaire",
-     * listeIntituleQuestions2),
-     * "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
-     * assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 1,
-     * "TestGestionQuestionnaire : Le questionnaire n'est pas présent dans la liste");
-     * System.out.println(gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().
-     * get(0).getIntituleQuestion());
-     * assertTrue(gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0).
-     * getIntituleQuestion() == "Aime tu le beurre doux ?",
-     * "TestGestionQuestionnaire : Le questionnaire n'a pas été mise à jour");
-     */
+    assertTrue(gestionQuestionnaire.modifierQuestionnaire("Questionnaire", listeIntituleQuestions2),
+        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+    assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 1,
+        "TestGestionQuestionnaire : Le questionnaire n'est pas présent dans la liste");
+    assertTrue(
+        gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
+            .getIntituleQuestion() == "Aime tu le beurre doux ?",
+        "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
+    // La modification est t-elle arreté si le nom du questionnaire est null ?
+    assertFalse(gestionQuestionnaire.modifierQuestionnaire(null, listeIntituleQuestions),
+        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+    assertTrue(
+        gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
+            .getIntituleQuestion() == "Aime tu le beurre doux ?",
+        "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
+    // La modification est t-elle arreté si le nom du questionnaire est une chaine vide ?
+    assertFalse(gestionQuestionnaire.modifierQuestionnaire("", listeIntituleQuestions),
+        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+    assertTrue(
+        gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
+            .getIntituleQuestion() == "Aime tu le beurre doux ?",
+        "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
+    // La modification est t-elle arreté si le nom du questionnaire est inconnu ?
+    assertFalse(gestionQuestionnaire.modifierQuestionnaire("test", listeIntituleQuestions),
+        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+    assertTrue(
+        gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
+            .getIntituleQuestion() == "Aime tu le beurre doux ?",
+        "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
+    // La modification est t-elle arreté si la nouvelle liste est null ?
+    assertFalse(gestionQuestionnaire.modifierQuestionnaire("Questionnaire", null),
+        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+    assertTrue(
+        gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
+            .getIntituleQuestion() == "Aime tu le beurre doux ?",
+        "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
+    // La modification est t-elle arreté si la nouvelle liste est vide ?
+    List<String> listeIntituleQuestions3 = new ArrayList<String>();
+    assertFalse(gestionQuestionnaire.modifierQuestionnaire("Questionnaire", listeIntituleQuestions3),
+        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+    assertTrue(
+        gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
+            .getIntituleQuestion() == "Aime tu le beurre doux ?",
+        "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
+
   }
 
   @Test

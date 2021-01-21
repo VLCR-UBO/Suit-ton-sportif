@@ -75,23 +75,21 @@ public class GestionQuestionnaire {
           verif = true;
         }
       }
-      if (!verif) {
+      if (verif) {
         for (String intitule : questions) {
           Question question = new QuestionBoolenne(intitule, true);
           listeQuestions.add(question);
         }
-      
         verif = false;
+        questionnaireIterator = this.listeQuestionnaire.iterator();
         while (questionnaireIterator.hasNext() && (!verif)) {
           questionnaireVerif = questionnaireIterator.next();
           if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
             this.listeQuestionnaire.remove(questionnaireVerif);
             questionnaireVerif.setListeDeQuestions(listeQuestions);
             questionnaireVerif.setNomQuestionnaire(nomQuestionnaire);
-            if (!(this.listeQuestionnaire.contains(questionnaireVerif))) {
-              this.listeQuestionnaire.add(questionnaireVerif);
-              ret = true;
-            }
+            this.listeQuestionnaire.add(questionnaireVerif);
+            ret = true;
             verif = true;
           }
         }
