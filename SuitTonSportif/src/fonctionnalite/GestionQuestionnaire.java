@@ -123,7 +123,7 @@ public class GestionQuestionnaire {
   }
 
   /**
-   * Une méthode permettant d'obtenir la liste de questions grâce au nom du questionnaire.
+   * Une méthode permettant d'obtenir un questionnaire grâce à son nom.
    * 
    * @param nomQuestionnaire : le nom du questionnaire
    * @return : la liste des question retournée
