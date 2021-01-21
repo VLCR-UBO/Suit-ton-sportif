@@ -136,15 +136,6 @@ public class GestionQuestionnaireTest {
         gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
             .getIntituleQuestion() == "Aime tu le beurre doux ?",
         "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
-    // La modification est t-elle arreté si la nouvelle liste est vide ?
-    List<String> listeIntituleQuestions3 = new ArrayList<String>();
-    assertFalse(gestionQuestionnaire.modifierQuestionnaire("Questionnaire", listeIntituleQuestions3),
-        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
-    assertTrue(
-        gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
-            .getIntituleQuestion() == "Aime tu le beurre doux ?",
-        "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
-
   }
 
   @Test
