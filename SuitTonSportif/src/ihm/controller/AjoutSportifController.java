@@ -1,12 +1,13 @@
 package ihm.controller;
 
+import ihm.Main;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,17 +29,19 @@ public class AjoutSportifController implements Initializable {
   private TextField pseudo;
   @FXML
   private DatePicker dateNaissance;
+  @FXML
+  private Label erreure;
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
     if (SportifController.nomSelectionner != null) {
-      titre.setText("Modifier un sportif :");
-      nom.setText("nom");
-      prenom.setText("prenom");
-      pseudo.setText("pseudo");
-      Date date = new Date(System.currentTimeMillis());
-      dateNaissance.setValue(
-          Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
+      titre.setText("Modifier un sportif");
+      nom.setText(Main.facade.obtenirNomSportif(SportifController.nomSelectionner));
+      prenom.setText(Main.facade.obtenirPrenomSportif(SportifController.nomSelectionner));
+      pseudo.setText(SportifController.nomSelectionner);
+      Calendar date = Main.facade.obtenirDateDeNaissanceSportif(SportifController.nomSelectionner);
+      Date input = date.getTime();
+      dateNaissance.setValue(input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
     } else {
       titre.setText("Ajouter un sportif :");
     }
@@ -66,9 +69,24 @@ public class AjoutSportifController implements Initializable {
   @FXML
   public void creationSportif(MouseEvent mouseEvent) throws IOException {
     LocalDate naissance = dateNaissance.getValue();
-    Date date = Date.from(naissance.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(date);
-    this.fermerPopUp(mouseEvent);
+
+    if (nom.getText() != null && prenom.getText() != null && pseudo.getText() != null
+        && naissance != null) {
+      Calendar calendar = new GregorianCalendar.Builder()
+          .setDate(naissance.getYear(), naissance.getMonthValue(), naissance.getDayOfMonth())
+          .build();
+
+      if (SportifController.nomSelectionner != null) {
+        Main.facade.modifierUnSportif(SportifController.nomSelectionner, nom.getText(),
+            prenom.getText(), pseudo.getText(), "pouet", calendar);
+      } else {
+        Main.facade.ajouterUnSportif(nom.getText(), prenom.getText(), pseudo.getText(), "pouet",
+            calendar);
+      }
+
+      this.fermerPopUp(mouseEvent);
+    } else {
+      erreure.setVisible(true);
+    }
   }
 }

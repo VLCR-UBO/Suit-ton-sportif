@@ -1,15 +1,15 @@
 package ihm.controller;
 
+import ihm.Main;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.SimpleTimeZone;
-import java.util.TimeZone;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +18,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import java.util.GregorianCalendar;
 
 public class ReponseController implements Initializable {
   @FXML
@@ -26,10 +25,13 @@ public class ReponseController implements Initializable {
   @FXML
   private ListView<String> listQuestionnaire;
   @FXML
+  private ListView<String> listReponse;
+  @FXML
   private DatePicker date;
   @FXML
   private VBox reponse;
 
+  private List<String> sportifs;
   private List<String> reponses;
   private List<String> questions;
 
@@ -39,19 +41,19 @@ public class ReponseController implements Initializable {
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    reponses = new ArrayList<String>();
-    reponses.add("pouet");
-    reponses.add("prout");
-    reponses.add("boop");
+    sportifs = Main.facade.obtenirListeSportif();
+    if (sportifs == null) {
+      sportifs = new ArrayList<String>();
+    }
 
     ObservableList<String> items = FXCollections.observableArrayList();
-    items.addAll(reponses);
+    items.addAll(sportifs);
     listSportif.setItems(items);
 
-    questions = new ArrayList<String>();
-    questions.add("pouet");
-    questions.add("prout");
-    questions.add("boop");
+    questions = Main.facade.consulterLesQuestionnaire();
+    if (questions == null) {
+      questions = new ArrayList<String>();
+    }
 
     ObservableList<String> items2 = FXCollections.observableArrayList();
     items2.addAll(questions);
@@ -78,12 +80,9 @@ public class ReponseController implements Initializable {
    * Récupère le numero de la semaine grace à la date sélèctionner.
    */
   public void selectionDate() {
-    // create a GregorianCalendar with the Pacific Daylight time zone
-    // and the current date and time
-    Calendar calendar = new GregorianCalendar();
     LocalDate jour = date.getValue();
-    Date jourSelectioner = Date.from(jour.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    calendar.setTime(jourSelectioner);
+    Calendar calendar = new GregorianCalendar.Builder()
+        .setDate(jour.getYear(), jour.getMonthValue(), jour.getDayOfMonth()).build();
 
     this.semaineSelectionner = calendar.get(Calendar.WEEK_OF_YEAR);
     this.afficherReponses();
@@ -97,6 +96,15 @@ public class ReponseController implements Initializable {
     if (this.sportifSelectioner != null && this.questionSelectionner != null
         && this.semaineSelectionner != 0) {
       reponse.setVisible(true);
+      HashMap<String, Integer> questionsReponses = Main.facade.obtenirQuestionnaireEtReponses(
+          this.semaineSelectionner, this.sportifSelectioner, this.questionSelectionner);
+      reponses = new ArrayList<String>();
+      for (Map.Entry<String, Integer> mapentry : questionsReponses.entrySet()) {
+        reponses.add(mapentry.getKey() + "\n" + mapentry.getValue());
+      }
+      ObservableList<String> items = FXCollections.observableArrayList();
+      items.addAll(reponses);
+      listReponse.setItems(items);
     }
   }
 }

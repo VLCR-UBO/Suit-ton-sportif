@@ -1,9 +1,11 @@
 package ihm.controller;
 
+import ihm.Main;
 import ihm.PopUp;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -13,7 +15,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -41,8 +42,7 @@ public class SportifController implements Initializable {
   @FXML
   private VBox information;
 
-  private List<String> sportif = new ArrayList<String>(); // TO DO : remplacer par les sportif qd ce
-  // sera créer
+  private List<String> sportif;
 
   private List<HBox> lignes;
 
@@ -50,11 +50,18 @@ public class SportifController implements Initializable {
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    // récuperer la liste des sportif
-    sportif.add("paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaatrick");
-    sportif.add("denis");
-    sportif.add("jp");
+    sportif = Main.facade.obtenirListeSportif();
+    if (sportif == null) {
+      sportif = new ArrayList<String>();
+    }
 
+    this.remplirListe();
+  }
+
+  /**
+   * remplie la liste view avec les pseudo des sportif.
+   */
+  public void remplirListe() {
     // remplir les hbox avec le nom et les bouton modifier et supprimer
     lignes = new ArrayList<HBox>();
     for (String nom : sportif) {
@@ -75,7 +82,6 @@ public class SportifController implements Initializable {
           try {
             modifier(nom);
           } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
           }
         }
@@ -92,10 +98,10 @@ public class SportifController implements Initializable {
       supprimer.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
-          supprimer(nom, ligne);
+          supprimer(nom);
         }
       });
-      
+
       Label label = new Label(nom);
       label.setPrefWidth(193);
       ligne.getChildren().addAll(label, modifier, supprimer);
@@ -122,6 +128,12 @@ public class SportifController implements Initializable {
 
     PopUp popup = new PopUp(root, "Ajout d'un sportif");
     popup.display();
+
+    sportif = Main.facade.obtenirListeSportif();
+    if (sportif == null) {
+      sportif = new ArrayList<String>();
+    }
+    this.remplirListe();
   }
 
   /**
@@ -132,10 +144,26 @@ public class SportifController implements Initializable {
    */
   @FXML
   public void afficherInformationSportif(MouseEvent mouseEvent) {
-    information.setVisible(true);
     HBox selected = list.getSelectionModel().getSelectedItem();
     Label sportif = (Label) selected.getChildren().get(0);
-    pseudo.setText(sportif.getText());
+    this.afficherInformationSportif(sportif.getText());
+  }
+
+  /**
+   * Afficher dans la partie de droite les informations du sportif : - nom - prénom - pseudo - date
+   * de naissance - sports.
+   * 
+   * @param sportif : pseudo du sportif à afficher
+   */
+  public void afficherInformationSportif(String sportif) {
+    information.setVisible(true);
+    pseudo.setText(sportif);
+    nom.setText(Main.facade.obtenirNomSportif(sportif));
+    prenom.setText(Main.facade.obtenirPrenomSportif(sportif));
+    Calendar date = Main.facade.obtenirDateDeNaissanceSportif(sportif);
+    dateDeNaissance.setText(date.get(Calendar.DAY_OF_MONTH) + " / " + date.get(Calendar.MONTH)
+        + " / " + date.get(Calendar.YEAR));
+    // sports.setText(Main.facade.consulterLesActivitesDuSportif(sportif.getText()).toString());
   }
 
   /**
@@ -152,16 +180,27 @@ public class SportifController implements Initializable {
 
     PopUp popup = new PopUp(root, "Modification du sportif");
     popup.display();
+
+    sportif = Main.facade.obtenirListeSportif();
+    if (sportif == null) {
+      sportif = new ArrayList<String>();
+    }
+    this.remplirListe();
+    information.setVisible(false);
   }
 
   /**
    * Supprime un sportif de la liste.
    *
    * @param nom : nom du sportif à supprimer
-   * @param hb : HBox à supprimer de la liste view
    */
-  public void supprimer(String nom, HBox hb) {
-    sportif.remove(nom);
-    list.getItems().remove(hb);
+  public void supprimer(String nom) {
+    Main.facade.supprimerUnSportif(nom);
+    sportif = Main.facade.obtenirListeSportif();
+    if (sportif == null) {
+      sportif = new ArrayList<String>();
+    }
+    this.remplirListe();
+    information.setVisible(false);
   }
 }

@@ -1,15 +1,17 @@
 package ihm;
 
+import fonctionnalite.Facade;
 import java.io.IOException;
 import java.net.URL;
-
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
+  public static Facade facade = new Facade();
+  
   public static void main(String[] args) {
     launch(args);
   }

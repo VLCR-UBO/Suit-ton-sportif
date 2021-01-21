@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import fonctionnalite.GestionSportif;
 import fonctionnalite.Sportif;
 import java.util.Calendar;
-import java.util.Date;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,10 +52,10 @@ public class GestionSportifTest {
     assertFalse(gestion.ajouterSportif("Ondra", "Adam", "adam4", "coucou", null));
 
     // avec un attribut vide
-    assertFalse(gestion.ajouterSportif("", "Adam", "adam1", "coucou", date));
-    assertFalse(gestion.ajouterSportif("Ondra", "", "adam2", "coucou", date));
+    assertFalse(gestion.ajouterSportif("", "Adam", "adam5", "coucou", date));
+    assertFalse(gestion.ajouterSportif("Ondra", "", "adam6", "coucou", date));
     assertFalse(gestion.ajouterSportif("Ondra", "Adam", "", "coucou", date));
-    assertFalse(gestion.ajouterSportif("Ondra", "Adam", "adam3", "", date));
+    assertFalse(gestion.ajouterSportif("Ondra", "Adam", "adam7", "", date));
 
     // Si le pseudo existe deja
     assertFalse(
@@ -70,6 +69,11 @@ public class GestionSportifTest {
     assertFalse(gestion.supprimerSportif("KimYahin"));
     // supprimer un sportif qui à deja été supprimer
     assertFalse(gestion.supprimerSportif("quarta"));
+    //ajout de quarta pour à nouveau le supprimer
+    Calendar date = Calendar.getInstance();
+    date.set(1999, 4, 12);
+    gestion.ajouterSportif("Quartararo", "Fabio", "quarta", "boop*&=", date);
+    assertTrue(gestion.supprimerSportif("quarta"));
   }
 
   @Test
