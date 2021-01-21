@@ -19,7 +19,6 @@ public class Questionnaire {
   public Questionnaire(String nom, List<Question> lesQuestions) {
     this.nomQuestionnaire = nom;
     this.listeDeQuestions = lesQuestions;
-
   }
 
   /**
@@ -31,7 +30,6 @@ public class Questionnaire {
   public Questionnaire(String nom) {
     this.nomQuestionnaire = nom;
     this.listeDeQuestions = new ArrayList<Question>();
-
   }
 
   /**
@@ -43,11 +41,19 @@ public class Questionnaire {
    */
   public boolean ajouterQuestionBooleene(String intitule, boolean defaut) {
     boolean ret = false;
-    QuestionBoolenne questionBool = new QuestionBoolenne(intitule, defaut);
-    if (!this.listeDeQuestions.contains(questionBool)) {
-      this.listeDeQuestions.add(questionBool);
-      ret = true;
-
+    if (intitule != null && intitule.length() > 0) {
+      List<Question> l = getListeDeQuestions();
+      int taille = l.size();
+      for (int i = 0; i < taille; i++) {
+        if (l.get(i).getIntituleQuestion().equals(intitule)) {
+          return ret; // question avec le même intitulé déjà present
+        }
+      }
+      QuestionBoolenne questionBool = new QuestionBoolenne(intitule, defaut);
+      if (!this.listeDeQuestions.contains(questionBool)) {
+        this.listeDeQuestions.add(questionBool);
+        ret = true;
+      }
     }
     return ret;
   }
@@ -62,26 +68,25 @@ public class Questionnaire {
    */
   public boolean modifierQuestionBooleene(String ancienIntitule, String nouveauIntitule,
       boolean defaut) {
+    if (ancienIntitule == null || ancienIntitule.length() < 1 || nouveauIntitule == null
+        || nouveauIntitule.length() < 1) {
+      return false; // paramètres incorrect
+    }
     Iterator<Question> questionIterator = listeDeQuestions.iterator();
     Question question;
     QuestionBoolenne questionBool;
-    boolean verif = false;
     boolean ret = false;
 
     while (questionIterator.hasNext() && (!ret)) {
       question = questionIterator.next();
-
       if ((question instanceof QuestionBoolenne)
           && (question.getIntituleQuestion() == ancienIntitule)) {
         this.listeDeQuestions.remove(question);
-        if (verif) {
-          questionBool = (QuestionBoolenne) question;
-          questionBool.setIntituleQuestion(nouveauIntitule);
-          questionBool.setReponseQuestion(defaut);
-          this.listeDeQuestions.add(questionBool);
-          ret = true;
-
-        }
+        questionBool = (QuestionBoolenne) question;
+        questionBool.setIntituleQuestion(nouveauIntitule);
+        questionBool.setReponseQuestion(defaut);
+        this.listeDeQuestions.add(questionBool);
+        ret = true;
       }
     }
     return ret;

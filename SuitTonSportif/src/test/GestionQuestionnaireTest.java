@@ -68,7 +68,7 @@ public class GestionQuestionnaireTest {
         "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
     assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() > 0,
         "TestGestionQuestionnaire : Le questionnaire n'a pas été ajouté à la liste");
-    // La cas de doublons est t-il gérer ?
+    // Le cas de doublons est t-il gérer ?
     assertFalse(gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions),
         "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() > 1,
@@ -186,7 +186,7 @@ public class GestionQuestionnaireTest {
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() == 0,
         "TestGestionQuestionnaire : Le questionnaire a été supprimer de la liste");
-    // La suppression est t-elle arreté si l'intitulé est une chaine vide ?
+ // La suppression est t-elle arreté si l'intitulé est vide ?
     assertFalse(gestionQuestionnaire.supprimerQuestionnaire(""),
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() == 0,
