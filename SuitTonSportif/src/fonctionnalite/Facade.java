@@ -27,6 +27,8 @@ public class Facade {
     gestionQuestionnaire = new GestionQuestionnaire();
   }
 
+  // Pour Chiara
+
   /**
    * Cette méthode renvoie la liste des sportifs.
    * 
@@ -201,4 +203,126 @@ public class Facade {
     return ret;
   }
 
+  // Pour Alex
+
+  /**
+   * Cette méthode retourne la liste des questions correspondante au à l'intitulé de questionnaire
+   * fourni en paramètre.
+   * 
+   * @param nomQuestionnaire : Chaine non null et non vide qui permet l'identification d'un sportif
+   *        de manière unique.
+   * @return la liste des questions correspondante, ou null en cas de problème.
+   */
+  public List<String> consulterLesQuestionDuQuestionnaire(String nomQuestionnaire) {
+    if (gestionQuestionnaire == null) {
+      return null;
+    }
+    List<String> ret = new ArrayList<String>();
+    List<Question> l =
+        gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire).getListeDeQuestions();
+    int taille = l.size();
+    for (int i = 0; i < taille; i++) {
+      ret.add(l.get(i).getIntituleQuestion());
+    }
+    return ret;
+  }
+
+  /**
+   * Cette méthode permet l'ajout du questionnaire qui à pour intitulé le paramètre
+   * "nomQuestionnaire". Celui-ci sera crée avec la liste de questions fourni.
+   * 
+   * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire.
+   * @param questions : la liste de string utilisée pour créée les questions.
+   * @return true si la demande c'est bien déroulé, false sinon.
+   */
+  public boolean ajouterUnQuestionnaire(String nomQuestionnaire, List<String> questions) {
+    if (gestionQuestionnaire == null) {
+      return false;
+    }
+    return gestionQuestionnaire.ajouterQuestionnaire(nomQuestionnaire, questions);
+  }
+
+  /**
+   * Une méthode pour modifier un questionnaire depuis une liste de string utilisée pour créée le
+   * nouveau questionnaire. Le questionnaire est identifié avec son nom.
+   * 
+   * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire.
+   * @param questions : la liste de string utilisée pour créée les questions.
+   * @return true si la demande c'est bien déroulé, false sinon.
+   */
+  public boolean modifierUnQuestionnaire(String nomQuestionnaire, List<String> questions) {
+    if (gestionQuestionnaire == null) {
+      return false;
+    }
+    return gestionQuestionnaire.modifierQuestionnaire(nomQuestionnaire, questions);
+  }
+
+  /**
+   * Cette méthode permet la suppression du questionnaire passez en paramètre.
+   * 
+   * @param nomQuestionnaire : L'identifiant unique du questionnaire à supprimer.
+   * @return true si la demande c'est bien passé, false sinon.
+   */
+  public boolean supprimerUnQuestionnaire(String nomQuestionnaire) {
+    if (gestionQuestionnaire == null) {
+      return false;
+    }
+    return gestionQuestionnaire.supprimerQuestionnaire(nomQuestionnaire);
+  }
+
+  /**
+   * Cette méthode permet l'ajout d'une question, avec l'intitulé fourni pour identifiant, au
+   * questionnaire cible également fourni en paramètre.
+   * 
+   * @param nomQuestionnaire : L'identifiant unique du questionnaire.
+   * @param intitule : L'identifiant unique de la question.
+   * @return true si la demande c'est bien passez, false sinon.
+   */
+  public boolean ajouterUneQuestion(String nomQuestionnaire, String intitule) {
+    if (gestionQuestionnaire == null) {
+      return false;
+    }
+    return gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire)
+        .ajouterQuestionBooleene(intitule, false);
+  }
+
+  /**
+   * Cette méthode permet la modification d'une question présent de le questionnaire cible, la
+   * question est identifié avec l'ancienIntitule, et celle-ci va être modifié avec les autres
+   * paramètres fourni.
+   * 
+   * @param nomQuestionnaire : L'identifiant unique du questionnaire.
+   * @param ancienIntitule : L'identifiant unique de la question.
+   * @param nouveauIntitule : Le nouveau identifiant unique de la question.
+   * @param valeur : La nouvelle valeur de la reponse.
+   * @return true si la demande c'est bien passez, false sinon.
+   */
+  public boolean modifierUneQuestion(String nomQuestionnaire, String ancienIntitule,
+      String nouveauIntitule, boolean valeur) {
+    if (gestionQuestionnaire == null) {
+      return false;
+    }
+    return gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire)
+        .modifierQuestionBooleene(ancienIntitule, nouveauIntitule, valeur);
+  }
+
+  /**
+   * Cette méthode permet la suppression d'une question présent dans le questionnaire cible. La
+   * question est identifié avec l'intitulé de la question fourni en paramètre.
+   * 
+   * @param nomQuestionnaire : L'identifiant unique du questionnaire.
+   * @param intitule : L'identifiant unique de la question.
+   * @return true si la demande c'est bien passez, false sinon.
+   */
+  public boolean supprimerUneQuestion(String nomQuestionnaire, String intitule) {
+    if (gestionQuestionnaire == null) {
+      return false;
+    }
+    return gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire)
+        .supprimerQuestion(intitule);
+  }
+
+
+
 }
+
