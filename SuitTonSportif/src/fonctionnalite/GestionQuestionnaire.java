@@ -56,13 +56,17 @@ public class GestionQuestionnaire {
    * Une méthode pour modifier un questionnaire depuis une liste de string utilisée pour créée le
    * nouveau questionnaire.
    * 
-   * @param nomQuestionnaire : L'identifiant unique pour retrouver notre questionnaire
+   * @param ancienNomQuestionnaire : L'identifiant unique pour retrouver notre questionnaire
+   * @param nouveauNomQuestionnaire : Le nouvelle identifiant unique pour notre questionnaire
    * @param questions : la liste de string utilisée pour le nouveau questionnaire
    * @return : vrai si le questionnaire à été modifié, faux sinon
    */
-  public boolean modifierQuestionnaire(String ancienNomQuestionnaire, String nouveauNomQuestionnaire, List<String> questions) {
+  public boolean modifierQuestionnaire(String ancienNomQuestionnaire,
+      String nouveauNomQuestionnaire, List<String> questions) {
     boolean ret = false;
-    if (ancienNomQuestionnaire != null && ancienNomQuestionnaire.length() > 0 && nouveauNomQuestionnaire != null && nouveauNomQuestionnaire.length() > 0 && questions != null) {
+    if (ancienNomQuestionnaire != null && ancienNomQuestionnaire.length() > 0
+        && nouveauNomQuestionnaire != null && nouveauNomQuestionnaire.length() > 0
+        && questions != null) {
       List<Question> listeQuestions = new ArrayList<Question>();
       Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
       Questionnaire questionnaireVerif;

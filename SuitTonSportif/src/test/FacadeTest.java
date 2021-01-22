@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import fonctionnalite.Facade;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -326,10 +325,10 @@ public class FacadeTest {
     // Vérification de modifier un questionnaire
     Facade facade3 = new Facade();
     List<String> listeDesQuestions4 = new ArrayList<String>();
-    facade.ajouterUnQuestionnaire("azerty", listeDesQuestions4);
-    facade.ajouterUneQuestion("azerty", "Question1");
-    facade.ajouterUneQuestion("azerty", "Question2");
-    facade.ajouterUneQuestion("azerty", "Question3");
+    facade3.ajouterUnQuestionnaire("azerty", listeDesQuestions4);
+    facade3.ajouterUneQuestion("azerty", "Question1");
+    facade3.ajouterUneQuestion("azerty", "Question2");
+    facade3.ajouterUneQuestion("azerty", "Question3");
     listeDesQuestions4 = facade.consulterLesQuestionDuQuestionnaire("azerty");
 
     assertTrue(facade.modifierUnQuestionnaire("monQuestionnaire", "MonNouveauQuestionnaire",

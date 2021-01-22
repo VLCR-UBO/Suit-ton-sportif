@@ -289,7 +289,8 @@ public class Facade {
    * Une méthode pour modifier un questionnaire depuis une liste de string utilisée pour créée le
    * nouveau questionnaire. Le questionnaire est identifié avec son nom.
    * 
-   * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire.
+   * @param ancienNomQuestionnaire : L'identifiant unique du questionnaire.
+   * @param nouveauNomQuestionnaire : L'identifiant unique du nouveau questionnaire.
    * @param questions : la liste de string utilisée pour créée les questions.
    * @return true si la demande c'est bien déroulé, false sinon.
    */
