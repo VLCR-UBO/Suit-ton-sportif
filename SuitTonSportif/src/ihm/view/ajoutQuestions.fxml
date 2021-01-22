@@ -12,7 +12,7 @@
    <children>
       <VBox layoutX="5.0" layoutY="5.0" prefHeight="284.0" prefWidth="290.0" spacing="5.0">
          <children>
-            <Label text="Ajouter une question :">
+            <Label fx:id="titre" text="Titre">
                <font>
                   <Font size="18.0" />
                </font>
