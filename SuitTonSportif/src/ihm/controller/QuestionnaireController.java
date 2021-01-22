@@ -225,8 +225,6 @@ public class QuestionnaireController implements Initializable {
     Label questionnaire = (Label) selected.getChildren().get(0);
 
     questions = Main.facade.consulterLesQuestionDuQuestionnaire(questionnaire.getText());
-    System.out.println(questions);
-
 
     if (questions == null) {
       questions = new ArrayList<String>();
