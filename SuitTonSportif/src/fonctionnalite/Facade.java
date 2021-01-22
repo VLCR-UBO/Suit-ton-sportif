@@ -40,6 +40,9 @@ public class Facade {
     }
     List<String> ret = new ArrayList<String>();
     List<Sportif> l = gestionSportif.getListeDesSportifs();
+    if (l == null) {
+      return null;
+    }
     int taille = l.size();
     for (int i = 0; i < taille; i++) {
       ret.add(l.get(i).getPseudo());
@@ -58,7 +61,11 @@ public class Facade {
     if (gestionSportif == null) {
       return null;
     }
-    return gestionSportif.consulterSportif(pseudo).getNom();
+    Sportif unSportif = gestionSportif.consulterSportif(pseudo);
+    if (unSportif == null) {
+      return null;
+    }
+    return unSportif.getNom();
   }
 
   /**
@@ -72,7 +79,11 @@ public class Facade {
     if (gestionSportif == null) {
       return null;
     }
-    return gestionSportif.consulterSportif(pseudo).getPrenom();
+    Sportif unSportif = gestionSportif.consulterSportif(pseudo);
+    if (unSportif == null) {
+      return null;
+    }
+    return unSportif.getPrenom();
   }
 
   /**
@@ -86,7 +97,11 @@ public class Facade {
     if (gestionSportif == null) {
       return null;
     }
-    return gestionSportif.consulterSportif(pseudo).getDateDeNaissance();
+    Sportif unSportif = gestionSportif.consulterSportif(pseudo);
+    if (unSportif == null) {
+      return null;
+    }
+    return unSportif.getDateDeNaissance();
   }
 
   /**
@@ -160,9 +175,12 @@ public class Facade {
     if (gestionSportif == null) {
       return null;
     }
+    Sportif unSportif = gestionSportif.consulterSportif(pseudo);
+    if (unSportif == null) {
+      return null;
+    }
     List<String> ret = new ArrayList<String>();
-    List<ActiviteSportive> l =
-        gestionSportif.consulterSportif(pseudo).getListeDesActivitesSportive();
+    List<ActiviteSportive> l = unSportif.getListeDesActivitesSportive();
     int taille = l.size();
     for (int i = 0; i < taille; i++) {
       ret.add(l.get(i).name());
@@ -235,6 +253,10 @@ public class Facade {
     if (gestionQuestionnaire == null) {
       return null;
     }
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unQuestionnaire == null) {
+      return null;
+    }
     List<String> ret = new ArrayList<String>();
     List<Question> l =
         gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire).getListeDeQuestions();
@@ -300,8 +322,11 @@ public class Facade {
     if (gestionQuestionnaire == null) {
       return false;
     }
-    return gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire)
-        .ajouterQuestionBoolenne(intitule, false);
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unQuestionnaire == null) {
+      return false;
+    }
+    return unQuestionnaire.ajouterQuestionBoolenne(intitule, false);
   }
 
   /**
