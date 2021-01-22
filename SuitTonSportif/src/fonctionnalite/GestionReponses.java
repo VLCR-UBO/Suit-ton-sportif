@@ -116,4 +116,12 @@ public class GestionReponses {
     return null; // reponses absente
   }
 
+  public List<Reponses> getListeDesReponses() {
+    return listeDesReponses;
+  }
+
+  public void setListeDesReponses(List<Reponses> listeDesReponses) {
+    this.listeDesReponses = listeDesReponses;
+  }
+
 }
