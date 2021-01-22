@@ -65,7 +65,9 @@ public class QuestionnaireController implements Initializable {
 
   }
 
-  // remplir les hbox avec le nom et les bouton modifier et supprimer
+  /**
+   * remplie la liste 
+   */
   public void remplirListeQuestionnaire() {
     lignes = new ArrayList<HBox>();
     for (String nom : questionnaire) {
