@@ -56,39 +56,36 @@ public class QuestionnaireTest {
   public void modifierQuestionBoolenne() {
     questionnaire.ajouterQuestionBoolenne("Qui suis je ?", true);
     // Le fonctionnement normal fonctionne ?
-    assertTrue(questionnaire.modifierQuestionBoolenne("Qui suis je ?", "Qui est tu ?", false),
+    assertTrue(questionnaire.modifierQuestionBoolenne("Qui suis je ?", "Qui est tu ?"),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     assertTrue(
         questionnaire.getListeDeQuestions().get(1).getIntituleQuestion().equals("Qui est tu ?"),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
-    QuestionBoolenne question = (QuestionBoolenne) questionnaire.getListeDeQuestions().get(1);
-    assertFalse(question.getReponseQuestion(),
-        "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     // La modification est t-elle arreté si le nom de la question est inconnu ?
-    assertFalse(questionnaire.modifierQuestionBoolenne("Qui est la ?", "Qui etes vous ?", true),
+    assertFalse(questionnaire.modifierQuestionBoolenne("Qui est la ?", "Qui etes vous ?"),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     assertFalse(
         questionnaire.getListeDeQuestions().get(1).getIntituleQuestion().equals("Qui etes vous ?"),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     // La modification est t-elle arreté si le nom de la question est null ?
-    assertFalse(questionnaire.modifierQuestionBoolenne(null, "Qui etes vous ?", true),
+    assertFalse(questionnaire.modifierQuestionBoolenne(null, "Qui etes vous ?"),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     assertFalse(
         questionnaire.getListeDeQuestions().get(1).getIntituleQuestion().equals("Qui etes vous ?"),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     // La modification est t-elle arreté si le nom de la question est vide ?
-    assertFalse(questionnaire.modifierQuestionBoolenne("", "Qui etes vous ?", true),
+    assertFalse(questionnaire.modifierQuestionBoolenne("", "Qui etes vous ?"),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     assertFalse(
         questionnaire.getListeDeQuestions().get(1).getIntituleQuestion().equals("Qui etes vous ?"),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     // La modification est t-elle arreté si le nouveau nom de la question est null ?
-    assertFalse(questionnaire.modifierQuestionBoolenne("Qui est tu ?", null, true),
+    assertFalse(questionnaire.modifierQuestionBoolenne("Qui est tu ?", null),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     assertFalse(questionnaire.getListeDeQuestions().get(1).getIntituleQuestion().equals(null),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     // La modification est t-elle arreté si le nouveau nom de la question est vide ?
-    assertFalse(questionnaire.modifierQuestionBoolenne("Qui est tu ?", "", true),
+    assertFalse(questionnaire.modifierQuestionBoolenne("Qui est tu ?", ""),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");
     assertFalse(questionnaire.getListeDeQuestions().get(1).getIntituleQuestion().equals(""),
         "QuestionnaireTest : La modification d'une question boolenne à échouer anormalement");

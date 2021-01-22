@@ -60,16 +60,16 @@ public class GestionQuestionnaire {
    * @param questions : la liste de string utilisée pour le nouveau questionnaire
    * @return : vrai si le questionnaire à été modifié, faux sinon
    */
-  public boolean modifierQuestionnaire(String nomQuestionnaire, List<String> questions) {
+  public boolean modifierQuestionnaire(String ancienNomQuestionnaire, String nouveauNomQuestionnaire, List<String> questions) {
     boolean ret = false;
-    if (nomQuestionnaire != null && nomQuestionnaire.length() > 0 && questions != null) {
+    if (ancienNomQuestionnaire != null && ancienNomQuestionnaire.length() > 0 && nouveauNomQuestionnaire != null && nouveauNomQuestionnaire.length() > 0 && questions != null) {
       List<Question> listeQuestions = new ArrayList<Question>();
       Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
       Questionnaire questionnaireVerif;
       boolean verif = false;
       while (questionnaireIterator.hasNext() && (!verif)) {
         questionnaireVerif = questionnaireIterator.next();
-        if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+        if (questionnaireVerif.getNomQuestionnaire() == ancienNomQuestionnaire) {
           verif = true;
         }
       }
@@ -82,10 +82,10 @@ public class GestionQuestionnaire {
         questionnaireIterator = this.listeQuestionnaire.iterator();
         while (questionnaireIterator.hasNext() && (!verif)) {
           questionnaireVerif = questionnaireIterator.next();
-          if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+          if (questionnaireVerif.getNomQuestionnaire() == ancienNomQuestionnaire) {
             this.listeQuestionnaire.remove(questionnaireVerif);
             questionnaireVerif.setListeDeQuestions(listeQuestions);
-            questionnaireVerif.setNomQuestionnaire(nomQuestionnaire);
+            questionnaireVerif.setNomQuestionnaire(nouveauNomQuestionnaire);
             this.listeQuestionnaire.add(questionnaireVerif);
             ret = true;
             verif = true;

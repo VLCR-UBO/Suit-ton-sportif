@@ -290,11 +290,13 @@ public class Facade {
    * @param questions : la liste de string utilisée pour créée les questions.
    * @return true si la demande c'est bien déroulé, false sinon.
    */
-  public boolean modifierUnQuestionnaire(String nomQuestionnaire, List<String> questions) {
+  public boolean modifierUnQuestionnaire(String ancienNomQuestionnaire,
+      String nouveauNomQuestionnaire, List<String> questions) {
     if (gestionQuestionnaire == null) {
       return false;
     }
-    return gestionQuestionnaire.modifierQuestionnaire(nomQuestionnaire, questions);
+    return gestionQuestionnaire.modifierQuestionnaire(ancienNomQuestionnaire,
+        nouveauNomQuestionnaire, questions);
   }
 
   /**
@@ -337,16 +339,18 @@ public class Facade {
    * @param nomQuestionnaire : L'identifiant unique du questionnaire.
    * @param ancienIntitule : L'identifiant unique de la question.
    * @param nouveauIntitule : Le nouveau identifiant unique de la question.
-   * @param valeur : La nouvelle valeur de la reponse.
    * @return true si la demande c'est bien passez, false sinon.
    */
   public boolean modifierUneQuestion(String nomQuestionnaire, String ancienIntitule,
-      String nouveauIntitule, boolean valeur) {
+      String nouveauIntitule) {
     if (gestionQuestionnaire == null) {
       return false;
     }
-    return gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire)
-        .modifierQuestionBoolenne(ancienIntitule, nouveauIntitule, valeur);
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unQuestionnaire == null) {
+      return false;
+    }
+    return unQuestionnaire.modifierQuestionBoolenne(ancienIntitule, nouveauIntitule);
   }
 
   /**
@@ -361,8 +365,11 @@ public class Facade {
     if (gestionQuestionnaire == null) {
       return false;
     }
-    return gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire)
-        .supprimerQuestion(intitule);
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unQuestionnaire == null) {
+      return false;
+    }
+    return unQuestionnaire.supprimerQuestion(intitule);
   }
 
 

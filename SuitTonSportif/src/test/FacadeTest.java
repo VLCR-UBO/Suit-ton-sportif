@@ -228,6 +228,13 @@ public class FacadeTest {
     assertFalse(facade.supprimerUnQuestionnaire("Test"),
         "FacadeTest : La suppression d'un questionnaire échoue");
 
+    // Verification du bon dérouler de la suppression précédente
+    List<String> listeQuestionnaire2 = facade.consulterLesQuestionnaire();
+    assertEquals(listeQuestionnaire2.size(), 1,
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    assertEquals(listeQuestionnaire2.get(0), "monQuestionnaire",
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+
     // Vérification de l'ajout d'une question
     assertTrue(facade.ajouterUneQuestion("monQuestionnaire", "Question1"),
         "FacadeTest : L'ajout d'une question à échouer");
@@ -254,5 +261,68 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
     assertEquals(listeDesQuestions.get(1), "Question2",
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+
+    // cas d'erreur
+    assertNull(facade.consulterLesQuestionDuQuestionnaire(""),
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    assertNull(facade.consulterLesQuestionDuQuestionnaire(null),
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    assertNull(facade.consulterLesQuestionDuQuestionnaire("Test"),
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+
+    // Vérification de la suppression d'une question
+    assertTrue(facade.supprimerUneQuestion("monQuestionnaire", "Question1"),
+        "FacadeTest : La suppression d'une question à échouer");
+
+    // cas d'erreur
+    assertFalse(facade.supprimerUneQuestion(null, "Question2"),
+        "FacadeTest : La suppression d'une question à échouer");
+    assertFalse(facade.supprimerUneQuestion("", "Question2"),
+        "FacadeTest : La suppression d'une question à échouer");
+    assertFalse(facade.supprimerUneQuestion("Test", "Question2"),
+        "FacadeTest : La suppression d'une question à échouer");
+    assertFalse(facade.supprimerUneQuestion("monQuestionnaire", null),
+        "FacadeTest : La suppression d'une question à échouer");
+    assertFalse(facade.supprimerUneQuestion("monQuestionnaire", ""),
+        "FacadeTest : La suppression d'une question à échouer");
+    assertFalse(facade.supprimerUneQuestion("monQuestionnaire", "Question3"),
+        "FacadeTest : La suppression d'une question à échouer");
+
+    // Vérification du bon dérouler de la suppression précédente
+    List<String> listeDesQuestions2 =
+        facade.consulterLesQuestionDuQuestionnaire("monQuestionnaire");
+    assertEquals(listeDesQuestions2.size(), 1,
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    assertEquals(listeDesQuestions2.get(0), "Question2",
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+
+    // Vérification de la modification d'une question
+    assertTrue(facade.modifierUneQuestion("monQuestionnaire", "Question2", "Question1"),
+        "FacadeTest : La modification d'une question à échouer");
+    
+    // Cas d'erreur
+    assertFalse(facade.modifierUneQuestion("monQuestionnaire", "QuestionTest", "Question3"),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUneQuestion("monQuestionnaire", "", "Question3"),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUneQuestion("monQuestionnaire", null, "Question3"),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUneQuestion("", "QuestionTest", "Question3"),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUneQuestion(null, "QuestionTest", "Question3"),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUneQuestion("monQuestionnaire345", "QuestionTest", "Question3"),
+        "FacadeTest : La modification d'une question à échouer");
+    
+    // Vérification du bon dérouler de la modification précédente
+    List<String> listeDesQuestions3 =
+        facade.consulterLesQuestionDuQuestionnaire("monQuestionnaire");
+    assertEquals(listeDesQuestions3.size(), 1,
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    assertEquals(listeDesQuestions3.get(0), "Question1",
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    
+    // Vérification de modifier un questionnaire
+    
   }
 }
