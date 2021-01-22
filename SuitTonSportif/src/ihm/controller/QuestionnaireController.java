@@ -164,6 +164,15 @@ public class QuestionnaireController implements Initializable {
     list2.setItems(items2);
   }
 
+  @FXML
+  public void selectionnerQuestion(MouseEvent mouseEvent) throws IOException {
+    HBox selected2 = list2.getSelectionModel().getSelectedItem();
+    Label question = (Label) selected2.getChildren().get(0);
+    questionSelectionner = question.getText();
+
+    this.modifierQuestions(question.getText());
+  }
+
 
   /**
    * Lance la PopUp pour ajouter un questionnaire à la liste.
@@ -271,17 +280,11 @@ public class QuestionnaireController implements Initializable {
     PopUp popup = new PopUp(root, "Modification d'une question");
     popup.display();
 
-    HBox selected2 = list2.getSelectionModel().getSelectedItem();
-    Label question = (Label) selected2.getChildren().get(0);
-    questionSelectionner = question.getText();
-    System.out.println(question.getText());
-
     questionnaire = Main.facade.consulterLesQuestionDuQuestionnaire(nomSelectionner);
     if (questionnaire == null) {
       questionnaire = new ArrayList<String>();
     }
     this.remplirListQuestions();
-    information.setVisible(false);
   }
 
   /**

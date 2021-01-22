@@ -1,6 +1,8 @@
 package ihm.controller;
 
 import ihm.Main;
+import ihm.PopUp;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,11 +14,20 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class ReponseController implements Initializable {
@@ -25,7 +36,7 @@ public class ReponseController implements Initializable {
   @FXML
   private ListView<String> listQuestionnaire;
   @FXML
-  private ListView<String> listReponse;
+  private ListView<HBox> listReponse;
   @FXML
   private DatePicker date;
   @FXML
@@ -36,8 +47,10 @@ public class ReponseController implements Initializable {
   private List<String> questions;
 
   private String sportifSelectioner = null;
-  private String questionSelectionner = null;
+  public static String questionnaireSelectionner = null;
   private int semaineSelectionner = 0;
+
+  private List<HBox> lignes;
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
@@ -72,7 +85,7 @@ public class ReponseController implements Initializable {
 
   @FXML
   public void selectionQuestion(MouseEvent mouseEvent) {
-    this.questionSelectionner = listQuestionnaire.getSelectionModel().getSelectedItem();
+    questionnaireSelectionner = listQuestionnaire.getSelectionModel().getSelectedItem();
     this.afficherReponses();
   }
 
@@ -93,18 +106,63 @@ public class ReponseController implements Initializable {
    * sélectioner.
    */
   public void afficherReponses() {
-    if (this.sportifSelectioner != null && this.questionSelectionner != null
+    if (this.sportifSelectioner != null && questionnaireSelectionner != null
         && this.semaineSelectionner != 0) {
       reponse.setVisible(true);
       HashMap<String, Integer> questionsReponses = Main.facade.obtenirQuestionnaireEtReponses(
-          this.semaineSelectionner, this.sportifSelectioner, this.questionSelectionner);
+          this.semaineSelectionner, this.sportifSelectioner, questionnaireSelectionner);
       reponses = new ArrayList<String>();
       for (Map.Entry<String, Integer> mapentry : questionsReponses.entrySet()) {
         reponses.add(mapentry.getKey() + "\n" + mapentry.getValue());
       }
-      ObservableList<String> items = FXCollections.observableArrayList();
-      items.addAll(reponses);
-      listReponse.setItems(items);
+      this.remplirListeReponse();
     }
+  }
+
+  public void remplirListeReponse() {
+    // remplir les hbox avec le nom et les bouton modifier et supprimer
+    lignes = new ArrayList<HBox>();
+    for (String nom : reponses) {
+      HBox ligne = new HBox();
+      ligne.setSpacing(5);
+
+      Button modifier = new Button();
+      Image crayon = new Image(getClass().getResourceAsStream("../icon/crayon.png"));
+      ImageView image = new ImageView(crayon);
+      image.setFitWidth(20);
+      image.setPreserveRatio(true);
+      modifier.setGraphic(image);
+      modifier.getStylesheets()
+          .add(getClass().getResource("../style/listView.css").toExternalForm());
+      modifier.setOnAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent e) {
+          try {
+            modifier(nom);
+          } catch (IOException e1) {
+            e1.printStackTrace();
+          }
+        }
+      });
+
+      Label label = new Label(nom);
+      label.setPrefWidth(193);
+      ligne.getChildren().addAll(label, modifier);
+      lignes.add(ligne);
+    }
+
+    // créer la liste view avec les hbox
+    ObservableList<HBox> items = FXCollections.observableArrayList();
+    items.addAll(lignes);
+    listReponse.setItems(items);
+  }
+
+  public void modifier(String nom) throws IOException {
+    final URL fxmlUrl = getClass().getResource("../view/ajoutReponse.fxml");
+    final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+    Pane root = fxmlLoader.load();
+
+    PopUp popup = new PopUp(root, "Modification de la réponse");
+    popup.display();
   }
 }
