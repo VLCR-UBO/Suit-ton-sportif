@@ -1,9 +1,11 @@
 package ihm.controller;
 
+import ihm.Main;
 import ihm.PopUp;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -45,19 +47,27 @@ public class QuestionnaireController implements Initializable {
   private List<HBox> lignes2;
 
   public static String nomSelectionner = null;
+  public static String questionSelectionner = null;
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
     // récuperer la liste des sportif
-    questionnaire.add("1");
-    questionnaire.add("2");
-    questionnaire.add("3");
+    questionnaire = Main.facade.consulterLesQuestionnaire();
 
-    questions.add("pouet");
-    questions.add("prout");
-    questions.add("boop");
+    if (questionnaire == null) {
+      questionnaire = new ArrayList<String>();
+    }
 
-    // remplir les hbox avec le nom et les bouton modifier et supprimer
+    if (questions == null) {
+      questions = new ArrayList<String>();
+    }
+
+    this.remplirListeQuestionnaire();
+
+  }
+
+  // remplir les hbox avec le nom et les bouton modifier et supprimer
+  public void remplirListeQuestionnaire() {
     lignes = new ArrayList<HBox>();
     for (String nom : questionnaire) {
       HBox ligne = new HBox();
@@ -73,7 +83,7 @@ public class QuestionnaireController implements Initializable {
         @Override
         public void handle(ActionEvent e) {
           try {
-            modifier(nom);
+            modifierQuestionnaire(nom);
           } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -90,7 +100,7 @@ public class QuestionnaireController implements Initializable {
       supprimer.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
-          supprimer(nom, ligne);
+          supprimerQuestionnaire(nom);
         }
       });
 
@@ -98,7 +108,13 @@ public class QuestionnaireController implements Initializable {
       lignes.add(ligne);
     }
 
+    ObservableList<HBox> items = FXCollections.observableArrayList();
+    items.addAll(lignes);
+    list.setItems(items);
 
+  }
+
+  public void remplirListQuestions() {
     lignes2 = new ArrayList<HBox>();
     for (String intitule : questions) {
       HBox ligne = new HBox();
@@ -114,13 +130,14 @@ public class QuestionnaireController implements Initializable {
         @Override
         public void handle(ActionEvent e) {
           try {
-            modifier(intitule);
+            modifierQuestions(intitule);
           } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
           }
         }
       });
+
 
       Button supprimer = new Button();
       Image pbl = new Image(getClass().getResourceAsStream("../icon/poubelle.png"));
@@ -131,7 +148,7 @@ public class QuestionnaireController implements Initializable {
       supprimer.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
-          supprimer(intitule, ligne);
+          supprimerQuestions(intitule);
         }
       });
 
@@ -140,16 +157,13 @@ public class QuestionnaireController implements Initializable {
     }
 
     // créer la liste view avec les hbox
-    ObservableList<HBox> items = FXCollections.observableArrayList();
-    items.addAll(lignes);
-    list.setItems(items);
+
 
     ObservableList<HBox> items2 = FXCollections.observableArrayList();
-    System.out.println(items2);
-    System.out.println(list2);
     items2.addAll(lignes2);
     list2.setItems(items2);
   }
+
 
   /**
    * Lance la PopUp pour ajouter un questionnaire à la liste.
@@ -159,12 +173,19 @@ public class QuestionnaireController implements Initializable {
    */
   @FXML
   public void ajoutQuestionnaire(MouseEvent mouseEvent) throws IOException {
+    nomSelectionner = null;
     final URL fxmlUrl = getClass().getResource("../view/ajoutQuestionnaire.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
     PopUp popup = new PopUp(root, "Ajout d'un questionnaire");
     popup.display();
+
+    questionnaire = Main.facade.consulterLesQuestionnaire();
+    if (questionnaire == null) {
+      questionnaire = new ArrayList<String>();
+    }
+    this.remplirListeQuestionnaire();
   }
 
   /**
@@ -181,6 +202,18 @@ public class QuestionnaireController implements Initializable {
 
     PopUp popup = new PopUp(root, "Ajout d'une question");
     popup.display();
+
+    HBox selected = list.getSelectionModel().getSelectedItem();
+    Label questionnaire = (Label) selected.getChildren().get(0);
+
+    questions = Main.facade.consulterLesQuestionDuQuestionnaire(questionnaire.getText());
+    System.out.println(questions);
+
+
+    if (questions == null) {
+      questions = new ArrayList<String>();
+    }
+    this.remplirListQuestions();
   }
 
   /**
@@ -191,10 +224,21 @@ public class QuestionnaireController implements Initializable {
    */
   @FXML
   public void afficherQuestions(MouseEvent mouseEvent) {
-    information.setVisible(true);
     HBox selected = list.getSelectionModel().getSelectedItem();
     Label questionnaire = (Label) selected.getChildren().get(0);
-    nom.setText(questionnaire.getText());
+    nomSelectionner = questionnaire.getText();
+
+    this.afficherQuestions(questionnaire.getText());
+
+
+  }
+
+  public void afficherQuestions(String nom) {
+    information.setVisible(true);
+
+    questions = Main.facade.consulterLesQuestionDuQuestionnaire(nom);
+
+    this.remplirListQuestions();
   }
 
   /**
@@ -203,14 +247,41 @@ public class QuestionnaireController implements Initializable {
    * @param nom : nom du sportif à modifier
    * @throws IOException : en cas d'échec de l'ecture du fxml
    */
-  public void modifier(String nom) throws IOException {
-    nomSelectionner = nom;
+  public void modifierQuestionnaire(String nom) throws IOException {
     final URL fxmlUrl = getClass().getResource("../view/ajoutQuestionnaire.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
     PopUp popup = new PopUp(root, "Modification du questionnaire");
     popup.display();
+
+    questionnaire = Main.facade.consulterLesQuestionnaire();
+    if (questionnaire == null) {
+      questionnaire = new ArrayList<String>();
+    }
+    this.remplirListeQuestionnaire();
+    information.setVisible(false);
+  }
+
+  public void modifierQuestions(String intitule) throws IOException {
+    final URL fxmlUrl = getClass().getResource("../view/ajoutQuestions.fxml");
+    final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+    Pane root = fxmlLoader.load();
+
+    PopUp popup = new PopUp(root, "Modification d'une question");
+    popup.display();
+
+    HBox selected2 = list2.getSelectionModel().getSelectedItem();
+    Label question = (Label) selected2.getChildren().get(0);
+    questionSelectionner = question.getText();
+    System.out.println(question.getText());
+
+    questionnaire = Main.facade.consulterLesQuestionDuQuestionnaire(nomSelectionner);
+    if (questionnaire == null) {
+      questionnaire = new ArrayList<String>();
+    }
+    this.remplirListQuestions();
+    information.setVisible(false);
   }
 
   /**
@@ -219,8 +290,24 @@ public class QuestionnaireController implements Initializable {
    * @param nom : nom du sportif à supprimer
    * @param hb : HBox à supprimer de la liste view
    */
-  public void supprimer(String nom, HBox hb) {
-    questionnaire.remove(nom);
-    list.getItems().remove(hb);
+  public void supprimerQuestionnaire(String nom) {
+    Main.facade.supprimerUnQuestionnaire(nom);
+    questionnaire = Main.facade.consulterLesQuestionnaire();
+    if (questionnaire == null) {
+      questionnaire = new ArrayList<String>();
+    }
+    this.remplirListeQuestionnaire();
+    information.setVisible(false);
+  }
+
+  public void supprimerQuestions(String nom) {
+    Main.facade.supprimerUneQuestion(nomSelectionner, nom);
+    questions = Main.facade.consulterLesQuestionDuQuestionnaire(nomSelectionner);
+    if (questions == null) {
+      questions = new ArrayList<String>();
+      information.setVisible(false);
+    }
+    this.remplirListQuestions();
+
   }
 }

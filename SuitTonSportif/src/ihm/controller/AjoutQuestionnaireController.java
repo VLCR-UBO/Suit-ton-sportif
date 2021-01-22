@@ -5,25 +5,37 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import ihm.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class AjoutQuestionnaireController implements Initializable {
   @FXML
   private TextField nom;
+  @FXML
+  private Label titre;
+  @FXML
+  private ListView<HBox> list;
 
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    if (SportifController.nomSelectionner != null) {
-      nom.setText("nom");
+    if (QuestionnaireController.nomSelectionner != null) {
+      titre.setText("Modifier un questionnaire");
+
+    } else {
+      titre.setText("Ajouter un questionnaire");
     }
   }
 
@@ -35,7 +47,7 @@ public class AjoutQuestionnaireController implements Initializable {
    */
   @FXML
   public void fermerPopUp(MouseEvent mouseEvent) throws IOException {
-    SportifController.nomSelectionner = null;
+    QuestionnaireController.nomSelectionner = null;
     Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
     stage.close();
   }
@@ -48,6 +60,16 @@ public class AjoutQuestionnaireController implements Initializable {
    */
   @FXML
   public void creationQuestionnaire(MouseEvent mouseEvent) throws IOException {
+
+    ArrayList<String> questionnaire = new ArrayList<String>();
+    if (nom.getText() != null) {
+      if (QuestionnaireController.nomSelectionner != null) {
+        Main.facade.modifierUnQuestionnaire(nom.getText(), questionnaire);
+      } else {
+        Main.facade.ajouterUnQuestionnaire(nom.getText(), questionnaire);
+      }
+    }
+
     this.fermerPopUp(mouseEvent);
   }
 }

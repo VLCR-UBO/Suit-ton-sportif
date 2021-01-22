@@ -3,9 +3,11 @@ package ihm.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import ihm.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -13,12 +15,17 @@ import javafx.stage.Stage;
 public class AjoutQuestionsController implements Initializable {
   @FXML
   private TextField intitule;
+  @FXML
+  private Label titre;
 
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    if (SportifController.nomSelectionner != null) {
-      intitule.setText("intitule");
+    if (QuestionnaireController.nomSelectionner != null) {
+      titre.setText("Modifier une question");
+
+    } else {
+      titre.setText("Ajouter une question");
     }
   }
 
@@ -30,7 +37,6 @@ public class AjoutQuestionsController implements Initializable {
    */
   @FXML
   public void fermerPopUp(MouseEvent mouseEvent) throws IOException {
-    SportifController.nomSelectionner = null;
     Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
     stage.close();
   }
@@ -41,8 +47,22 @@ public class AjoutQuestionsController implements Initializable {
    * @param mouseEvent : clique de l'utilisateur
    * @throws IOException : en cas d'échec de l'ecture du fxml
    */
+
   @FXML
   public void creationQuestions(MouseEvent mouseEvent) throws IOException {
+
+    if (intitule.getText() != null) {
+      if (QuestionnaireController.nomSelectionner != null) {
+        if (QuestionnaireController.questionSelectionner != null) {
+          Main.facade.modifierUneQuestion(QuestionnaireController.nomSelectionner, QuestionnaireController.questionSelectionner, intitule.getText(), false);
+        } else {
+          Main.facade.ajouterUneQuestion(QuestionnaireController.nomSelectionner,
+              intitule.getText());
+        }
+
+      }
+    }
+
     this.fermerPopUp(mouseEvent);
   }
 }
