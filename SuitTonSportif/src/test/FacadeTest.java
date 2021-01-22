@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import fonctionnalite.Facade;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -299,7 +300,7 @@ public class FacadeTest {
     // Vérification de la modification d'une question
     assertTrue(facade.modifierUneQuestion("monQuestionnaire", "Question2", "Question1"),
         "FacadeTest : La modification d'une question à échouer");
-    
+
     // Cas d'erreur
     assertFalse(facade.modifierUneQuestion("monQuestionnaire", "QuestionTest", "Question3"),
         "FacadeTest : La modification d'une question à échouer");
@@ -313,7 +314,7 @@ public class FacadeTest {
         "FacadeTest : La modification d'une question à échouer");
     assertFalse(facade.modifierUneQuestion("monQuestionnaire345", "QuestionTest", "Question3"),
         "FacadeTest : La modification d'une question à échouer");
-    
+
     // Vérification du bon dérouler de la modification précédente
     List<String> listeDesQuestions3 =
         facade.consulterLesQuestionDuQuestionnaire("monQuestionnaire");
@@ -321,8 +322,49 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
     assertEquals(listeDesQuestions3.get(0), "Question1",
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
-    
+
     // Vérification de modifier un questionnaire
-    
+    Facade facade3 = new Facade();
+    List<String> listeDesQuestions4 = new ArrayList<String>();
+    facade.ajouterUnQuestionnaire("azerty", listeDesQuestions4);
+    facade.ajouterUneQuestion("azerty", "Question1");
+    facade.ajouterUneQuestion("azerty", "Question2");
+    facade.ajouterUneQuestion("azerty", "Question3");
+    listeDesQuestions4 = facade.consulterLesQuestionDuQuestionnaire("azerty");
+
+    assertTrue(facade.modifierUnQuestionnaire("monQuestionnaire", "MonNouveauQuestionnaire",
+        listeDesQuestions4), "FacadeTest : La modification d'une question à échouer");
+
+    // Cas d'erreur
+    assertFalse(facade.modifierUnQuestionnaire("", "MonNouveauQuestionnaire", listeDesQuestions4),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUnQuestionnaire(null, "MonNouveauQuestionnaire", listeDesQuestions4),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUnQuestionnaire("unFauxQuestionnaire", "MonNouveauQuestionnaire",
+        listeDesQuestions4), "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUnQuestionnaire("unFauxQuestionnaire", "", listeDesQuestions4),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUnQuestionnaire("monQuestionnaire", null, listeDesQuestions4),
+        "FacadeTest : La modification d'une question à échouer");
+    assertFalse(facade.modifierUnQuestionnaire("monQuestionnaire", "MonNouveauQuestionnaire", null),
+        "FacadeTest : La modification d'une question à échouer");
+
+    // Vérification de la modification précédente
+    List<String> listeDesQuestions5 =
+        facade.consulterLesQuestionDuQuestionnaire("MonNouveauQuestionnaire");
+    assertEquals(listeDesQuestions5.size(), 3,
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    assertEquals(listeDesQuestions5.get(0), "Question1",
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    assertEquals(listeDesQuestions5.get(1), "Question2",
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+    assertEquals(listeDesQuestions5.get(2), "Question3",
+        "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
+
+    // Vérification de la méthode obtenirQuestionnaireEtReponses (pas testable dans ce sprint)
+
+    // HashMap<String, Integer> map = facade.obtenirQuestionnaireEtReponses(null, "MandelaNelson",
+    // "MonNouveauQuestionnaire");
+
   }
 }

@@ -206,6 +206,9 @@ public class Facade {
     }
     Sportif unSportif = gestionSportif.consulterSportif(pseudo);
     Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unSportif == null || unQuestionnaire == null) {
+      return null;
+    }
     List<Integer> listeReponses =
         gestionReponses.consulterReponses(numeroSemaine, unSportif, unQuestionnaire);
     List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
