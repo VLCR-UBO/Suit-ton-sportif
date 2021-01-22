@@ -119,6 +119,9 @@ public class ReponseController implements Initializable {
     }
   }
 
+  /**
+   * remplie la liste view avec la liste des réponses.
+   */
   public void remplirListeReponse() {
     // remplir les hbox avec le nom et les bouton modifier et supprimer
     lignes = new ArrayList<HBox>();
@@ -157,6 +160,11 @@ public class ReponseController implements Initializable {
     listReponse.setItems(items);
   }
 
+  /**
+   * permet de modifier une reponse a une question.
+   * @param nom : nom de la question
+   * @throws IOException : : en cas d'échec de l'ecture du fxml
+   */
   public void modifier(String nom) throws IOException {
     final URL fxmlUrl = getClass().getResource("../view/ajoutReponse.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);

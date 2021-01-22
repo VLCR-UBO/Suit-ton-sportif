@@ -50,7 +50,7 @@ public class QuestionnaireController implements Initializable {
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    // récuperer la liste des sportif
+
     questionnaire = Main.facade.consulterLesQuestionnaire();
 
     if (questionnaire == null) {
@@ -65,7 +65,10 @@ public class QuestionnaireController implements Initializable {
 
   }
 
-  // remplir les hbox avec le nom et les bouton modifier et supprimer
+  /**
+   * remplie la liste view avec les questionnaires.
+   * ainsi que les boutons modifier et supprimer pour chaque questionnaire.
+   */
   public void remplirListeQuestionnaire() {
     lignes = new ArrayList<HBox>();
     for (String nom : questionnaire) {
@@ -113,6 +116,10 @@ public class QuestionnaireController implements Initializable {
 
   }
 
+  /**
+   * remplie la liste view avec les questions.
+   * ainsi que les boutons modifier et supprimer pour chaque question.
+   */
   public void remplirListQuestions() {
     lignes2 = new ArrayList<HBox>();
     for (String intitule : questions) {
@@ -163,6 +170,9 @@ public class QuestionnaireController implements Initializable {
     list2.setItems(items2);
   }
 
+  /**
+   * permet de selectionner la question sur lequel l'utilisateur clique.
+   */
   @FXML
   public void selectionnerQuestion(MouseEvent mouseEvent) throws IOException {
     HBox selected2 = list2.getSelectionModel().getSelectedItem();
@@ -225,8 +235,7 @@ public class QuestionnaireController implements Initializable {
   }
 
   /**
-   * Afficher dans la partie de droite les informations du sportif : - nom - prénom - pseudo - date
-   * de naissance - sports.
+   * Afficher dans la partie de droite les questions relie a un questionnaire.
    *
    * @param mouseEvent : clique de l'utilisateur
    */
@@ -243,6 +252,7 @@ public class QuestionnaireController implements Initializable {
 
   /**
    * Affiche les questions correspondantes au questionnaire.
+   *
    * @param nom : nom du questionanire
    */
   public void afficherQuestions(String nom) {
@@ -254,7 +264,7 @@ public class QuestionnaireController implements Initializable {
   }
 
   /**
-   * Ouvre la PopUp pour modifier les infos du sportif.
+   * Ouvre la PopUp pour modifier le nom du questionnaire.
    *
    * @param nom : nom du sportif à modifier
    * @throws IOException : en cas d'échec de l'ecture du fxml
@@ -281,7 +291,8 @@ public class QuestionnaireController implements Initializable {
   }
 
   /**
-   * Mofdifie le nom d'une question.
+   * permet de modifier une question.
+   *
    * @param intitule : nom de la question à modfier
    * @throws IOException : si la popup s'ouvre pas
    */
@@ -309,9 +320,9 @@ public class QuestionnaireController implements Initializable {
   }
 
   /**
-   * Supprime un sportif de la liste.
+   * Supprime un questionnaire de la liste.
    *
-   * @param nom : nom du sportif à supprimer
+   * @param nom : nom du questionnaire à supprimer
    */
   public void supprimerQuestionnaire(String nom) {
     Main.facade.supprimerUnQuestionnaire(nom);
@@ -324,7 +335,8 @@ public class QuestionnaireController implements Initializable {
   }
 
   /**
-   * Supprime une questiond de la liste.
+   * Supprime une question de la liste.
+   *
    * @param nom : intitule de la question
    */
   public void supprimerQuestions(String nom) {

@@ -42,7 +42,7 @@ public class AjoutQuestionsController implements Initializable {
   }
 
   /**
-   * Creer un sportif grâce aux informations saisie par l'utilisateur, puis ferme la PopUp.
+   * Creer une question grâce aux informations saisie par l'utilisateur, puis ferme la PopUp.
    *
    * @param mouseEvent : clique de l'utilisateur
    * @throws IOException : en cas d'échec de l'ecture du fxml

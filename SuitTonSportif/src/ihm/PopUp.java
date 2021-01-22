@@ -10,12 +10,17 @@ public class PopUp {
   private Scene scene;
   private Stage popup;
 
+  /**
+   *création d'une popup afin d'ajouter, modifier une question, un questionnaire ou une réponse.
+   * @param p : emplacement du popup
+   * @param titre : titre du popup
+   */
   public PopUp(Parent p, String titre) {
     popup = new Stage();
     popup.setTitle(titre);
     popup.initModality(Modality.NONE);
     popup.initStyle(StageStyle.UNDECORATED);
-    
+
     scene = new Scene(p);
 
     /*popup.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {

@@ -1,8 +1,8 @@
 package ihm.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import ihm.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -27,6 +27,12 @@ public class AjoutReponseController implements Initializable {
     question.setText(ReponseController.questionnaireSelectionner);
   }
 
+  /**
+   * Supprime un sportif de la liste.
+   *
+   * @param mouseEvent : clique de l'utilisateur
+   * @throws IOException : en cas d'échec de l'ecture du fxml
+   */
   @FXML
   public void fermerPopUp(MouseEvent mouseEvent) {
     ReponseController.questionnaireSelectionner = null;
