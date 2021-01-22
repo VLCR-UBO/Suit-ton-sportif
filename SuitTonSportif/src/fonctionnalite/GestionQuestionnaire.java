@@ -13,8 +13,6 @@ public class GestionQuestionnaire {
    */
   public GestionQuestionnaire() {
     this.setListeQuestionnaire(new ArrayList<Questionnaire>());
-
-
   }
 
   /**

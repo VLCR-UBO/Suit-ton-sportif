@@ -329,7 +329,7 @@ public class FacadeTest {
     facade3.ajouterUneQuestion("azerty", "Question1");
     facade3.ajouterUneQuestion("azerty", "Question2");
     facade3.ajouterUneQuestion("azerty", "Question3");
-    listeDesQuestions4 = facade.consulterLesQuestionDuQuestionnaire("azerty");
+    listeDesQuestions4 = facade3.consulterLesQuestionDuQuestionnaire("azerty");
 
     assertTrue(facade.modifierUnQuestionnaire("monQuestionnaire", "MonNouveauQuestionnaire",
         listeDesQuestions4), "FacadeTest : La modification d'une question à échouer");
