@@ -1,18 +1,13 @@
 package ihm.controller;
 
+import ihm.Main;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
-import ihm.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -33,7 +28,7 @@ public class AjoutQuestionnaireController implements Initializable {
   public void initialize(URL arg0, ResourceBundle arg1) {
     if (QuestionnaireController.nomSelectionner != null) {
       titre.setText("Modifier un questionnaire");
-
+      nom.setText(QuestionnaireController.nomSelectionner);
     } else {
       titre.setText("Ajouter un questionnaire");
     }
@@ -64,7 +59,8 @@ public class AjoutQuestionnaireController implements Initializable {
     ArrayList<String> questionnaire = new ArrayList<String>();
     if (nom.getText() != null) {
       if (QuestionnaireController.nomSelectionner != null) {
-        Main.facade.modifierUnQuestionnaire(nom.getText(), questionnaire);
+        Main.facade.modifierUnQuestionnaire(QuestionnaireController.nomSelectionner, nom.getText(),
+            QuestionnaireController.questions);
       } else {
         Main.facade.ajouterUnQuestionnaire(nom.getText(), questionnaire);
       }
