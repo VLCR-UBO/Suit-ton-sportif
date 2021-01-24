@@ -14,17 +14,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -36,7 +34,7 @@ public class ReponseController implements Initializable {
   @FXML
   private ListView<String> listQuestionnaire;
   @FXML
-  private ListView<HBox> listReponse;
+  private ListView<VBox> listReponse;
   @FXML
   private DatePicker date;
   @FXML
@@ -50,7 +48,7 @@ public class ReponseController implements Initializable {
   public static String questionnaireSelectionner = null;
   private int semaineSelectionner = 0;
 
-  private List<HBox> lignes;
+  private List<VBox> lignes;
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
@@ -113,7 +111,7 @@ public class ReponseController implements Initializable {
           this.semaineSelectionner, this.sportifSelectioner, questionnaireSelectionner);
       reponses = new ArrayList<String>();
       for (Map.Entry<String, Integer> mapentry : questionsReponses.entrySet()) {
-        reponses.add(mapentry.getKey() + "\n" + mapentry.getValue());
+        reponses.add(mapentry.getKey());
       }
       this.remplirListeReponse();
     }
@@ -124,38 +122,27 @@ public class ReponseController implements Initializable {
    */
   public void remplirListeReponse() {
     // remplir les hbox avec le nom et les bouton modifier et supprimer
-    lignes = new ArrayList<HBox>();
+    lignes = new ArrayList<VBox>();
     for (String nom : reponses) {
-      HBox ligne = new HBox();
+      VBox ligne = new VBox();
       ligne.setSpacing(5);
 
-      Button modifier = new Button();
-      Image crayon = new Image(getClass().getResourceAsStream("../icon/crayon.png"));
-      ImageView image = new ImageView(crayon);
-      image.setFitWidth(20);
-      image.setPreserveRatio(true);
-      modifier.setGraphic(image);
-      modifier.getStylesheets()
-          .add(getClass().getResource("../style/listView.css").toExternalForm());
-      modifier.setOnAction(new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent e) {
-          try {
-            modifier(nom);
-          } catch (IOException e1) {
-            e1.printStackTrace();
-          }
-        }
-      });
-
+      ToggleGroup rep = new ToggleGroup();
+      RadioButton oui  = new RadioButton("Oui");
+      RadioButton non  = new RadioButton("Non");
+      oui.setToggleGroup(rep);
+      non.setToggleGroup(rep);
+      HBox hb = new HBox();
+      hb.setSpacing(10);
+      hb.getChildren().addAll(oui, non);
+      hb.setAlignment(Pos.CENTER);
       Label label = new Label(nom);
-      label.setPrefWidth(193);
-      ligne.getChildren().addAll(label, modifier);
+      ligne.getChildren().addAll(label, hb);
       lignes.add(ligne);
     }
 
     // créer la liste view avec les hbox
-    ObservableList<HBox> items = FXCollections.observableArrayList();
+    ObservableList<VBox> items = FXCollections.observableArrayList();
     items.addAll(lignes);
     listReponse.setItems(items);
   }
@@ -172,5 +159,23 @@ public class ReponseController implements Initializable {
 
     PopUp popup = new PopUp(root, "Modification de la réponse");
     popup.display();
+  }
+  
+  /**
+   * Enregistre les réponses aux questions.
+   * @param mouseEvent : clique sur le bouton
+   */
+  @FXML
+  public void enregistrer(MouseEvent mouseEvent) {
+    
+  }
+  
+  /**
+   * Reinitialise les réponses à leur dernier état enregistrer.
+   * @param mouseEvent : clique sur le bouton
+   */
+  @FXML
+  public void reinitialiser(MouseEvent mouseEvent) {
+    
   }
 }

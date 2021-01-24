@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -38,14 +39,20 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="reponse" prefHeight="368.0" prefWidth="245.0" visible="false">
+            <VBox fx:id="reponse" prefHeight="368.0" prefWidth="245.0" spacing="5.0" visible="false">
                <children>
                   <Label text="Réponses :">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ListView fx:id="listReponse" onMouseClicked="#selectionSportif" prefHeight="311.0" prefWidth="245.0" />
+                  <ListView fx:id="listReponse" onMouseClicked="#selectionSportif" prefHeight="289.0" prefWidth="245.0" />
+                  <HBox prefHeight="26.0" prefWidth="245.0" spacing="5.0">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#enregistrer" prefHeight="26.0" prefWidth="126.0" text="Enregistrer" />
+                        <Button mnemonicParsing="false" onMouseClicked="#reinitialiser" prefHeight="26.0" prefWidth="126.0" text="Reinitialiser" />
+                     </children>
+                  </HBox>
                </children></VBox>
          </children>
       </HBox>

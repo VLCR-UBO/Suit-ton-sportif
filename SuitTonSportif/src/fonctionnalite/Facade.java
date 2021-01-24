@@ -211,6 +211,9 @@ public class Facade {
     }
     List<Integer> listeReponses =
         gestionReponses.consulterReponses(numeroSemaine, unSportif, unQuestionnaire);
+    if (listeReponses == null) {
+      return null;
+    }
     List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
     int taille = listeReponses.size();
     if (taille != listeQuestions.size()) { // Problème
