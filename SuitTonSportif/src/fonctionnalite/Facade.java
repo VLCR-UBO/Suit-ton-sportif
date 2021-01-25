@@ -240,6 +240,19 @@ public class Facade {
     return ret;
   }
 
+  /**
+   * Cette méthode permet de modifier ou d'ajouter les reponses pour un sportif, un questionnnaire,
+   * et un numéro de semaine précis. Si lors de la modification, l'élément n'existe pas, cette
+   * méthode va essayer d'ajouter une liste de réponses avec les paramètres qui lui sont fourni.
+   * Sinon elle va se contenter de la modifier.
+   * 
+   * @param date : Il s'agit de la date de la dernière modification de la liste de reponses.
+   * @param numeroSemaine : Contient le numéro de la semaine ou l'élément à été crée.
+   * @param listeReponses : Cette liste de Integer est la liste des reponses à un questionnaire.
+   * @param pseudo : Ces réponses correspondent à ce sportif.
+   * @param nomQuestionnaire : Ces réponses correspondent à ce questionnaire.
+   * @return
+   */
   public boolean modifierReponses(Date date, String pseudo, String nomQuestionnaire,
       List<Integer> listeReponses, Integer numeroSemaine) {
     if (gestionReponses == null || gestionQuestionnaire == null || gestionSportif == null) {
