@@ -68,7 +68,7 @@ public class GestionReponses {
    * @param listeReponses : Cette liste de Integer est la liste des reponses � un questionnaire.
    * @param unSportif : Ces r�ponses correspondent � ce sportif.
    * @param unQuestionnaire : Ces r�ponses correspondent � ce questionnaire.
-   * @return Retourne true si la reponses � �t� modifi�e, false sinon.
+   * @return Retourne 1 si la reponses est modifié, 0 s'il elle n'a pas été trouvé, -1 sinon.
    */
   public boolean modifierReponses(Integer numeroSemaine, Date date, Sportif unSportif,
       Questionnaire unQuestionnaire, List<Integer> listeReponses) {
@@ -84,6 +84,9 @@ public class GestionReponses {
           && this.listeDesReponses.get(i).getNumeroSemaine() == numeroSemaine) {
         maReponse = this.listeDesReponses.get(i);
       }
+    }
+    if (maReponse == null) {
+      return false;
     }
     maReponse.setDate(date);
     maReponse.setListeReponses(listeReponses);

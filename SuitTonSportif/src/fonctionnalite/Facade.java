@@ -2,6 +2,7 @@ package fonctionnalite;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -237,6 +238,26 @@ public class Facade {
       }
     }
     return ret;
+  }
+
+  public boolean modifierReponses(Date date, String pseudo, String nomQuestionnaire,
+      List<Integer> listeReponses, Integer numeroSemaine) {
+    if (gestionReponses == null || gestionQuestionnaire == null || gestionSportif == null) {
+      return false;
+    }
+    Sportif unSportif = gestionSportif.consulterSportif(pseudo);
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unSportif == null || unQuestionnaire == null) {
+      return false;
+    }
+    // On procède à la modification
+    boolean modification = gestionReponses.modifierReponses(numeroSemaine, date, unSportif,
+        unQuestionnaire, listeReponses);
+    if (modification == true) {
+      return true;
+    }
+    // Il s'agit donc d'un ajout
+    return gestionReponses.ajouterReponses(date, unSportif, unQuestionnaire, listeReponses);
   }
 
   /**
