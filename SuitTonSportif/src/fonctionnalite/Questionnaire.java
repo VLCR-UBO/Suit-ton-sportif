@@ -65,7 +65,7 @@ public class Questionnaire {
    * @param nouveauIntitule : le nouvel intitulé.
    * @return : vrai si la question à été modifiée, faux sinon
    */
-  public boolean modifierQuestionBoolenne(String ancienIntitule, String nouveauIntitule) {
+  public boolean modifierQuestionBoolenne(String ancienIntitule, String nouveauIntitule, boolean defaut) {
     if (ancienIntitule == null || ancienIntitule.length() < 1 || nouveauIntitule == null
         || nouveauIntitule.length() < 1) {
       return false; // paramètres incorrect
@@ -74,7 +74,6 @@ public class Questionnaire {
     Question question;
     QuestionBoolenne questionBool;
     boolean ret = false;
-
     while (questionIterator.hasNext() && (!ret)) {
       question = questionIterator.next();
       if ((question instanceof QuestionBoolenne)
@@ -82,6 +81,7 @@ public class Questionnaire {
         this.listeDeQuestions.remove(question);
         questionBool = (QuestionBoolenne) question;
         questionBool.setIntituleQuestion(nouveauIntitule);
+        questionBool.setReponseQuestion(defaut);
         this.listeDeQuestions.add(questionBool);
         ret = true;
       }

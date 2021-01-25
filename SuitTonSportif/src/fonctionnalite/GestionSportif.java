@@ -77,7 +77,8 @@ public class GestionSportif {
   /**
    * Cette m�thode permet de modifier les informations d'un sportif, celui-ci est identifi� avec le
    * param�tre ancienPseudo. Les informations de ce sportif sont modifi� avec les autres param�tres
-   * fourni. Une valeur boolean sera retourn�e : true si le sportif � �t� modifi�, false sinon.
+   * fourni. Si le nouveau pseudo existe déjà, la modification sera annulé. Une valeur boolean sera
+   * retourn�e : true si le sportif � �t� modifi�, false sinon.
    * 
    * @param ancienPseudo : Chaine de caract�res non null et non vide qui permet l'identification du
    *        sportif.

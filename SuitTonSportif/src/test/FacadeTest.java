@@ -297,21 +297,22 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
 
     // Vérification de la modification d'une question
-    assertTrue(facade.modifierUneQuestion("monQuestionnaire", "Question2", "Question1"),
+    assertTrue(facade.modifierUneQuestion("monQuestionnaire", "Question2", "Question1", true),
         "FacadeTest : La modification d'une question à échouer");
 
     // Cas d'erreur
-    assertFalse(facade.modifierUneQuestion("monQuestionnaire", "QuestionTest", "Question3"),
+    assertFalse(facade.modifierUneQuestion("monQuestionnaire", "QuestionTest", "Question3", true),
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion("monQuestionnaire", "", "Question3"),
+    assertFalse(facade.modifierUneQuestion("monQuestionnaire", "", "Question3", true),
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion("monQuestionnaire", null, "Question3"),
+    assertFalse(facade.modifierUneQuestion("monQuestionnaire", null, "Question3", true),
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion("", "QuestionTest", "Question3"),
+    assertFalse(facade.modifierUneQuestion("", "QuestionTest", "Question3", true),
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion(null, "QuestionTest", "Question3"),
+    assertFalse(facade.modifierUneQuestion(null, "QuestionTest", "Question3", true),
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion("monQuestionnaire345", "QuestionTest", "Question3"),
+    assertFalse(
+        facade.modifierUneQuestion("monQuestionnaire345", "QuestionTest", "Question3", true),
         "FacadeTest : La modification d'une question à échouer");
 
     // Vérification du bon dérouler de la modification précédente

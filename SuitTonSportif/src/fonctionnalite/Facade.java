@@ -190,7 +190,8 @@ public class Facade {
 
   /**
    * Cette méthode retourne un objet HashMap contenant chaque intitulé de question et, pour chaque
-   * intitulé de question, la réponse correspondante en valeur numérique.
+   * intitulé de question, la réponse correspondante en valeur numérique. S'il trouve la liste de
+   * question mais pas les réponses correpondante, on va aller chercher les réponses par défaut.
    * 
    * @param numeroSemaine : Le numéro correspondant à la semaine de création de ce questionnaire.
    * @param pseudo : Chaine non null et non vide qui permet l'identification d'un sportif de manière
@@ -211,18 +212,29 @@ public class Facade {
     }
     List<Integer> listeReponses =
         gestionReponses.consulterReponses(numeroSemaine, unSportif, unQuestionnaire);
-    if (listeReponses == null) {
-      return null;
-    }
-    List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
-    int taille = listeReponses.size();
-    if (taille != listeQuestions.size()) { // Problème
-      return null;
-    }
 
     HashMap<String, Integer> ret = new HashMap<String, Integer>();
-    for (int i = 0; i < taille; i++) {
-      ret.put(listeQuestions.get(i).getIntituleQuestion(), listeReponses.get(i));
+    List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
+    int taille = listeQuestions.size();
+    if (listeReponses == null) { // Pas de reponses -> On va chercher les reponses par défaut
+      Integer reponseQuestion;
+      boolean reponse;
+      for (int i = 0; i < taille; i++) {
+        reponse = ((QuestionBoolenne) listeQuestions.get(i)).getReponseQuestion();
+        if (reponse == false) {
+          reponseQuestion = 0;
+        } else {
+          reponseQuestion = 1;
+        }
+        ret.put(listeQuestions.get(i).getIntituleQuestion(), reponseQuestion);
+      }
+    } else {
+      if (taille != listeReponses.size()) { // Problème
+        return null;
+      }
+      for (int i = 0; i < taille; i++) {
+        ret.put(listeQuestions.get(i).getIntituleQuestion(), listeReponses.get(i));
+      }
     }
     return ret;
   }
@@ -349,7 +361,7 @@ public class Facade {
    * @return true si la demande c'est bien passez, false sinon.
    */
   public boolean modifierUneQuestion(String nomQuestionnaire, String ancienIntitule,
-      String nouveauIntitule) {
+      String nouveauIntitule, boolean defaut) {
     if (gestionQuestionnaire == null) {
       return false;
     }
@@ -357,7 +369,7 @@ public class Facade {
     if (unQuestionnaire == null) {
       return false;
     }
-    return unQuestionnaire.modifierQuestionBoolenne(ancienIntitule, nouveauIntitule);
+    return unQuestionnaire.modifierQuestionBoolenne(ancienIntitule, nouveauIntitule, defaut);
   }
 
   /**
