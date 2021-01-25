@@ -54,7 +54,7 @@ public class AjoutQuestionsController implements Initializable {
     if (intitule.getText() != null) {
       if (QuestionnaireController.questionSelectionner != null) {
         Main.facade.modifierUneQuestion(QuestionnaireController.nomSelectionner,
-            QuestionnaireController.questionSelectionner, intitule.getText());
+            QuestionnaireController.questionSelectionner, intitule.getText(), false);
       } else {
         Main.facade.ajouterUneQuestion(QuestionnaireController.nomSelectionner,
             intitule.getText());
