@@ -58,8 +58,7 @@ public class GestionSportifTest {
     assertFalse(gestion.ajouterSportif("Ondra", "Adam", "adam7", "", date));
 
     // Si le pseudo existe deja
-    assertFalse(
-        gestion.ajouterSportif("Honold", "Aranaud", "adam", "coucou", date));
+    assertFalse(gestion.ajouterSportif("Honold", "Aranaud", "adam", "coucou", date));
   }
 
   @Test
@@ -69,7 +68,7 @@ public class GestionSportifTest {
     assertFalse(gestion.supprimerSportif("KimYahin"));
     // supprimer un sportif qui à deja été supprimer
     assertFalse(gestion.supprimerSportif("quarta"));
-    //ajout de quarta pour à nouveau le supprimer
+    // ajout de quarta pour à nouveau le supprimer
     Calendar date = Calendar.getInstance();
     date.set(1999, 4, 12);
     gestion.ajouterSportif("Quartararo", "Fabio", "quarta", "boop*&=", date);
@@ -80,34 +79,25 @@ public class GestionSportifTest {
   public void modification() { // test de la modification d'un sportif
     Calendar date = Calendar.getInstance();
     date.set(1976, 7, 4);
-    assertTrue(gestion.modifierSportif("monster", "Zarco", "Johann", "NewMonster", "boop",
-        date));
+    assertTrue(gestion.modifierSportif("monster", "Zarco", "Johann", "NewMonster", "boop", date));
     // sportif qui n'existe pas
-    assertFalse(
-        gestion.modifierSportif("Bas", "Basil", "Loris", "bous", "wooop", date));
+    assertFalse(gestion.modifierSportif("Bas", "Basil", "Loris", "bous", "wooop", date));
     // avec un argument null
-    assertFalse(
-        gestion.modifierSportif(null, "Ondra", "Adam", "adam", "coucou", date));
-    assertFalse(
-        gestion.modifierSportif("quarta", null, "Adam", "adam", "coucou", date));
-    assertFalse(
-        gestion.modifierSportif("quarta", "Ondra", null, "adam", "coucou", date));
-    assertFalse(
-        gestion.modifierSportif("quarta", "Ondra", "Adam", null, "coucou", date));
-    assertFalse(
-        gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", null, date));
+    assertFalse(gestion.modifierSportif(null, "Ondra", "Adam", "adam", "coucou", date));
+    assertFalse(gestion.modifierSportif("quarta", null, "Adam", "adam", "coucou", date));
+    assertFalse(gestion.modifierSportif("quarta", "Ondra", null, "adam", "coucou", date));
+    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", null, "coucou", date));
+    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", null, date));
     assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", "coucou", null));
     // avec un argument vide
+    assertFalse(gestion.modifierSportif("", "Ondra", "Adam", "adam", "coucou", date));
+    assertFalse(gestion.modifierSportif("quarta", "", "Adam", "adam", "coucou", date));
+    assertFalse(gestion.modifierSportif("quarta", "Ondra", "", "adam", "coucou", date));
+    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", "", "coucou", date));
+    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", "", date));
+    // modifier le pseudo en quelque chose qui existe deja
     assertFalse(
-        gestion.modifierSportif("", "Ondra", "Adam", "adam", "coucou", date));
-    assertFalse(
-        gestion.modifierSportif("quarta", "", "Adam", "adam", "coucou", date));
-    assertFalse(
-        gestion.modifierSportif("quarta", "Ondra", "", "adam", "coucou", date));
-    assertFalse(
-        gestion.modifierSportif("quarta", "Ondra", "Adam", "", "coucou", date));
-    assertFalse(
-        gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", "", date));
+        gestion.modifierSportif("quarta", "Quartararo", "Fabio", "NewMonster", "boop*&=", date));
   }
 
   @Test

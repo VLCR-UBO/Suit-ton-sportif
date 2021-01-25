@@ -109,6 +109,7 @@ public class ReponseController implements Initializable {
       reponse.setVisible(true);
       HashMap<String, Integer> questionsReponses = Main.facade.obtenirQuestionnaireEtReponses(
           this.semaineSelectionner, this.sportifSelectioner, questionnaireSelectionner);
+      System.out.println(questionsReponses);
       reponses = new ArrayList<String>();
       for (Map.Entry<String, Integer> mapentry : questionsReponses.entrySet()) {
         reponses.add(mapentry.getKey());
