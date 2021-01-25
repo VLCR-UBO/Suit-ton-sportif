@@ -1,0 +1,26 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "Ce README est destinée à la compréhension de la partie  web du projet \"Suis-ton-sportif\" Description :  La partie web est réalisée entièrement en JavaScript Pour le coté client nous utilisons React Pour le coté serveur nous utilison node.js avec Express Pour la base de donnée nous avons décidé d'utiliser MariaDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/bin/www",
+    "serveur": "nodemon serveur/bin/www",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run serveur\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VLCR-UBO/Suit-ton-sportif.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VLCR-UBO/Suit-ton-sportif/issues"
+  },
+  "homepage": "https://github.com/VLCR-UBO/Suit-ton-sportif#readme",
+  "dependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.7"
+  }
+}
