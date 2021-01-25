@@ -132,7 +132,7 @@ class GestionReponsesTest {
     // Test dans le cas erreur : paramètres incorrects
     GestionReponses gestion = new GestionReponses();
     assertNull(gestion.consulterReponses(null, null, null));
-    
+
     // Test dans le cas normal
 
     List<Question> listeQuestion = new ArrayList<Question>();
@@ -183,8 +183,8 @@ class GestionReponsesTest {
     res = gestion.consulterReponses(numeroSemaine, sportif, question);
 
     assertEquals(reponse, res);
- 
-   
+
+
   }
 
 

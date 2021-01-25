@@ -2,6 +2,7 @@ package fonctionnalite;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -237,6 +238,39 @@ public class Facade {
       }
     }
     return ret;
+  }
+
+  /**
+   * Cette méthode permet de modifier ou d'ajouter les reponses pour un sportif, un questionnnaire,
+   * et un numéro de semaine précis. Si lors de la modification, l'élément n'existe pas, cette
+   * méthode va essayer d'ajouter une liste de réponses avec les paramètres qui lui sont fourni.
+   * Sinon elle va se contenter de la modifier.
+   * 
+   * @param date : Il s'agit de la date de la dernière modification de la liste de reponses.
+   * @param numeroSemaine : Contient le numéro de la semaine ou l'élément à été crée.
+   * @param listeReponses : Cette liste de Integer est la liste des reponses à un questionnaire.
+   * @param pseudo : Ces réponses correspondent à ce sportif.
+   * @param nomQuestionnaire : Ces réponses correspondent à ce questionnaire.
+   * @return
+   */
+  public boolean modifierReponses(Date date, String pseudo, String nomQuestionnaire,
+      List<Integer> listeReponses, Integer numeroSemaine) {
+    if (gestionReponses == null || gestionQuestionnaire == null || gestionSportif == null) {
+      return false;
+    }
+    Sportif unSportif = gestionSportif.consulterSportif(pseudo);
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unSportif == null || unQuestionnaire == null) {
+      return false;
+    }
+    // On procède à la modification
+    boolean modification = gestionReponses.modifierReponses(numeroSemaine, date, unSportif,
+        unQuestionnaire, listeReponses);
+    if (modification == true) {
+      return true;
+    }
+    // Il s'agit donc d'un ajout
+    return gestionReponses.ajouterReponses(date, unSportif, unQuestionnaire, listeReponses);
   }
 
   /**
