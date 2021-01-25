@@ -1,0 +1,26 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "\" La partie web du projet Suis-ton-sportif qui doit permettre aux sportifs de répondre aux questions\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "node serveur/bin/www",
+    "serveur": "nodemon serveur/bin/www",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run serveur\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VLCR-UBO/Suit-ton-sportif.git"
+  },
+  "author": "\" Alan Vadeleau, Yann Chantrel, Alex Leborgne, Chiara Relevat\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VLCR-UBO/Suit-ton-sportif/issues"
+  },
+  "homepage": "https://github.com/VLCR-UBO/Suit-ton-sportif#readme",
+  "dependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.7"
+  }
+}
