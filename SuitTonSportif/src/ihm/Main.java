@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
   public static Facade facade = new Facade();
-  
+
   public static void main(String[] args) {
     launch(args);
   }
