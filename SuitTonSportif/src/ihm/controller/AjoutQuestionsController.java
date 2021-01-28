@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class AjoutQuestionsController implements Initializable {
@@ -17,6 +18,8 @@ public class AjoutQuestionsController implements Initializable {
   private TextField intitule;
   @FXML
   private Label titre;
+  @FXML
+  private Label erreure;
 
 
   @Override
@@ -50,17 +53,26 @@ public class AjoutQuestionsController implements Initializable {
 
   @FXML
   public void creationQuestions(MouseEvent mouseEvent) throws IOException {
+    boolean err;
 
     if (intitule.getText() != null) {
       if (QuestionnaireController.questionSelectionner != null) {
-        Main.facade.modifierUneQuestion(QuestionnaireController.nomSelectionner,
+        err = Main.facade.modifierUneQuestion(QuestionnaireController.nomSelectionner,
             QuestionnaireController.questionSelectionner, intitule.getText(), false);
       } else {
-        Main.facade.ajouterUneQuestion(QuestionnaireController.nomSelectionner,
+        err = Main.facade.ajouterUneQuestion(QuestionnaireController.nomSelectionner,
             intitule.getText());
       }
-    }
 
-    this.fermerPopUp(mouseEvent);
+      if (!err) {
+        erreure.setVisible(true);
+        erreure.setText("Ce pseudo est déjà utilisé !");
+        erreure.setTextFill(Paint.valueOf("#e00404"));
+      } else {
+        this.fermerPopUp(mouseEvent);
+      }
+    } else {
+      erreure.setVisible(true);
+    }
   }
 }

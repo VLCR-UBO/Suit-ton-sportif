@@ -103,7 +103,8 @@ public class GestionSportif {
     int taille = this.listeDesSportifs.size();
     Sportif leSportif = null;
     for (int i = 0; i < taille; i++) {
-      if (this.listeDesSportifs.get(i).getPseudo().equals(pseudo)) {
+      if (this.listeDesSportifs.get(i).getPseudo().equals(pseudo)
+          && !this.listeDesSportifs.get(i).getPseudo().equals(ancienPseudo)) {
         return false; // deja present
       }
       if (this.listeDesSportifs.get(i).getPseudo().equals(ancienPseudo)) {

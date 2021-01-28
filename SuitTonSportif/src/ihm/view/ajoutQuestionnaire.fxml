@@ -19,6 +19,11 @@
             </Label>
             <Label text="Nom" />
             <TextField fx:id="nom" />
+            <Label fx:id="erreure" text="Tout les champs doivent etre remplies" textFill="#e1a903" visible="false">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                <children>
                   <Button mnemonicParsing="false" onMouseClicked="#fermerPopUp" text="Retour" />

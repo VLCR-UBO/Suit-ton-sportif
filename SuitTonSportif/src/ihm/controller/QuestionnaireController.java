@@ -46,6 +46,7 @@ public class QuestionnaireController implements Initializable {
   private List<HBox> lignes2;
 
   public static String nomSelectionner = null;
+  public static String questionnaireSelectionner = null;
   public static String questionSelectionner = null;
 
   @Override
@@ -106,7 +107,9 @@ public class QuestionnaireController implements Initializable {
         }
       });
 
-      ligne.getChildren().addAll(new Label(nom), modifier, supprimer);
+      Label label = new Label(nom);
+      label.setPrefWidth(155);
+      ligne.getChildren().addAll(label, modifier, supprimer);
       lignes.add(ligne);
     }
 
@@ -136,9 +139,8 @@ public class QuestionnaireController implements Initializable {
         @Override
         public void handle(ActionEvent e) {
           try {
-            modifierQuestions(intitule);
+            modifierQuestions(intitule, ligne);
           } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
           }
         }
@@ -158,7 +160,9 @@ public class QuestionnaireController implements Initializable {
         }
       });
 
-      ligne.getChildren().addAll(new Label(intitule), modifier, supprimer);
+      Label label = new Label(intitule);
+      label.setPrefWidth(148);
+      ligne.getChildren().addAll(label, modifier, supprimer);
       lignes2.add(ligne);
     }
 
@@ -179,7 +183,7 @@ public class QuestionnaireController implements Initializable {
     Label question = (Label) selected2.getChildren().get(0);
     questionSelectionner = question.getText();
 
-    this.modifierQuestions(question.getText());
+    this.modifierQuestions(question.getText(), selected2);
   }
 
 
@@ -230,6 +234,8 @@ public class QuestionnaireController implements Initializable {
       questions = new ArrayList<String>();
     }
     this.remplirListQuestions();
+    this.afficherQuestions(questionnaireSelectionner);
+    list.getSelectionModel().select(selected);
   }
 
   /**
@@ -243,9 +249,8 @@ public class QuestionnaireController implements Initializable {
     Label questionnaire = (Label) selected.getChildren().get(0);
     nomSelectionner = questionnaire.getText();
 
+    questionnaireSelectionner = questionnaire.getText();
     this.afficherQuestions(questionnaire.getText());
-
-
   }
 
   /**
@@ -294,7 +299,7 @@ public class QuestionnaireController implements Initializable {
    * @param intitule : nom de la question à modfier
    * @throws IOException : si la popup s'ouvre pas
    */
-  public void modifierQuestions(String intitule) throws IOException {
+  public void modifierQuestions(String intitule, HBox selected) throws IOException {
     questionSelectionner = intitule;
     final URL fxmlUrl = getClass().getResource("../view/ajoutQuestions.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
@@ -315,6 +320,8 @@ public class QuestionnaireController implements Initializable {
     }
     this.remplirListQuestions();
     this.remplirListQuestions();
+    this.afficherQuestions(questionnaireSelectionner);
+    list.getSelectionModel().select(selected);
   }
 
   /**

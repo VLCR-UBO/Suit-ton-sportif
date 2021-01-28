@@ -23,11 +23,11 @@ public class PopUp {
 
     scene = new Scene(p);
 
-    /*popup.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+    popup.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
       if (!isNowFocused) {
         popup.hide();
       }
-    });*/
+    });
   }
 
   public Stage getStage() {

@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class AjoutQuestionnaireController implements Initializable {
@@ -22,6 +23,8 @@ public class AjoutQuestionnaireController implements Initializable {
   private Label titre;
   @FXML
   private ListView<HBox> list;
+  @FXML
+  private Label erreure;
 
 
   @Override
@@ -55,17 +58,27 @@ public class AjoutQuestionnaireController implements Initializable {
    */
   @FXML
   public void creationQuestionnaire(MouseEvent mouseEvent) throws IOException {
-
     ArrayList<String> questionnaire = new ArrayList<String>();
+
+    boolean err;
+
     if (nom.getText() != null) {
       if (QuestionnaireController.nomSelectionner != null) {
-        Main.facade.modifierUnQuestionnaire(QuestionnaireController.nomSelectionner, nom.getText(),
-            QuestionnaireController.questions);
+        err = Main.facade.modifierUnQuestionnaire(QuestionnaireController.nomSelectionner,
+            nom.getText(), QuestionnaireController.questions);
       } else {
-        Main.facade.ajouterUnQuestionnaire(nom.getText(), questionnaire);
+        err = Main.facade.ajouterUnQuestionnaire(nom.getText(), questionnaire);
       }
+      
+      if (!err) {
+        erreure.setVisible(true);
+        erreure.setText("Ce pseudo est déjà utilisé !");
+        erreure.setTextFill(Paint.valueOf("#e00404"));
+      } else {
+        this.fermerPopUp(mouseEvent);
+      }
+    } else {
+      erreure.setVisible(true);
     }
-
-    this.fermerPopUp(mouseEvent);
   }
 }

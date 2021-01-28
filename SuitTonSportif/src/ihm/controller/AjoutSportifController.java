@@ -16,6 +16,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class AjoutSportifController implements Initializable {
@@ -76,15 +77,23 @@ public class AjoutSportifController implements Initializable {
           .setDate(naissance.getYear(), naissance.getMonthValue(), naissance.getDayOfMonth())
           .build();
 
+      boolean err;
+
       if (SportifController.nomSelectionner != null) {
-        Main.facade.modifierUnSportif(SportifController.nomSelectionner, nom.getText(),
+        err = Main.facade.modifierUnSportif(SportifController.nomSelectionner, nom.getText(),
             prenom.getText(), pseudo.getText(), "pouet", calendar);
       } else {
-        Main.facade.ajouterUnSportif(nom.getText(), prenom.getText(), pseudo.getText(), "pouet",
-            calendar);
+        err = Main.facade.ajouterUnSportif(nom.getText(), prenom.getText(), pseudo.getText(),
+            "pouet", calendar);
       }
 
-      this.fermerPopUp(mouseEvent);
+      if (!err) {
+        erreure.setVisible(true);
+        erreure.setText("Ce pseudo est déjà utilisé !");
+        erreure.setTextFill(Paint.valueOf("#e00404"));
+      } else {
+        this.fermerPopUp(mouseEvent);
+      }
     } else {
       erreure.setVisible(true);
     }
