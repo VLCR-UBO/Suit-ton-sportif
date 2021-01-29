@@ -3,9 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mysql = require('mysql'); 
+require('dotenv').config();  
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
 
 var app = express();
 
@@ -18,6 +21,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const db = mysql.createConnection({
+    host : process.env.BDD_HOST,
+    user : process.env.BDD_USER,
+    password : process.env.BDD_PASSWORD,
+    database: process.env.BDD_DATABASE
+});
+
+db.connect((err)=>{
+  if(err) throw err;
+  console.log("Connexion réussie ! ");
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
