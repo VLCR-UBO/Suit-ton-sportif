@@ -17,6 +17,8 @@ public class Facade {
   private GestionSportif gestionSportif;
   private GestionReponses gestionReponses;
   private GestionQuestionnaire gestionQuestionnaire;
+  
+  private GestionSportifBDD gestionSportifBDD;
 
   /**
    * Le constructeur de la classe Facade. Il initialise les 3 objets dont nous allons avoir besoins
@@ -26,6 +28,8 @@ public class Facade {
     gestionSportif = new GestionSportif();
     gestionReponses = new GestionReponses();
     gestionQuestionnaire = new GestionQuestionnaire();
+    
+    gestionSportifBDD = new GestionSportifBDD();
   }
 
   // Pour Chiara
@@ -425,6 +429,9 @@ public class Facade {
     return unQuestionnaire.supprimerQuestion(intitule);
   }
 
+  public boolean load() {
+     return false;
+  }
 
 
 }
