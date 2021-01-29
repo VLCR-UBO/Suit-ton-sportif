@@ -6,9 +6,9 @@ Ce README est destinée à la compréhension de la partie  web du projet "Suis-t
 
 
 ## 1/ Description 
-La partie web est réalisée entièrement en JavaScript.
-Pour le coté client nous utilisons React.
-Pour le coté serveur nous utilison node.js avec Express.
+La partie web est réalisée entièrement en JavaScript.\
+Pour le coté client nous utilisons React.\
+Pour le coté serveur nous utilison node.js avec Express.\
 Pour la base de donnée nous avons décidé d'utiliser MariaDB.
 
 
