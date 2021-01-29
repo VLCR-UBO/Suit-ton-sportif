@@ -1,7 +1,7 @@
 package fonctionnalite;
 
 import bdd.GestionQuestionnaireBDD;
-import bdd.GestionSportifBDD;
+import bdd.GestionSportifBdd;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +20,7 @@ public class Facade {
   private GestionReponses gestionReponses;
   private GestionQuestionnaire gestionQuestionnaire;
   
-  private GestionSportifBDD gestionSportifBdd;
+  private GestionSportifBdd gestionSportifBdd;
   private GestionQuestionnaireBDD gestionQuestionnaireBdd;
 
   /**
@@ -32,7 +32,7 @@ public class Facade {
     gestionReponses = new GestionReponses();
     gestionQuestionnaire = new GestionQuestionnaire();
     
-    gestionSportifBdd = new GestionSportifBDD();
+    gestionSportifBdd = new GestionSportifBdd();
     gestionQuestionnaireBdd = new GestionQuestionnaireBDD();  
     
     load();
