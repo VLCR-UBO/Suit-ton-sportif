@@ -71,8 +71,8 @@ public class AjoutSportifController implements Initializable {
   public void creationSportif(MouseEvent mouseEvent) throws IOException {
     LocalDate naissance = dateNaissance.getValue();
 
-    if (nom.getText() != null && prenom.getText() != null && pseudo.getText() != null
-        && naissance != null) {
+    if (!nom.getText().trim().isEmpty() && !prenom.getText().trim().isEmpty()
+        && !pseudo.getText().trim().isEmpty() && naissance != null) {
       Calendar calendar = new GregorianCalendar.Builder()
           .setDate(naissance.getYear(), naissance.getMonthValue(), naissance.getDayOfMonth())
           .build();
@@ -96,6 +96,8 @@ public class AjoutSportifController implements Initializable {
       }
     } else {
       erreure.setVisible(true);
+      erreure.setText("Tout les champs doivent etre remplies");
+      erreure.setTextFill(Paint.valueOf("#e1a903"));
     }
   }
 }

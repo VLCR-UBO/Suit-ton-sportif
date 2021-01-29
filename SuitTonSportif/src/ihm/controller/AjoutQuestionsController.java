@@ -55,7 +55,7 @@ public class AjoutQuestionsController implements Initializable {
   public void creationQuestions(MouseEvent mouseEvent) throws IOException {
     boolean err;
 
-    if (intitule.getText() != null) {
+    if (!intitule.getText().trim().isEmpty()) {
       if (QuestionnaireController.questionSelectionner != null) {
         err = Main.facade.modifierUneQuestion(QuestionnaireController.nomSelectionner,
             QuestionnaireController.questionSelectionner, intitule.getText(), false);
@@ -73,6 +73,8 @@ public class AjoutQuestionsController implements Initializable {
       }
     } else {
       erreure.setVisible(true);
+      erreure.setText("Tout les champs doivent etre remplies");
+      erreure.setTextFill(Paint.valueOf("#e1a903"));
     }
   }
 }

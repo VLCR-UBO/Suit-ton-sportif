@@ -59,10 +59,10 @@ public class AjoutQuestionnaireController implements Initializable {
   @FXML
   public void creationQuestionnaire(MouseEvent mouseEvent) throws IOException {
     ArrayList<String> questionnaire = new ArrayList<String>();
-
-    boolean err;
-
-    if (nom.getText() != null) {
+    
+    if (!nom.getText().trim().isEmpty()) {
+      boolean err;
+      
       if (QuestionnaireController.nomSelectionner != null) {
         err = Main.facade.modifierUnQuestionnaire(QuestionnaireController.nomSelectionner,
             nom.getText(), QuestionnaireController.questions);
@@ -79,6 +79,8 @@ public class AjoutQuestionnaireController implements Initializable {
       }
     } else {
       erreure.setVisible(true);
+      erreure.setText("Tout les champs doivent etre remplies");
+      erreure.setTextFill(Paint.valueOf("#e1a903"));
     }
   }
 }
