@@ -17,8 +17,8 @@ Pour la base de donnée nous avons décidé d'utiliser MariaDB.
 1. A la racine du dossier web : npm install
 2. Dans le dossier client : npm install
 3. Dans le dossier serveur : npm install
-4. Pour la connexion à la base de donnée créer un fichier .env à la racine du projet et ajouter dedans 4 variables BDD_HOST,BDD_USER,BDD_PASSWORD,BDD_DATABASE avec vos informations personnelles de connexion du genre : \ 
-BDD_HOST = localhost\
+4. Pour la connexion à la base de donnée créer un fichier .env à la racine du projet et ajouter dedans 4 variables BDD_HOST,BDD_USER,BDD_PASSWORD,BDD_DATABASE avec vos informations personnelles de connexion du genre : 
+\BDD_HOST = localhost\
 BDD_USER = username\
 BDD_PASSWORD = password\
 BDD_DATABASE = database\
