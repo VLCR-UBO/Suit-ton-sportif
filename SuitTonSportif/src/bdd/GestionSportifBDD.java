@@ -1,4 +1,4 @@
-package fonctionnalite;
+package bdd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +26,10 @@ public class GestionSportifBDD {
   }
 
   public boolean supprimerSportif(String pseudo) {
-    return false;
+    if (pseudo == null || pseudo.length() < 1) {
+      return false; // parametres incorrects
+    }
+    String query = "DELETE FROM sportif WHERE idSpo";
+    return false; // le sportif n'a pas �t� trouv�
   }
 }

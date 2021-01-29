@@ -15,12 +15,12 @@ USE `enregistretonsportif` ;
 DROP TABLE IF EXISTS `enregistretonsportif`.`SPORTIF` ;
 
 CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`SPORTIF` (
-  `idSportif` INT NOT NULL AUTO_INCREMENT,
+  `pseudo` VARCHAR(45) NOT NULL,
   `nomSportif` VARCHAR(45) NOT NULL,
   `prenomSportif` VARCHAR(45) NOT NULL,
   `dateDeNaissanceSportif` DATE NOT NULL,
   `motDePasseSportif` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idSportif`))
+  PRIMARY KEY (`pseudo`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -40,14 +40,14 @@ DROP TABLE IF EXISTS `enregistretonsportif`.`RELATION_SPORTIF_ACTIVITE_SPORTIVE`
 
 CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`RELATION_SPORTIF_ACTIVITE_SPORTIVE` (
   `idRelationSportifActiviteSportive` INT NOT NULL AUTO_INCREMENT,
-  `unSportif` INT NOT NULL,
+  `unSportif` VARCHAR(45) NOT NULL,
   `uneActiviteSportive` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idRelationSportifActiviteSportive`),
   INDEX `fk_RELATION_SPORTIF_ACTIVITE_SPORTIVE_SPORTIF_idx` (`unSportif` ASC),
   INDEX `fk_RELATION_SPORTIF_ACTIVITE_SPORTIVE_ACTIVITE_SPORTIVE_idx` (`uneActiviteSportive` ASC),
   CONSTRAINT `fk_RELATION_SPORTIF_ACTIVITE_SPORTIVE_SPORTIF`
     FOREIGN KEY (`unSportif`)
-    REFERENCES `enregistretonsportif`.`SPORTIF` (`idSportif`)
+    REFERENCES `enregistretonsportif`.`SPORTIF` (`pseudo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_RELATION_SPORTIF_ACTIVITE_SPORTIVE_ACTIVITE_SPORTIVE`
@@ -74,14 +74,14 @@ DROP TABLE IF EXISTS `enregistretonsportif`.`RELATION_SPORTIF_QUESTIONNAIRE` ;
 
 CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`RELATION_SPORTIF_QUESTIONNAIRE` (
   `idRelationSportifQuestionnaire` INT NOT NULL AUTO_INCREMENT,
-  `unSportif` INT NOT NULL,
+  `unSportif` VARCHAR(45) NOT NULL,
   `unQuestionnaire` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idRelationSportifQuestionnaire`),
   INDEX `fk_RELATION_SPORTIF_QUESTIONNAIRE_SPORTIF_idx` (`unSportif` ASC),
   INDEX `fk_RELATION_SPORTIF_QUESTIONNAIRE_QUESTIONNAIRE_idx` (`unQuestionnaire` ASC),
   CONSTRAINT `fk_RELATION_SPORTIF_QUESTIONNAIRE_SPORTIF`
     FOREIGN KEY (`unSportif`)
-    REFERENCES `enregistretonsportif`.`SPORTIF` (`idSportif`)
+    REFERENCES `enregistretonsportif`.`SPORTIF` (`pseudo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_RELATION_SPORTIF_QUESTIONNAIRE_QUESTIONNAIRE`
@@ -101,12 +101,12 @@ CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`REPONSE` (
   `numeroSemaine` INT NOT NULL,
   `derniereModification` DATE NOT NULL,
   `valeurReponse` INT NOT NULL,
-  `unSportif` INT NOT NULL,
+  `unSportif` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idReponse`),
   INDEX `fk_REPONSE_SPORTIF_idx` (`unSportif` ASC),
   CONSTRAINT `fk_REPONSE_SPORTIF`
     FOREIGN KEY (`unSportif`)
-    REFERENCES `enregistretonsportif`.`SPORTIF` (`idSportif`)
+    REFERENCES `enregistretonsportif`.`SPORTIF` (`pseudo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
