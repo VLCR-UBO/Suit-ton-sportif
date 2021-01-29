@@ -2,15 +2,38 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="400.0" maxWidth="640.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.OngletController">
+<AnchorPane maxHeight="400.0" maxWidth="640.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@../../../bin/ihm/style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.OngletController">
    <children>
       <TabPane maxHeight="400.0" maxWidth="640.0" prefHeight="400.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="tabSportif" text="Sportif" />
-          <Tab fx:id="tabQuestionnaire" text="Questionnaire" />
-            <Tab fx:id="tabReponse" text="Réponse" />
+          <Tab fx:id="tabSportif" text="Sportif">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/2.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Tab>
+          <Tab fx:id="tabQuestionnaire" text="Questionnaire">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/questionnaire3.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Tab>
+            <Tab fx:id="tabReponse" text="Réponse">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/réponse2.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Tab>
         </tabs>
       </TabPane>
    </children>
