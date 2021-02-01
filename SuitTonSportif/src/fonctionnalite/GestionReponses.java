@@ -44,7 +44,6 @@ public class GestionReponses {
     Calendar calendar = new GregorianCalendar();
     calendar.setTime(date);
     Integer numeroSemaine = calendar.get(Calendar.WEEK_OF_YEAR);
-    System.out.println(numeroSemaine);
     int taille = this.listeDesReponses.size();
     for (int i = 0; i < taille; i++) {
       if (this.listeDesReponses.get(i).getUnSportif().equals(unSportif)

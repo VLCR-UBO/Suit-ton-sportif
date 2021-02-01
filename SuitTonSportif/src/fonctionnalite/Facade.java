@@ -1,6 +1,7 @@
 package fonctionnalite;
 
 import bdd.GestionQuestionnaireBdd;
+import bdd.GestionReponsesBdd;
 import bdd.GestionSportifBdd;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,6 +23,7 @@ public class Facade {
 
   private GestionSportifBdd gestionSportifBdd;
   private GestionQuestionnaireBdd gestionQuestionnaireBdd;
+  private GestionReponsesBdd gestionReponsesBdd;
 
   /**
    * Le constructeur de la classe Facade. Il initialise les 3 objets dont nous allons avoir besoins
@@ -34,6 +36,7 @@ public class Facade {
 
     gestionSportifBdd = new GestionSportifBdd();
     gestionQuestionnaireBdd = new GestionQuestionnaireBdd();
+    gestionReponsesBdd = new GestionReponsesBdd();
 
     load();
   }
@@ -449,10 +452,16 @@ public class Facade {
     return unQuestionnaire.supprimerQuestion(intitule);
   }
 
+  /**
+   * Cette méthode permet de charger les données depuis notre base de données, dans l'application.
+   * 
+   * @return true si le chargement des données c'est bien passé, false sinon.
+   */
   public boolean load() {
     boolean ret1 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
     boolean ret2 = this.gestionSportifBdd.load(this.gestionSportif);
-    if (ret1 && ret2) {
+    boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses);
+    if (ret1 && ret2 && ret3) {
       return true;
     }
     return false;
