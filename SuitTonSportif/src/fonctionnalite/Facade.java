@@ -436,8 +436,10 @@ public class Facade {
   }
 
   public boolean load() {
-    this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
-     return false;
+    boolean ret1 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
+    boolean ret2 = this.gestionSportifBdd.load(this.gestionSportif);
+    if (ret1 && ret2) return true;
+    return false;
   }
 
 

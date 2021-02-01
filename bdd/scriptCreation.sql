@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`QUESTION` (
   `intituleQuestion` VARCHAR(45) NOT NULL,
   `reponseParDefaut` INT NOT NULL,
   `unQuestionnaire` VARCHAR(45) NOT NULL,
-  `uneReponse` INT NOT NULL,
+  `uneReponse` INT NULL,
   PRIMARY KEY (`intituleQuestion`),
   INDEX `fk_QUESTION_QUESTIONNAIRE_idx` (`unQuestionnaire` ASC),
   INDEX `fk_QUESTION_REPONSE_idx` (`uneReponse` ASC),
