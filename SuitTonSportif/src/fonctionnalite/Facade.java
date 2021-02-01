@@ -19,7 +19,7 @@ public class Facade {
   private GestionSportif gestionSportif;
   private GestionReponses gestionReponses;
   private GestionQuestionnaire gestionQuestionnaire;
-  
+
   private GestionSportifBdd gestionSportifBdd;
   private GestionQuestionnaireBdd gestionQuestionnaireBdd;
 
@@ -31,10 +31,10 @@ public class Facade {
     gestionSportif = new GestionSportif();
     gestionReponses = new GestionReponses();
     gestionQuestionnaire = new GestionQuestionnaire();
-    
+
     gestionSportifBdd = new GestionSportifBdd();
-    gestionQuestionnaireBdd = new GestionQuestionnaireBdd();  
-    
+    gestionQuestionnaireBdd = new GestionQuestionnaireBdd();
+
     load();
   }
 
@@ -126,7 +126,11 @@ public class Facade {
     if (gestionSportif == null) {
       return false;
     }
-    return gestionSportif.supprimerSportif(pseudo);
+    boolean retBdd = gestionSportifBdd.supprimerSportif(pseudo);
+    if (retBdd) {
+      return gestionSportif.supprimerSportif(pseudo);
+    }
+    return false;
   }
 
   /**
@@ -151,8 +155,13 @@ public class Facade {
     if (gestionSportif == null) {
       return false;
     }
-    return gestionSportif.modifierSportif(ancienPseudo, nom, prenom, pseudo, motDePasse,
-        dateDeNaissance);
+    boolean retBdd = gestionSportifBdd.modifierSportif(gestionSportif, ancienPseudo, nom, prenom,
+        pseudo, motDePasse, dateDeNaissance);
+    if (retBdd) {
+      return gestionSportif.modifierSportif(ancienPseudo, nom, prenom, pseudo, motDePasse,
+          dateDeNaissance);
+    }
+    return false;
   }
 
   /**
@@ -172,7 +181,12 @@ public class Facade {
     if (gestionSportif == null) {
       return false;
     }
-    return gestionSportif.ajouterSportif(nom, prenom, pseudo, motDePasse, dateDeNaissance);
+    boolean retBdd = gestionSportifBdd.ajouterSportif(gestionSportif, nom, prenom, pseudo,
+        motDePasse, dateDeNaissance);
+    if (retBdd) {
+      return gestionSportif.ajouterSportif(nom, prenom, pseudo, motDePasse, dateDeNaissance);
+    }
+    return false;
   }
 
   /**
@@ -438,7 +452,9 @@ public class Facade {
   public boolean load() {
     boolean ret1 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
     boolean ret2 = this.gestionSportifBdd.load(this.gestionSportif);
-    if (ret1 && ret2) return true;
+    if (ret1 && ret2) {
+      return true;
+    }
     return false;
   }
 
