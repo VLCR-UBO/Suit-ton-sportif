@@ -1,6 +1,6 @@
 package fonctionnalite;
 
-import bdd.GestionQuestionnaireBDD;
+import bdd.GestionQuestionnaireBdd;
 import bdd.GestionSportifBdd;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +21,7 @@ public class Facade {
   private GestionQuestionnaire gestionQuestionnaire;
   
   private GestionSportifBdd gestionSportifBdd;
-  private GestionQuestionnaireBDD gestionQuestionnaireBdd;
+  private GestionQuestionnaireBdd gestionQuestionnaireBdd;
 
   /**
    * Le constructeur de la classe Facade. Il initialise les 3 objets dont nous allons avoir besoins
@@ -33,7 +33,7 @@ public class Facade {
     gestionQuestionnaire = new GestionQuestionnaire();
     
     gestionSportifBdd = new GestionSportifBdd();
-    gestionQuestionnaireBdd = new GestionQuestionnaireBDD();  
+    gestionQuestionnaireBdd = new GestionQuestionnaireBdd();  
     
     load();
   }

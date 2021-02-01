@@ -9,15 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Gère les appel à la base de données pour la partie questionnaire.
  * 
  * @author Chiara
  *
  */
-public class GestionQuestionnaireBDD {
+public class GestionQuestionnaireBdd {
   private Connection connection;
   private Statement sqlStatement;
 
-  public GestionQuestionnaireBDD() {
+  /**
+   * Etablie une connexion à la base de données.
+   */
+  public GestionQuestionnaireBdd() {
     try {
       String url = "jdbc:mysql://localhost/enregistretonsportif";
       String user = "root";
@@ -31,10 +35,17 @@ public class GestionQuestionnaireBDD {
     }
   }
 
+  /**
+   * Charge les questionnaires et les questions qui leurs sont associer dans le gestionnaire des
+   * questionnaire.
+   * 
+   * @param gestion : Gestionnaire des questionnaire
+   * @return
+   */
   public boolean load(GestionQuestionnaire gestion) {
     List<String> lesNomsDesQuestionnaires = new ArrayList<String>();
     List<String> lesNomsDesQuestions = new ArrayList<String>();
-    
+
     try {
       ResultSet lesQuestionnaires = this.sqlStatement.executeQuery(("SELECT * FROM questionnaire"));
 
@@ -49,9 +60,9 @@ public class GestionQuestionnaireBDD {
         while (lesQuestions.next()) {
           lesNomsDesQuestions.add(lesQuestionnaires.getString("unQuestionnaire"));
         }
-        
+
         gestion.ajouterQuestionnaire(nom, lesNomsDesQuestions);
-        
+
         lesNomsDesQuestions.clear();
       }
     } catch (Exception e) {
