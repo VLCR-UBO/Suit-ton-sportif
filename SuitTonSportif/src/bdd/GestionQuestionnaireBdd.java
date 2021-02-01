@@ -58,7 +58,7 @@ public class GestionQuestionnaireBdd {
       for (String nom : lesNomsDesQuestionnaires) {
         // récuperer les questions
         ResultSet lesQuestions = this.sqlStatement
-            .executeQuery(("SELECT * FROM question WHERE unQuestionnaire = " + nom));
+            .executeQuery(("SELECT * FROM question WHERE unQuestionnaire = '" + nom + "'"));
 
         // creer le questionnaire vide
         gestion.ajouterQuestionnaire(nom, new ArrayList<String>());
@@ -74,6 +74,7 @@ public class GestionQuestionnaireBdd {
         lesNomsDesQuestions.clear();
       }
     } catch (Exception e) {
+      e.printStackTrace();
       return false;
     }
 
@@ -120,13 +121,14 @@ public class GestionQuestionnaireBdd {
     if (nomQuestionnaire != null && nomQuestionnaire.length() > 0) {
       try {
         String queryQuestions =
-            "DELETE FROM question WHERE unQuestionnaire = " + nomQuestionnaire;
+            "DELETE FROM question WHERE unQuestionnaire = '" + nomQuestionnaire + "'";
         sqlStatement.executeUpdate(queryQuestions);
-        
+
         String queryQuestionnaire =
-            "DELETE FROM questionnaire WHERE intituleQuestionnaire = " + nomQuestionnaire;
+            "DELETE FROM questionnaire WHERE intituleQuestionnaire = '" + nomQuestionnaire + "'";
         sqlStatement.executeUpdate(queryQuestionnaire);
       } catch (SQLException e) {
+        e.printStackTrace();
         return false;
       }
       return true;
@@ -137,7 +139,7 @@ public class GestionQuestionnaireBdd {
   /**
    * Modifie le nom d'un questionnaire dans la BDD.
    * 
-   * @param ancienNomQuestionnaire : nom du questionnaire avant la modification 
+   * @param ancienNomQuestionnaire : nom du questionnaire avant la modification
    * @param nouveauNomQuestionnaire : nouveau nom du questionnaire
    * @return : true si c'est reussi false sinon
    */
@@ -184,12 +186,18 @@ public class GestionQuestionnaireBdd {
     return false;
   }
 
-  public boolean modifierQuestion(String ancienNomQuestion, String nouveauNomQuestion) {
+  public boolean modifierQuestion(String ancienNomQuestion, String nouveauNomQuestion,
+      boolean defaut) {
     if (ancienNomQuestion != null && ancienNomQuestion.length() > 0 && nouveauNomQuestion != null
         && nouveauNomQuestion.length() > 0) {
       try {
+        int valeurDefaut = 0;
+        if (defaut) {
+          valeurDefaut = 1;
+        }
         String queryQuestion = "UPDATE question SET intituleQuestion = '" + nouveauNomQuestion
-            + "' WHERE unQuestionnaire = '" + ancienNomQuestion;
+            + "', reponseParDefaut = " + valeurDefaut + " WHERE intituleQuestion = '"
+            + ancienNomQuestion + "'";
         sqlStatement.executeUpdate(queryQuestion);
       } catch (SQLException e) {
         return false;
@@ -198,12 +206,12 @@ public class GestionQuestionnaireBdd {
     }
     return false;
   }
-  
+
   public boolean supprimerQuestion(String intituleQuestion) {
     if (intituleQuestion != null && intituleQuestion.length() > 0) {
       try {
         String queryQuestions =
-            "DELETE FROM question WHERE intituleQuestion = " + intituleQuestion;
+            "DELETE FROM question WHERE intituleQuestion = '" + intituleQuestion + "'";
         sqlStatement.executeUpdate(queryQuestions);
       } catch (SQLException e) {
         return false;

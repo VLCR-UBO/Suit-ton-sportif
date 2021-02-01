@@ -125,7 +125,7 @@ public class Facade {
    * @return Retourne true si la demande c'est bien passé, false sinon.
    */
   public boolean supprimerUnSportif(String pseudo) {
-    if (gestionSportif == null) {
+    if (gestionSportif == null || gestionSportifBdd == null) {
       return false;
     }
     boolean retBdd = gestionSportifBdd.supprimerSportif(pseudo);
@@ -154,7 +154,7 @@ public class Facade {
    */
   public boolean modifierUnSportif(String ancienPseudo, String nom, String prenom, String pseudo,
       String motDePasse, Calendar dateDeNaissance) {
-    if (gestionSportif == null) {
+    if (gestionSportif == null || gestionSportifBdd == null) {
       return false;
     }
     boolean retBdd = gestionSportifBdd.modifierSportif(gestionSportif, ancienPseudo, nom, prenom,
@@ -180,7 +180,7 @@ public class Facade {
    */
   public boolean ajouterUnSportif(String nom, String prenom, String pseudo, String motDePasse,
       Calendar dateDeNaissance) {
-    if (gestionSportif == null) {
+    if (gestionSportif == null || gestionSportifBdd == null) {
       return false;
     }
     boolean retBdd = gestionSportifBdd.ajouterSportif(gestionSportif, nom, prenom, pseudo,
@@ -281,7 +281,7 @@ public class Facade {
    */
   public boolean modifierReponses(Date date, String pseudo, String nomQuestionnaire,
       Map<String, Integer> listeReponses, Integer numeroSemaine) {
-    if (gestionReponses == null || gestionQuestionnaire == null || gestionSportif == null) {
+    if (gestionReponses == null  || gestionReponsesBdd == null || gestionQuestionnaire == null || gestionSportif == null) {
       return false;
     }
     Sportif unSportif = gestionSportif.consulterSportif(pseudo);
@@ -367,12 +367,17 @@ public class Facade {
    * @return Retourne true si la demande c'est bien déroulé, false sinon.
    */
   public boolean ajouterUnQuestionnaire(String nomQuestionnaire, List<String> questions) {
-    if (gestionQuestionnaire == null) {
+    if (gestionQuestionnaire == null || gestionQuestionnaireBdd == null) {
       return false;
     }
-    return gestionQuestionnaire.ajouterQuestionnaire(nomQuestionnaire, questions);
+    boolean retBdd = gestionQuestionnaireBdd.ajouterQuestionnaire(nomQuestionnaire, questions);
+    if (retBdd == true) {
+      return gestionQuestionnaire.ajouterQuestionnaire(nomQuestionnaire, questions);
+    }
+    return false;
   }
 
+  // méthode incohérente
   /**
    * Une méthode pour modifier un questionnaire depuis une liste de string utilisée pour créée le
    * nouveau questionnaire. Le questionnaire est identifié avec son nom.
@@ -384,11 +389,16 @@ public class Facade {
    */
   public boolean modifierUnQuestionnaire(String ancienNomQuestionnaire,
       String nouveauNomQuestionnaire, List<String> questions) {
-    if (gestionQuestionnaire == null) {
+    if (gestionQuestionnaire == null || gestionQuestionnaireBdd == null) {
       return false;
     }
-    return gestionQuestionnaire.modifierQuestionnaire(ancienNomQuestionnaire,
-        nouveauNomQuestionnaire, questions);
+    boolean retBdd = gestionQuestionnaireBdd.modifierQuestionnaire(ancienNomQuestionnaire,
+        nouveauNomQuestionnaire);
+    if (retBdd == true) {
+      return gestionQuestionnaire.modifierQuestionnaire(ancienNomQuestionnaire,
+          nouveauNomQuestionnaire, questions);
+    }
+    return false;
   }
 
   /**
@@ -401,7 +411,11 @@ public class Facade {
     if (gestionQuestionnaire == null) {
       return false;
     }
-    return gestionQuestionnaire.supprimerQuestionnaire(nomQuestionnaire);
+    boolean retBdd = gestionQuestionnaireBdd.supprimerQuestionnaire(nomQuestionnaire);
+    if (retBdd == true) {
+      return gestionQuestionnaire.supprimerQuestionnaire(nomQuestionnaire);
+    }
+    return false;
   }
 
   /**
@@ -420,7 +434,11 @@ public class Facade {
     if (unQuestionnaire == null) {
       return false;
     }
-    return unQuestionnaire.ajouterQuestionBoolenne(intitule, false);
+    boolean retBdd = gestionQuestionnaireBdd.ajouterQuestion(nomQuestionnaire, intitule, false);
+    if (retBdd == true) {
+      return unQuestionnaire.ajouterQuestionBoolenne(intitule, false);
+    }
+    return false;
   }
 
   /**
@@ -442,7 +460,11 @@ public class Facade {
     if (unQuestionnaire == null) {
       return false;
     }
-    return unQuestionnaire.modifierQuestionBoolenne(ancienIntitule, nouveauIntitule, defaut);
+    boolean retBdd = gestionQuestionnaireBdd.modifierQuestion(ancienIntitule, nouveauIntitule, defaut);
+    if (retBdd == true) {
+      return unQuestionnaire.modifierQuestionBoolenne(ancienIntitule, nouveauIntitule, defaut);
+    }
+    return false;
   }
 
   /**
@@ -461,7 +483,12 @@ public class Facade {
     if (unQuestionnaire == null) {
       return false;
     }
-    return unQuestionnaire.supprimerQuestion(intitule);
+    boolean retBdd = gestionQuestionnaireBdd.supprimerQuestion(intitule);
+    if (retBdd == true) {
+      return unQuestionnaire.supprimerQuestion(intitule);
+    }
+    return false;
+    
   }
 
   /**
@@ -470,9 +497,9 @@ public class Facade {
    * @return Retourne true si le chargement des données c'est bien passé, false sinon.
    */
   public boolean load() {
-    boolean ret1 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
-    boolean ret2 = this.gestionSportifBdd.load(this.gestionSportif);
-    boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses);
+    boolean ret1 = this.gestionSportifBdd.load(this.gestionSportif);
+    boolean ret2 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
+    boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses, this.gestionSportif, this.gestionQuestionnaire);
     if (ret1 && ret2 && ret3) {
       return true;
     }

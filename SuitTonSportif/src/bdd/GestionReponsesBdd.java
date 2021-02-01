@@ -1,6 +1,8 @@
 package bdd;
 
+import fonctionnalite.GestionQuestionnaire;
 import fonctionnalite.GestionReponses;
+import fonctionnalite.GestionSportif;
 import fonctionnalite.Questionnaire;
 import fonctionnalite.Sportif;
 import java.sql.Connection;
@@ -8,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,8 +42,6 @@ public class GestionReponsesBdd {
       connection = DriverManager.getConnection(url, user, passwd);
       sqlStatement =
           connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-      System.out.println("Connexion OK");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -137,7 +138,70 @@ public class GestionReponsesBdd {
    * @param gestionReponses : Permet de mettre à jour les éléments de l'application.
    * @return true si tout c'est bien passé, false sinon.
    */
-  public boolean load(GestionReponses gestionReponses) {
+  public boolean load(GestionReponses gestionReponses, GestionSportif gestionSportif,
+      GestionQuestionnaire gestionQuestionnaire) {
+    try {
+      ResultSet lesReponses = this.sqlStatement
+          .executeQuery(("SELECT reponse.*, question.unQuestionnaire FROM reponse, question"));
+
+      // initialisation des composantes nécessaire
+      List<String> intituleQuestionnaire = new ArrayList<String>();
+      List<String> pseudoSportif = new ArrayList<String>();
+      List<Date> date = new ArrayList<Date>();
+      List<Integer> valeur = new ArrayList<Integer>();
+
+      // collecte des éléments (on rempli nos listes)
+      while (lesReponses.next()) {
+        intituleQuestionnaire.add(lesReponses.getString("unQuestionnaire"));
+        pseudoSportif.add(lesReponses.getString("unSportif"));
+        date.add(lesReponses.getDate("derniereModification"));
+        valeur.add(lesReponses.getInt("valeurReponse"));
+      }
+
+      // traitement des listes pour les ajouts des réponses
+      // On initialise les composants nécessaire
+      List<Integer> reponses = new ArrayList<Integer>();
+      String questionnaire;
+      String pseudo;
+      Date d;
+      Sportif unSportif;
+      Questionnaire unQuestionnaire;
+      Calendar calendar;
+      Calendar calendar2;
+      Integer numeroSemaine;
+      Integer numeroSemaine2;
+      // tant qu'il reste un élément dans la liste, toute les reponses n'ont pas été crée
+      while (valeur.size() > 0) {
+        // On prend tout les informations du premier élément
+        questionnaire = intituleQuestionnaire.get(0);
+        pseudo = pseudoSportif.get(0);
+        d = date.get(0);
+        calendar = new GregorianCalendar();
+        calendar.setTime(d);
+        numeroSemaine = calendar.get(Calendar.WEEK_OF_YEAR);
+        reponses.add(valeur.get(0)); // On ajoute l'élément dans la liste des éléments à ajouté
+        valeur.remove(0); // on supprimer l'élément qu'on va ajouté
+        // On cherche si d'autre élément sont conforme au premier élément
+        for (int i = 0; i < valeur.size(); i++) {
+          calendar2 = new GregorianCalendar();
+          calendar2.setTime(date.get(i));
+          numeroSemaine2 = calendar2.get(Calendar.WEEK_OF_YEAR);
+          if (intituleQuestionnaire.get(i) == questionnaire && pseudoSportif.get(0) == pseudo
+              && numeroSemaine == numeroSemaine2) {
+            // Il est conforme, on l'ajoute dans la liste des éléments à ajouté
+            reponses.add(valeur.get(i));
+            valeur.remove(i); // on supprimer l'élément qu'on va ajouté
+          }
+        }
+        unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(questionnaire);
+        unSportif = gestionSportif.consulterSportif(pseudo);
+        gestionReponses.ajouterReponses(d, unSportif, unQuestionnaire, reponses); // on fait l'ajout
+        reponses.clear(); // On réinitialise la liste ajouté pour le prochain tour de boucle
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
     return true;
   }
 

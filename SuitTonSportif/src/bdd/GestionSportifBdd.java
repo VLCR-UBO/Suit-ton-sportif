@@ -37,8 +37,6 @@ public class GestionSportifBdd {
       connection = DriverManager.getConnection(url, user, passwd);
       sqlStatement =
           connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-      System.out.println("Connexion OK");
     } catch (Exception e) {
       e.printStackTrace();
     }
