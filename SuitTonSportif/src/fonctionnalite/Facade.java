@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * La classe Facade fourni à l'IHM toutes les informations dont elle à besoin. Elle agit comme
@@ -275,13 +276,13 @@ public class Facade {
    * 
    * @param date : Il s'agit de la date de la dernière modification de la liste de reponses.
    * @param numeroSemaine : Contient le numéro de la semaine ou l'élément à été crée.
-   * @param listeReponses : Cette liste de Integer est la liste des reponses à un questionnaire.
+   * @param listeReponses : Contient les questions, et respectivement leurs réponses a ajouté.
    * @param pseudo : Ces réponses correspondent à ce sportif.
    * @param nomQuestionnaire : Ces réponses correspondent à ce questionnaire.
    * @return
    */
   public boolean modifierReponses(Date date, String pseudo, String nomQuestionnaire,
-      List<Integer> listeReponses, Integer numeroSemaine) {
+      Map<String, Integer> listeReponses, Integer numeroSemaine) {
     if (gestionReponses == null || gestionQuestionnaire == null || gestionSportif == null) {
       return false;
     }
@@ -290,14 +291,29 @@ public class Facade {
     if (unSportif == null || unQuestionnaire == null) {
       return false;
     }
+    
     // On procède à la modification
-    boolean modification = gestionReponses.modifierReponses(numeroSemaine, date, unSportif,
-        unQuestionnaire, listeReponses);
-    if (modification == true) {
-      return true;
+    List<Integer> listeDesReponses = new ArrayList<Integer>();
+    for (String key : listeReponses.keySet()) {
+      listeDesReponses.add(listeReponses.get(key));
     }
+    boolean retBdd = gestionReponsesBdd.modifierReponses(numeroSemaine, date, unSportif,
+        unQuestionnaire, listeReponses);
+    if (retBdd) {
+      boolean modification = gestionReponses.modifierReponses(numeroSemaine, date, unSportif,
+          unQuestionnaire, listeDesReponses);
+      if (modification == true) {
+        return true;
+      }
+    }
+    
     // Il s'agit donc d'un ajout
-    return gestionReponses.ajouterReponses(date, unSportif, unQuestionnaire, listeReponses);
+    boolean retBdd2 = gestionReponsesBdd.ajouterReponses(gestionReponses, date, unSportif,
+        pseudo, unQuestionnaire, listeReponses);
+    if (retBdd2) {
+      return gestionReponses.ajouterReponses(date, unSportif, unQuestionnaire, listeDesReponses);
+    }
+    return false;
   }
 
   /**

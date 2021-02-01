@@ -72,6 +72,7 @@ public class GestionSportifBdd {
    * n'existe pas déjà. Une valeur boolean sera retournée : true si le sportif est ajouté, false
    * sinon.
    * 
+   * @param gestionSportif : Permet d'accéder aux éléments déjà présents dans l'application.
    * @param nom : Chaine de caractères non null et non vide.
    * @param prenom : Chaine de caractères non null et non vide.
    * @param pseudo : Chaine de caractères non null et non vide qui permet l'identification du
@@ -114,6 +115,7 @@ public class GestionSportifBdd {
    * modifié avec les autres paramètres fourni. Si le nouveau pseudo existe déjà, la modification
    * sera annulé. Une valeur boolean sera retournée : true si le sportif est modifié, false sinon.
    * 
+   * @param gestionSportif : Permet d'accéder aux éléments déjà présents dans l'application.
    * @param ancienPseudo : Chaine de caractères non null et non vide qui permet l'identification du
    *        sportif.
    * @param nom : Chaine de caractères non null et non vide. Il s'agit du nouveau nom du sportif.
@@ -156,7 +158,14 @@ public class GestionSportifBdd {
     return true;
   }
 
-  public boolean load(GestionSportif gestion) {
+  /**
+   * Cette méthode permet de mettre à jour les données de l'application, avec celle de la base de
+   * données.
+   * 
+   * @param gestionSportif : Permet de mettre à jour les éléments de l'application.
+   * @return true si tout c'est bien passé, false sinon.
+   */
+  public boolean load(GestionSportif gestionSportif) {
     try {
       List<String> lesPseudoSportifs = new ArrayList<String>();
       List<String> lesNomSportifs = new ArrayList<String>();
@@ -179,7 +188,7 @@ public class GestionSportifBdd {
 
       int taille = lesPseudoSportifs.size();
       for (int i = 0; i < taille; i++) {
-        gestion.ajouterSportif(lesNomSportifs.get(i), lesPrenomSportifs.get(i),
+        gestionSportif.ajouterSportif(lesNomSportifs.get(i), lesPrenomSportifs.get(i),
             lesPseudoSportifs.get(i), lesMotDePasseSportifs.get(i),
             lesDateDeNaissanceSportifs.get(i));
       }
