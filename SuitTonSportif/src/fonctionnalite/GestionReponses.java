@@ -25,16 +25,16 @@ public class GestionReponses {
   }
 
   /**
-   * Cette m�thode permet d'ajouter un objet reponses avec les param�tres qui lui sont fourni.
-   * L'ajout aura lieu si et seulement si les param�tres sont correct et si l'�l�ment n'est pas d�j�
-   * pr�sent (m�me sportif, questionnaire, et semaine). Une valeur boolean sera retourn�e : true si
-   * la reponses � �t� ajout�, false sinon.
+   * Cette méthode permet d'ajouter un objet reponses avec les paramètres qui lui sont fourni.
+   * L'ajout aura lieu si et seulement si les paramètres sont correct et si l'élément n'est pas déjà
+   * présent (même sportif, questionnaire, et semaine). Une valeur boolean sera retournée : true si
+   * la reponses est ajouté, false sinon.
    * 
-   * @param date : Il s'agit de la date de la derni�re modification de la liste de reponses.
-   * @param listeReponses : Cette liste de Integer est la liste des reponses � un questionnaire.
-   * @param unSportif : Ces r�ponses correspondent � ce sportif.
-   * @param unQuestionnaire : Ces r�ponses correspondent � ce questionnaire.
-   * @return Retourne true si la reponses � �t� ajout�e, false sinon.
+   * @param date : Il s'agit de la date de la dernière modification de la liste de reponses.
+   * @param listeReponses : Cette liste de Integer est la liste des reponses a un questionnaire.
+   * @param unSportif : Ces réponses correspondent à ce sportif.
+   * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
+   * @return Retourne true si la reponses est ajoutée, false sinon.
    */
   public boolean ajouterReponses(Date date, Sportif unSportif, Questionnaire unQuestionnaire,
       List<Integer> listeReponses) {
@@ -58,16 +58,16 @@ public class GestionReponses {
   }
 
   /**
-   * Cette m�thode permet de modifier la listes de reponses d'un objet reponses (la date sera mise �
-   * jour �galement), Celui-ci est identifi� avec les param�tres unSportif, unQuestionnaire, et le
-   * num�ro de semaine.
+   * Cette méthode permet de modifier la listes de reponses d'un objet reponses (la date sera mise a
+   * jour également), Celui-ci est identifié avec les paramètres unSportif, unQuestionnaire, et le
+   * numéro de semaine.
    * 
-   * @param date : Il s'agit de la date de la derni�re modification de la liste de reponses.
-   * @param numeroSemaine : Contient le num�ro de la semaine ou l'�l�ment � �t� cr�e.
-   * @param listeReponses : Cette liste de Integer est la liste des reponses � un questionnaire.
-   * @param unSportif : Ces r�ponses correspondent � ce sportif.
-   * @param unQuestionnaire : Ces r�ponses correspondent � ce questionnaire.
-   * @return Retourne 1 si la reponses est modifié, 0 s'il elle n'a pas été trouvé, -1 sinon.
+   * @param date : Il s'agit de la date de la dernière modification de la liste de reponses.
+   * @param numeroSemaine : Contient le numéro de la semaine ou l'élément est crée.
+   * @param listeReponses : Cette liste de Integer est la liste des reponses à un questionnaire.
+   * @param unSportif : Ces réponses correspondent à ce sportif.
+   * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
+   * @return Retourne true si la reponses est modifié, false sinon.
    */
   public boolean modifierReponses(Integer numeroSemaine, Date date, Sportif unSportif,
       Questionnaire unQuestionnaire, List<Integer> listeReponses) {
@@ -93,13 +93,14 @@ public class GestionReponses {
   }
 
   /**
-   * Cette m�thode permet de recup�rer un objet Reponses parmi la liste. Celui-ci est identifi� avec
-   * les param�tres unSporti, unQuestionnaire, et le num�ro de semaine.
+   * Cette méthode permet de recupérer un objet Reponses parmi la liste. Celui-ci est identifié avec
+   * les paramètres unSporti, unQuestionnaire, et le numéro de semaine.
    * 
-   * @param numeroSemaine : Contient le num�ro de la semaine ou l'�l�ment � �t� cr�e.
-   * @param unSportif : Ces r�ponses correspondent � ce sportif.
-   * @param unQuestionnaire : Ces r�ponses correspondent � ce questionnaire.
-   * @return
+   * @param numeroSemaine : Contient le numéro de la semaine ou l'élément est crée.
+   * @param unSportif : Ces réponses correspondent à ce sportif.
+   * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
+   * @return Retourne la liste des réponses correspondant aux paramètres indiqué, ou null en cas de
+   *         problème.
    */
   public List<Integer> consulterReponses(Integer numeroSemaine, Sportif unSportif,
       Questionnaire unQuestionnaire) {

@@ -57,7 +57,7 @@ public class GestionQuestionnaire {
    * @param ancienNomQuestionnaire : L'identifiant unique pour retrouver notre questionnaire
    * @param nouveauNomQuestionnaire : Le nouvelle identifiant unique pour notre questionnaire
    * @param questions : la liste de string utilisée pour le nouveau questionnaire
-   * @return : vrai si le questionnaire à été modifié, faux sinon
+   * @return Retourne vrai si le questionnaire à été modifié, faux sinon
    */
   public boolean modifierQuestionnaire(String ancienNomQuestionnaire,
       String nouveauNomQuestionnaire, List<String> questions) {
@@ -102,7 +102,7 @@ public class GestionQuestionnaire {
    * Une méthode pour supprimer un questionnaire.
    * 
    * @param nomQuestionnaire : L'identifiant unique du questionnaire à supprimer
-   * @return : vrai si le questionnaire à été supprimé, faux sinon
+   * @return Retourne vrai si le questionnaire à été supprimé, faux sinon
    */
   public boolean supprimerQuestionnaire(String nomQuestionnaire) {
     boolean ret = false;
@@ -124,7 +124,7 @@ public class GestionQuestionnaire {
    * Une méthode permettant d'obtenir un questionnaire grâce à son nom.
    * 
    * @param nomQuestionnaire : le nom du questionnaire
-   * @return : la liste des question retournée
+   * @return Retourne la liste des question retournée
    */
   public Questionnaire consulterListeQuestion(String nomQuestionnaire) {
     Questionnaire questionnaire = null;

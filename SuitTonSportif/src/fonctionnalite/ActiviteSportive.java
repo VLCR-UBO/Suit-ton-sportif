@@ -1,7 +1,7 @@
 package fonctionnalite;
 
 /**
- * L'énumeration ActiviteSportive contient la liste des activités sportives disponible.
+ * L'Ã©numeration ActiviteSportive contient la liste des activitÃ©s sportives disponible.
  * 
  * @author ychan
  *

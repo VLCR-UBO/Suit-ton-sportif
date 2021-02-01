@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * La classe Reponses permet la création d'une liste de reponses pour un sportif et questionnaire
- * donné. Des Getters et des Setters permettent l'accès à ses informations.
+ * La classe Reponses permet la crÃ©ation d'une liste de reponses pour un sportif et questionnaire
+ * donnÃ©. Des Getters et des Setters permettent l'accÃ¨s Ã  ses informations.
  * 
  * @author ychan
  *
@@ -18,14 +18,14 @@ public class Reponses {
   private Questionnaire unQuestionnaire;
 
   /**
-   * Constructeur de la classe Reponses. Il crée une nouvelle Reponses avec les paramètres qui lui
+   * Constructeur de la classe Reponses. Il crÃ©e une nouvelle Reponses avec les paramÃ¨tres qui lui
    * sont fourni.
    * 
-   * @param date : Il s'agit de la date de la dernière modification de la liste de reponses.
-   * @param numeroSemaine : Contient le numéro de la semaine ou l'élément à été crée.
-   * @param listeReponses : Cette liste de Integer est la liste des reponses à un questionnaire.
-   * @param unSportif : Ces réponses correspondent à ce sportif.
-   * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
+   * @param date : Il s'agit de la date de la derniÃ¨re modification de la liste de reponses.
+   * @param numeroSemaine : Contient le numÃ©ro de la semaine ou l'Ã©lÃ©ment est crÃ©e.
+   * @param listeReponses : Cette liste de Integer est la liste des reponses Ã  un questionnaire.
+   * @param unSportif : Ces rÃ©ponses correspondent Ã  ce sportif.
+   * @param unQuestionnaire : Ces rÃ©ponses correspondent Ã  ce questionnaire.
    */
   public Reponses(Date date, Integer numeroSemaine, List<Integer> listeReponses, Sportif unSportif,
       Questionnaire unQuestionnaire) {

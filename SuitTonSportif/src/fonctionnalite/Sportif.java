@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * La classe Sportif permet la cr�ation d'un sportif et contient toutes les donn�es de celui-ci. Des
- * Getters et des Setters permettent l'acc�s � ces informations.
+ * La classe Sportif permet la création d'un sportif et contient toutes les données de celui-ci. Des
+ * Getters et des Setters permettent l'accès à ces informations.
  * 
  * @author ychan
  *
@@ -20,14 +20,14 @@ public class Sportif {
   private List<ActiviteSportive> listeDesActivitesSportive;
 
   /**
-   * Constructeur de la classe Sportif. Il cr�e un nouveau sportif avec les param�tres qui lui sont
+   * Constructeur de la classe Sportif. Il crée un nouveau sportif avec les paramètres qui lui sont
    * fourni.
    * 
-   * @param nom : Chaine de caract�res non null et non vide.
-   * @param prenom : Chaine de caract�res non null et non vide.
-   * @param pseudo : Chaine de caract�res non null et non vide qui permet l'identification du
+   * @param nom : Chaine de caractères non null et non vide.
+   * @param prenom : Chaine de caractères non null et non vide.
+   * @param pseudo : Chaine de caractères non null et non vide qui permet l'identification du
    *        sportif.
-   * @param motDePasse : Chaine de caract�res non null et non vide.
+   * @param motDePasse : Chaine de caractères non null et non vide.
    * @param dateDeNaissance : une date non null.
    */
   public Sportif(String nom, String prenom, String pseudo, String motDePasse,

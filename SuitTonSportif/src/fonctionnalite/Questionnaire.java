@@ -37,7 +37,7 @@ public class Questionnaire {
    * 
    * @param intitule : l'intitulé de la question
    * @param defaut : la réponse par défaut de la question
-   * @return : vrai si la question à été ajoutée, faux sinon
+   * @return Retourne vrai si la question à été ajoutée, faux sinon
    */
   public boolean ajouterQuestionBoolenne(String intitule, boolean defaut) {
     boolean ret = false;
@@ -63,9 +63,10 @@ public class Questionnaire {
    * 
    * @param ancienIntitule : l'ancienne intitulé pour repérer la question à modifier.
    * @param nouveauIntitule : le nouvel intitulé.
-   * @return : vrai si la question à été modifiée, faux sinon
+   * @return Retourne vrai si la question à été modifiée, faux sinon
    */
-  public boolean modifierQuestionBoolenne(String ancienIntitule, String nouveauIntitule, boolean defaut) {
+  public boolean modifierQuestionBoolenne(String ancienIntitule, String nouveauIntitule,
+      boolean defaut) {
     if (ancienIntitule == null || ancienIntitule.length() < 1 || nouveauIntitule == null
         || nouveauIntitule.length() < 1) {
       return false; // paramètres incorrect
@@ -93,7 +94,7 @@ public class Questionnaire {
    * Une méthode pour supprimer une question.
    * 
    * @param intitule : l'intitulé de la question à supprimer
-   * @return : vrai si la question à été supprimée
+   * @return Retourne vrai si la question à été supprimée
    */
   public boolean supprimerQuestion(String intitule) {
     boolean ret = false;

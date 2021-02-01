@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * La classe Facade fourni à l'IHM toutes les informations dont elle à besoin. Elle agit comme
+ * La classe Facade fourni à l'IHM toutes les informations dont elle à besoin. Elle agit comme un
  * intermédiaire entre ces deux packages.
  * 
  * @author ychan
@@ -27,8 +27,8 @@ public class Facade {
   private GestionReponsesBdd gestionReponsesBdd;
 
   /**
-   * Le constructeur de la classe Facade. Il initialise les 3 objets dont nous allons avoir besoins
-   * pour accéder à nos différentes ressources.
+   * Le constructeur de la classe Facade. Il initialise les objets dont nous allons avoir besoins
+   * pour accéder et intéragir avec nos différentes ressources.
    */
   public Facade() {
     gestionSportif = new GestionSportif();
@@ -42,12 +42,10 @@ public class Facade {
     load();
   }
 
-  // Pour Chiara
-
   /**
    * Cette méthode renvoie la liste des sportifs.
    * 
-   * @return la liste des sportifs ou null en cas de problème.
+   * @return Retourne la liste des sportifs ou null en cas de problème.
    */
   public List<String> obtenirListeSportif() {
     if (gestionSportif == null || gestionSportif.getListeDesSportifs().size() == 0) {
@@ -70,7 +68,7 @@ public class Facade {
    * 
    * @param pseudo : Chaine non null et non vide, qui permet l'identifiaction d'un sportif de
    *        manière unique.
-   * @return le nom du sportif demandé ou null en cas de problème.
+   * @return Retourne le nom du sportif demandé ou null en cas de problème.
    */
   public String obtenirNomSportif(String pseudo) {
     if (gestionSportif == null) {
@@ -88,7 +86,7 @@ public class Facade {
    * 
    * @param pseudo : Chaine non null et non vide, qui permet l'identifiaction d'un sportif de
    *        manière unique.
-   * @return le prenom du sportif demandé ou null en cas de problème.
+   * @return Retourne le prenom du sportif demandé ou null en cas de problème.
    */
   public String obtenirPrenomSportif(String pseudo) {
     if (gestionSportif == null) {
@@ -106,7 +104,7 @@ public class Facade {
    * 
    * @param pseudo : Chaine non null et non vide, qui permet l'identifiaction d'un sportif de
    *        manière unique.
-   * @return la date de naissance du sportif demandé ou null en cas de problème.
+   * @return Retourne la date de naissance du sportif demandé ou null en cas de problème.
    */
   public Calendar obtenirDateDeNaissanceSportif(String pseudo) {
     if (gestionSportif == null) {
@@ -124,7 +122,7 @@ public class Facade {
    * 
    * @param pseudo : Chaine non null et non vide, qui permet l'identifiaction d'un sportif de
    *        manière unique.
-   * @return true si la demande c'est bien passé, false sinon.
+   * @return Retourne true si la demande c'est bien passé, false sinon.
    */
   public boolean supprimerUnSportif(String pseudo) {
     if (gestionSportif == null) {
@@ -152,7 +150,7 @@ public class Facade {
    *        du sportif.
    * @param dateDeNaissance : une date non null. Il s'agit de la nouvelle dateDeNaissance du
    *        sportif.
-   * @return true si la demande c'est bien passé, false sinon.
+   * @return Retourne true si la demande c'est bien passé, false sinon.
    */
   public boolean modifierUnSportif(String ancienPseudo, String nom, String prenom, String pseudo,
       String motDePasse, Calendar dateDeNaissance) {
@@ -178,7 +176,7 @@ public class Facade {
    *        sportif de manière unique.
    * @param motDePasse : Chaine de caractères non null et non vide.
    * @param dateDeNaissance : Une date non null.
-   * @return true si la demande c'est bien passé, false sinon.
+   * @return Retourne true si la demande c'est bien passé, false sinon.
    */
   public boolean ajouterUnSportif(String nom, String prenom, String pseudo, String motDePasse,
       Calendar dateDeNaissance) {
@@ -198,7 +196,7 @@ public class Facade {
    * 
    * @param pseudo : Chaine de caractères non null et non vide qui permet l'identification du
    *        sportif de manière unique.
-   * @return la liste des activites du sportif demandé ou null en cas de problème.
+   * @return Retourne la liste des activites du sportif demandé ou null en cas de problème.
    */
   public List<String> consulterLesActivitesDuSportif(String pseudo) {
     if (gestionSportif == null) {
@@ -227,7 +225,7 @@ public class Facade {
    *        unique.
    * @param nomQuestionnaire : Chaine non null et non vide qui permet l'identification d'un
    *        questionnaire de manière unique.
-   * @return l'objet HashMap correpondant, ou null en cas de problème.
+   * @return Retourne l'objet HashMap correpondant, ou null en cas de problème.
    */
   public HashMap<String, Integer> obtenirQuestionnaireEtReponses(Integer numeroSemaine,
       String pseudo, String nomQuestionnaire) {
@@ -279,7 +277,7 @@ public class Facade {
    * @param listeReponses : Contient les questions, et respectivement leurs réponses a ajouté.
    * @param pseudo : Ces réponses correspondent à ce sportif.
    * @param nomQuestionnaire : Ces réponses correspondent à ce questionnaire.
-   * @return
+   * @return Retourne true si la modification c'est bien passé, false sinon.
    */
   public boolean modifierReponses(Date date, String pseudo, String nomQuestionnaire,
       Map<String, Integer> listeReponses, Integer numeroSemaine) {
@@ -319,7 +317,7 @@ public class Facade {
   /**
    * Cette méthode retourne la liste de tout les nom des questionnaires.
    * 
-   * @return la liste de tout les questionnaire, ou null en cas de problème.
+   * @return Retourne la liste de tout les questionnaires, ou null en cas de problème.
    */
   public List<String> consulterLesQuestionnaire() {
     if (gestionQuestionnaire == null) {
@@ -334,15 +332,13 @@ public class Facade {
     return ret;
   }
 
-  // Pour Alex
-
   /**
    * Cette méthode retourne la liste des questions correspondante au à l'intitulé de questionnaire
    * fourni en paramètre.
    * 
    * @param nomQuestionnaire : Chaine non null et non vide qui permet l'identification d'un sportif
    *        de manière unique.
-   * @return la liste des questions correspondante, ou null en cas de problème.
+   * @return Retourne la liste des questions correspondantes, ou null en cas de problème.
    */
   public List<String> consulterLesQuestionDuQuestionnaire(String nomQuestionnaire) {
     if (gestionQuestionnaire == null) {
@@ -368,7 +364,7 @@ public class Facade {
    * 
    * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire.
    * @param questions : la liste de string utilisée pour créée les questions.
-   * @return true si la demande c'est bien déroulé, false sinon.
+   * @return Retourne true si la demande c'est bien déroulé, false sinon.
    */
   public boolean ajouterUnQuestionnaire(String nomQuestionnaire, List<String> questions) {
     if (gestionQuestionnaire == null) {
@@ -384,7 +380,7 @@ public class Facade {
    * @param ancienNomQuestionnaire : L'identifiant unique du questionnaire.
    * @param nouveauNomQuestionnaire : L'identifiant unique du nouveau questionnaire.
    * @param questions : la liste de string utilisée pour créée les questions.
-   * @return true si la demande c'est bien déroulé, false sinon.
+   * @return Retourne true si la demande c'est bien déroulé, false sinon.
    */
   public boolean modifierUnQuestionnaire(String ancienNomQuestionnaire,
       String nouveauNomQuestionnaire, List<String> questions) {
@@ -396,10 +392,10 @@ public class Facade {
   }
 
   /**
-   * Cette méthode permet la suppression du questionnaire passez en paramètre.
+   * Cette méthode permet la suppression du questionnaire passé en paramètre.
    * 
    * @param nomQuestionnaire : L'identifiant unique du questionnaire à supprimer.
-   * @return true si la demande c'est bien passé, false sinon.
+   * @return Retourne true si la demande c'est bien passé, false sinon.
    */
   public boolean supprimerUnQuestionnaire(String nomQuestionnaire) {
     if (gestionQuestionnaire == null) {
@@ -414,7 +410,7 @@ public class Facade {
    * 
    * @param nomQuestionnaire : L'identifiant unique du questionnaire.
    * @param intitule : L'identifiant unique de la question.
-   * @return true si la demande c'est bien passez, false sinon.
+   * @return Retourne true si la demande c'est bien passez, false sinon.
    */
   public boolean ajouterUneQuestion(String nomQuestionnaire, String intitule) {
     if (gestionQuestionnaire == null) {
@@ -435,7 +431,7 @@ public class Facade {
    * @param nomQuestionnaire : L'identifiant unique du questionnaire.
    * @param ancienIntitule : L'identifiant unique de la question.
    * @param nouveauIntitule : Le nouveau identifiant unique de la question.
-   * @return true si la demande c'est bien passez, false sinon.
+   * @return Retourne true si la demande c'est bien passez, false sinon.
    */
   public boolean modifierUneQuestion(String nomQuestionnaire, String ancienIntitule,
       String nouveauIntitule, boolean defaut) {
@@ -455,7 +451,7 @@ public class Facade {
    * 
    * @param nomQuestionnaire : L'identifiant unique du questionnaire.
    * @param intitule : L'identifiant unique de la question.
-   * @return true si la demande c'est bien passez, false sinon.
+   * @return Retourne true si la demande c'est bien passez, false sinon.
    */
   public boolean supprimerUneQuestion(String nomQuestionnaire, String intitule) {
     if (gestionQuestionnaire == null) {
@@ -471,7 +467,7 @@ public class Facade {
   /**
    * Cette méthode permet de charger les données depuis notre base de données, dans l'application.
    * 
-   * @return true si le chargement des données c'est bien passé, false sinon.
+   * @return Retourne true si le chargement des données c'est bien passé, false sinon.
    */
   public boolean load() {
     boolean ret1 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);

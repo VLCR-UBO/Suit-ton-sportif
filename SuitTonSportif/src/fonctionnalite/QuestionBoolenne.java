@@ -10,11 +10,9 @@ public class QuestionBoolenne extends Question {
    * @param intitule : l'intitulé de la question
    * @param reponseQuestion : la réponse par default de la question
    */
-
   public QuestionBoolenne(String intitule, boolean reponseQuestion) {
     super(intitule);
     this.reponseQuestion = reponseQuestion;
-    // TODO Auto-generated constructor stub
   }
 
   public boolean getReponseQuestion() {
