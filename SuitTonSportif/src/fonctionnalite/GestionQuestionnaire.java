@@ -19,7 +19,7 @@ public class GestionQuestionnaire {
    * Une méthode pour ajouter un questionnaire depuis une liste de string utilisée pour créée les
    * questions.
    * 
-   * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire
+   * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire.
    * @param questions : la liste de string utilisée pour créée les questions.
    */
   public boolean ajouterQuestionnaire(String nomQuestionnaire, List<String> questions) {
