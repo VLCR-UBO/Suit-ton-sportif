@@ -98,54 +98,33 @@ public class GestionSportifBdd {
     }
     return true;
   }
-  
+
   public boolean load(GestionSportif gestion) {
-    /*List<String> lesNomsDesQuestionnaires = new ArrayList<String>();
-    List<String> lesNomsDesQuestions = new ArrayList<String>();
-    
-    try {
-      ResultSet lesQuestionnaires = this.sqlStatement.executeQuery(("SELECT * FROM questionnaire"));
-
-      while (lesQuestionnaires.next()) {
-        lesNomsDesQuestionnaires.add(lesQuestionnaires.getString("intituleQuestionnaire"));
-      }
-
-      for (String nom : lesNomsDesQuestionnaires) {
-        ResultSet lesQuestions = this.sqlStatement
-            .executeQuery(("SELECT * FROM question WHERE unQuestionnaire = " + nom));
-
-        while (lesQuestions.next()) {
-          lesNomsDesQuestions.add(lesQuestions.getString("intituleQuestion"));
-        }
-        
-        gestion.ajouterQuestionnaire(nom, lesNomsDesQuestions);
-        
-        lesNomsDesQuestions.clear();
-      }
-    } catch (Exception e) {
-      return false;
-    }
-
-    return true;*/
-    
     try {
       List<String> lesPseudoSportifs = new ArrayList<String>();
       List<String> lesNomSportifs = new ArrayList<String>();
       List<String> lesPrenomSportifs = new ArrayList<String>();
       List<String> lesMotDePasseSportifs = new ArrayList<String>();
       List<Calendar> lesDateDeNaissanceSportifs = new ArrayList<Calendar>();
-      
+
       ResultSet lesSportifs = this.sqlStatement.executeQuery(("SELECT * FROM sportif"));
       while (lesSportifs.next()) {
         lesPseudoSportifs.add(lesSportifs.getString("pseudo"));
         lesNomSportifs.add(lesSportifs.getString("nomSportif"));
         lesPrenomSportifs.add(lesSportifs.getString("prenomSportif"));
         lesMotDePasseSportifs.add(lesSportifs.getString("motDePasseSportif"));
-        
+
         Date uneDate = lesSportifs.getDate("dateDeNaissanceSportif");
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(uneDate);
         lesDateDeNaissanceSportifs.add(calendar);
+      }
+      
+      int taille = lesPseudoSportifs.size();
+      for (int i = 0; i < taille; i++) {
+        gestion.ajouterSportif(lesNomSportifs.get(i), lesPrenomSportifs.get(i),
+            lesPseudoSportifs.get(i), lesMotDePasseSportifs.get(i),
+            lesDateDeNaissanceSportifs.get(i));
       }
     } catch (Exception e) {
       return false;
