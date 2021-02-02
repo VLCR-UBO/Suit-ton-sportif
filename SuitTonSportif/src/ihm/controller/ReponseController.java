@@ -164,15 +164,15 @@ public class ReponseController implements Initializable {
    */
   @FXML
   public void enregistrer(MouseEvent mouseEvent) {
-    Map<String, Integer> map = new HashMap <String, Integer>();
+    Map<String, Integer> map = new HashMap<String, Integer>();
     for (VBox vb : lignes) {
       HBox hb = (HBox) vb.getChildren().get(1);
       Label l = (Label) vb.getChildren().get(0);
       RadioButton rb = (RadioButton) hb.getChildren().get(0);
       map.put(l.getText(), rb.isSelected() ? 1 : 0);
     }
-    Main.facade.modifierReponses(new Date(), this.sportifSelectioner,
-        questionnaireSelectionner, map, this.semaineSelectionner);
+    Main.facade.modifierReponses(new Date(), this.sportifSelectioner, questionnaireSelectionner,
+        map, this.semaineSelectionner);
     questionReponse = Main.facade.obtenirQuestionnaireEtReponses(this.semaineSelectionner,
         this.sportifSelectioner, questionnaireSelectionner);
     this.remplirListeReponse();
