@@ -1,13 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const mysql = require('mysql'); 
 require('dotenv').config();  
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+
+// Gestion des routes
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const connexionRouter = require('./routes/connexion');
+
 
 
 var app = express();
@@ -22,6 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Connexion à la base de donnée
 const db = mysql.createConnection({
     host : process.env.BDD_HOST,
     user : process.env.BDD_USER,
