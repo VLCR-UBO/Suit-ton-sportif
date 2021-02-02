@@ -134,7 +134,7 @@ public class GestionQuestionnaire {
       boolean verif = false;
       while (questionnaireIterator.hasNext() && (!verif)) {
         questionnaireVerif = questionnaireIterator.next();
-        if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
+        if (questionnaireVerif.getNomQuestionnaire().equals(nomQuestionnaire)) {
           questionnaire = questionnaireVerif;
           verif = true;
         }

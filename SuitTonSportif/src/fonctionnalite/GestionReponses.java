@@ -113,6 +113,9 @@ public class GestionReponses {
       if (this.listeDesReponses.get(i).getUnSportif().equals(unSportif)
           && this.listeDesReponses.get(i).getUnQuestionnaire().equals(unQuestionnaire)
           && this.listeDesReponses.get(i).getNumeroSemaine() == numeroSemaine) {
+        //System.out.println("z");
+        Reponses r = this.listeDesReponses.get(i);
+        //System.out.println(r.getListeReponses());
         return this.listeDesReponses.get(i).getListeReponses();
       }
     }

@@ -239,10 +239,10 @@ public class Facade {
     }
     List<Integer> listeReponses =
         gestionReponses.consulterReponses(numeroSemaine, unSportif, unQuestionnaire);
-
     HashMap<String, Integer> ret = new HashMap<String, Integer>();
     List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
     int taille = listeQuestions.size();
+    System.out.println(listeReponses);
     if (listeReponses == null) { // Pas de reponses -> On va chercher les reponses par défaut
       Integer reponseQuestion;
       boolean reponse;
@@ -281,7 +281,8 @@ public class Facade {
    */
   public boolean modifierReponses(Date date, String pseudo, String nomQuestionnaire,
       Map<String, Integer> listeReponses, Integer numeroSemaine) {
-    if (gestionReponses == null  || gestionReponsesBdd == null || gestionQuestionnaire == null || gestionSportif == null) {
+    if (gestionReponses == null || gestionReponsesBdd == null || gestionQuestionnaire == null
+        || gestionSportif == null) {
       return false;
     }
     Sportif unSportif = gestionSportif.consulterSportif(pseudo);
@@ -289,7 +290,7 @@ public class Facade {
     if (unSportif == null || unQuestionnaire == null) {
       return false;
     }
-    
+
     // On procède à la modification
     List<Integer> listeDesReponses = new ArrayList<Integer>();
     for (String key : listeReponses.keySet()) {
@@ -304,10 +305,10 @@ public class Facade {
         return true;
       }
     }
-    
+
     // Il s'agit donc d'un ajout
-    boolean retBdd2 = gestionReponsesBdd.ajouterReponses(gestionReponses, date, unSportif,
-        pseudo, unQuestionnaire, listeReponses);
+    boolean retBdd2 = gestionReponsesBdd.ajouterReponses(gestionReponses, date, unSportif, pseudo,
+        unQuestionnaire, listeReponses);
     if (retBdd2) {
       return gestionReponses.ajouterReponses(date, unSportif, unQuestionnaire, listeDesReponses);
     }
@@ -460,7 +461,8 @@ public class Facade {
     if (unQuestionnaire == null) {
       return false;
     }
-    boolean retBdd = gestionQuestionnaireBdd.modifierQuestion(ancienIntitule, nouveauIntitule, defaut);
+    boolean retBdd =
+        gestionQuestionnaireBdd.modifierQuestion(ancienIntitule, nouveauIntitule, defaut);
     if (retBdd == true) {
       return unQuestionnaire.modifierQuestionBoolenne(ancienIntitule, nouveauIntitule, defaut);
     }
@@ -488,7 +490,7 @@ public class Facade {
       return unQuestionnaire.supprimerQuestion(intitule);
     }
     return false;
-    
+
   }
 
   /**
@@ -499,7 +501,9 @@ public class Facade {
   public boolean load() {
     boolean ret1 = this.gestionSportifBdd.load(this.gestionSportif);
     boolean ret2 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
-    boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses, this.gestionSportif, this.gestionQuestionnaire);
+    boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses, this.gestionSportif,
+        this.gestionQuestionnaire);
+    //System.out.println(this.gestionReponses.getListeDesReponses().size());
     if (ret1 && ret2 && ret3) {
       return true;
     }

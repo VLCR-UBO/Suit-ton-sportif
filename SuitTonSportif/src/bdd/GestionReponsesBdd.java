@@ -70,7 +70,12 @@ public class GestionReponsesBdd {
     calendar.setTime(date);
     Integer numeroSemaine = calendar.get(Calendar.WEEK_OF_YEAR);
     int taille = gestionReponses.getListeDesReponses().size();
+    //System.out.println(unSportif.getPseudo());
+    //System.out.println(unQuestionnaire.getNomQuestionnaire());
+    //System.out.println(numeroSemaine);
+    //System.out.println(taille);
     for (int i = 0; i < taille; i++) {
+      
       if (gestionReponses.getListeDesReponses().get(i).getUnSportif().equals(unSportif)
           && gestionReponses.getListeDesReponses().get(i).getUnQuestionnaire()
               .equals(unQuestionnaire)
@@ -78,7 +83,7 @@ public class GestionReponsesBdd {
         return false; // deja present
       }
     }
-
+    System.out.println("je suis passez connard !");
     java.util.Date utilDate = date;
     java.sql.Date dateBdd = new java.sql.Date(utilDate.getTime());
 
@@ -141,8 +146,8 @@ public class GestionReponsesBdd {
   public boolean load(GestionReponses gestionReponses, GestionSportif gestionSportif,
       GestionQuestionnaire gestionQuestionnaire) {
     try {
-      ResultSet lesReponses = this.sqlStatement
-          .executeQuery(("SELECT reponse.*, question.unQuestionnaire FROM reponse, question"));
+      ResultSet lesReponses = this.sqlStatement.executeQuery(
+          ("SELECT DISTINCT reponse.*, question.unQuestionnaire FROM reponse, question"));
 
       // initialisation des composantes nécessaire
       List<String> intituleQuestionnaire = new ArrayList<String>();
@@ -171,6 +176,7 @@ public class GestionReponsesBdd {
       Integer numeroSemaine;
       Integer numeroSemaine2;
       // tant qu'il reste un élément dans la liste, toute les reponses n'ont pas été crée
+      //System.out.println(valeur.size());
       while (valeur.size() > 0) {
         // On prend tout les informations du premier élément
         questionnaire = intituleQuestionnaire.get(0);
@@ -179,6 +185,7 @@ public class GestionReponsesBdd {
         calendar = new GregorianCalendar();
         calendar.setTime(d);
         numeroSemaine = calendar.get(Calendar.WEEK_OF_YEAR);
+        //System.out.println("aa");
         reponses.add(valeur.get(0)); // On ajoute l'élément dans la liste des éléments à ajouté
         valeur.remove(0); // on supprimer l'élément qu'on va ajouté
         // On cherche si d'autre élément sont conforme au premier élément
@@ -189,13 +196,27 @@ public class GestionReponsesBdd {
           if (intituleQuestionnaire.get(i) == questionnaire && pseudoSportif.get(0) == pseudo
               && numeroSemaine == numeroSemaine2) {
             // Il est conforme, on l'ajoute dans la liste des éléments à ajouté
+            //System.out.println("bb");
             reponses.add(valeur.get(i));
             valeur.remove(i); // on supprimer l'élément qu'on va ajouté
           }
         }
         unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(questionnaire);
         unSportif = gestionSportif.consulterSportif(pseudo);
-        gestionReponses.ajouterReponses(d, unSportif, unQuestionnaire, reponses); // on fait l'ajout
+        //System.out.println("go");
+        //System.out.println(reponses);
+        //System.out.println(d);
+        //System.out.println(unSportif);
+        //System.out.println(unQuestionnaire);
+        //System.out.println(reponses);
+        reponses.add(2);
+        boolean ret = gestionReponses.ajouterReponses(d, unSportif, unQuestionnaire, reponses); // on fait l'ajout
+        List<Integer> a = gestionReponses.consulterReponses(numeroSemaine, unSportif, unQuestionnaire);
+        System.out.println(ret);
+        System.out.println(a);
+        if (!ret) {
+          return false; // Une erreur c'est produite lors de la création
+        }
         reponses.clear(); // On réinitialise la liste ajouté pour le prochain tour de boucle
       }
     } catch (Exception e) {
