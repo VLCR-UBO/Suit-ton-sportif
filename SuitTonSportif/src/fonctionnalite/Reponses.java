@@ -32,7 +32,6 @@ public class Reponses {
     this.date = date;
     this.numeroSemaine = numeroSemaine;
     this.listeReponses = listeReponses;
-    System.out.println(this.listeReponses);
     this.unSportif = unSportif;
     this.unQuestionnaire = unQuestionnaire;
   }

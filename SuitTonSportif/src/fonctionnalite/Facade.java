@@ -32,8 +32,8 @@ public class Facade {
    */
   public Facade() {
     gestionSportif = new GestionSportif();
-    gestionReponses = new GestionReponses();
     gestionQuestionnaire = new GestionQuestionnaire();
+    gestionReponses = new GestionReponses();
 
     gestionSportifBdd = new GestionSportifBdd();
     gestionQuestionnaireBdd = new GestionQuestionnaireBdd();
@@ -242,6 +242,9 @@ public class Facade {
     HashMap<String, Integer> ret = new HashMap<String, Integer>();
     List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
     int taille = listeQuestions.size();
+    System.out.println(numeroSemaine);
+    System.out.println(unSportif);
+    System.out.println(unQuestionnaire);
     System.out.println(listeReponses);
     if (listeReponses == null) { // Pas de reponses -> On va chercher les reponses par défaut
       Integer reponseQuestion;
@@ -503,8 +506,12 @@ public class Facade {
     boolean ret2 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
     boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses, this.gestionSportif,
         this.gestionQuestionnaire);
-    //System.out.println(this.gestionReponses.getListeDesReponses().size());
+    // System.out.println(this.gestionReponses.getListeDesReponses().size());
     if (ret1 && ret2 && ret3) {
+      /*List<Integer> a =
+          gestionReponses.consulterReponses(5, gestionSportif.consulterSportif("ytutru"),
+              gestionQuestionnaire.consulterListeQuestion("zaeza"));
+      System.out.println("test : " + a);*/
       return true;
     }
     return false;
