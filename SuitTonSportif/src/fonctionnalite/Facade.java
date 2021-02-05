@@ -242,10 +242,6 @@ public class Facade {
     HashMap<String, Integer> ret = new HashMap<String, Integer>();
     List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
     int taille = listeQuestions.size();
-    System.out.println(numeroSemaine);
-    System.out.println(unSportif);
-    System.out.println(unQuestionnaire);
-    System.out.println(listeReponses);
     if (listeReponses == null) { // Pas de reponses -> On va chercher les reponses par défaut
       Integer reponseQuestion;
       boolean reponse;
