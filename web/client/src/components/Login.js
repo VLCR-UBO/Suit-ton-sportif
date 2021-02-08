@@ -30,7 +30,6 @@ export default function Login() {
             console.log(res.data);
 
             if ( res.data !=undefined ){
-            
                 switch (res.data) {
                     case "MDPINCORR":
                         alert("Le mot est entré est erronné, veuillez recommencer s'il vous plait");                  
