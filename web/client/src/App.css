@@ -58,4 +58,21 @@ div.col-4 {
   border-radius: 30px;
   box-shadow: 12px 12px 2px 1px rgba(131, 131, 131, 0.2);
   padding: 5px;
+  margin-top:10px;
+}
+
+.title{
+  color :#000;
+  text-align : center;
+}
+
+.list-group-item:hover{
+  background-color: yellowgreen;
+  color : white;
+}
+
+.item{
+  background: transparent;
+  border: transparent;
+  text-align : left;
 }

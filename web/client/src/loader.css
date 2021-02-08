@@ -11,8 +11,3 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-.list-group-item:hover{
-    background-color: yellowgreen;
-    color : white;
-}
