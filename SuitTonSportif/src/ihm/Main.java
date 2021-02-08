@@ -18,7 +18,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
-    final URL fxmlUrl = getClass().getResource("onglet.fxml");
+    final URL fxmlUrl = getClass().getResource("view/onglet.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
