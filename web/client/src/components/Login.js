@@ -26,7 +26,7 @@ export default function Login() {
 
         Axios.post('/connexion/sportif',{user})
         .then(res =>{
-            
+
             if ( res.data !=undefined ){
                 switch (res.data) {
                     case "MDPINCORR":
@@ -41,13 +41,6 @@ export default function Login() {
                         /*Envoyer les données du sportif au questionnaire */ 
                         break;
                 }
-
-            
-
-
-
-
-
             }
             
 
