@@ -26,9 +26,6 @@ export default function Login() {
 
         Axios.post('/connexion/sportif',{user})
         .then(res =>{
-
-            console.log(res.data);
-
             if ( res.data !=undefined ){
                 switch (res.data) {
                     case "MDPINCORR":
