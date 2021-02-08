@@ -36,14 +36,12 @@ public class GestionReponses {
    * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
    * @return Retourne true si la reponses est ajoutée, false sinon.
    */
-  public boolean ajouterReponses(Date date, Sportif unSportif, Questionnaire unQuestionnaire,
-      List<Integer> listeReponses) {
-    if (date == null || unSportif == null || unQuestionnaire == null || listeReponses == null) {
+  public boolean ajouterReponses(Integer numeroSemaine, Date date, Sportif unSportif,
+      Questionnaire unQuestionnaire, List<Integer> listeReponses) {
+    if (numeroSemaine == null || numeroSemaine < 1 || date == null || unSportif == null
+        || unQuestionnaire == null || listeReponses == null) {
       return false; // parametres incorrects
     }
-    Calendar calendar = new GregorianCalendar();
-    calendar.setTime(date);
-    Integer numeroSemaine = calendar.get(Calendar.WEEK_OF_YEAR);
     int taille = this.listeDesReponses.size();
     for (int i = 0; i < taille; i++) {
       if (this.listeDesReponses.get(i).getUnSportif().equals(unSportif)

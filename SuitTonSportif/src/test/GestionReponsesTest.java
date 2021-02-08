@@ -60,17 +60,17 @@ class GestionReponsesTest {
     Date date = new Date(2020, 06, 22);
     Sportif sportif = new Sportif("Velo", "Marco", "theSportif", "marcovelo", dateNaissance);
 
-    assertTrue(gestion.ajouterReponses(date, sportif, question, reponse));
+    assertTrue(gestion.ajouterReponses(20, date, sportif, question, reponse));
 
 
     // Test dans le cas erreur
 
-    assertFalse(gestion.ajouterReponses(null, null, null, null));
+    assertFalse(gestion.ajouterReponses(null, null, null, null, null));
 
 
     // Test Questionnaire déja présent
 
-    assertFalse(gestion.ajouterReponses(date, sportif, question, reponse));
+    assertFalse(gestion.ajouterReponses(20, date, sportif, question, reponse));
 
   }
 
@@ -103,7 +103,7 @@ class GestionReponsesTest {
 
     Questionnaire question = new Questionnaire("Sondage", listeQuestion);
 
-    gestion.ajouterReponses(date, sportif, question, reponse);
+    gestion.ajouterReponses(20, date, sportif, question, reponse);
 
     List<Reponses> listeReponse = gestion.getListeDesReponses();
     int numero = listeReponse.get(0).getNumeroSemaine();
@@ -151,7 +151,7 @@ class GestionReponsesTest {
     Date date = new Date(2020, 6, 22);
     Questionnaire question = new Questionnaire("Sondage", listeQuestion);
 
-    gestion.ajouterReponses(date, sportif, question, reponse);
+    gestion.ajouterReponses(20, date, sportif, question, reponse);
 
 
     List<Question> listeQuestion2 = new ArrayList<Question>();
@@ -173,7 +173,7 @@ class GestionReponsesTest {
 
     Date date2 = new Date(2020, 8, 16);
 
-    gestion.ajouterReponses(date2, sportif2, questionnaire, reponse2);
+    gestion.ajouterReponses(20, date2, sportif2, questionnaire, reponse2);
 
     List<Reponses> listeReponse = gestion.getListeDesReponses();
     int numero = listeReponse.get(0).getNumeroSemaine();

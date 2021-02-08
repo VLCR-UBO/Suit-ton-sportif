@@ -284,6 +284,8 @@ public class Facade {
         || gestionSportif == null) {
       return false;
     }
+    System.out.println(date);
+    System.out.println(numeroSemaine);
     Sportif unSportif = gestionSportif.consulterSportif(pseudo);
     Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
     if (unSportif == null || unQuestionnaire == null) {
@@ -305,11 +307,12 @@ public class Facade {
       }
     }
 
-    // Il s'agit donc d'un ajout
-    boolean retBdd2 = gestionReponsesBdd.ajouterReponses(gestionReponses, date, unSportif, pseudo,
-        unQuestionnaire, listeReponses);
+    // On fait l'ajout
+    boolean retBdd2 = gestionReponsesBdd.ajouterReponses(gestionReponses, numeroSemaine, date,
+        unSportif, pseudo, unQuestionnaire, listeReponses);
     if (retBdd2) {
-      return gestionReponses.ajouterReponses(date, unSportif, unQuestionnaire, listeDesReponses);
+      return gestionReponses.ajouterReponses(numeroSemaine, date, unSportif, unQuestionnaire,
+          listeDesReponses);
     }
     return false;
   }
@@ -504,10 +507,11 @@ public class Facade {
         this.gestionQuestionnaire);
     // System.out.println(this.gestionReponses.getListeDesReponses().size());
     if (ret1 && ret2 && ret3) {
-      /*List<Integer> a =
-          gestionReponses.consulterReponses(5, gestionSportif.consulterSportif("ytutru"),
-              gestionQuestionnaire.consulterListeQuestion("zaeza"));
-      System.out.println("test : " + a);*/
+      /*
+       * List<Integer> a = gestionReponses.consulterReponses(5,
+       * gestionSportif.consulterSportif("ytutru"),
+       * gestionQuestionnaire.consulterListeQuestion("zaeza")); System.out.println("test : " + a);
+       */
       return true;
     }
     return false;
