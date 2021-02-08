@@ -60,22 +60,15 @@ public class GestionReponsesBdd {
    * @param unQuestionnaire : Ces réponses correspondent � ce questionnaire.
    * @return Retourne true si la reponses est ajoutée, false sinon.
    */
-  public boolean ajouterReponses(GestionReponses gestionReponses, Date date, Sportif unSportif,
-      String pseudo, Questionnaire unQuestionnaire, Map<String, Integer> listeReponses) {
+  public boolean ajouterReponses(GestionReponses gestionReponses, Integer numeroSemaine, Date date,
+      Sportif unSportif, String pseudo, Questionnaire unQuestionnaire,
+      Map<String, Integer> listeReponses) {
     if (date == null || unSportif == null || pseudo == null || pseudo.length() < 1
         || unQuestionnaire == null || listeReponses == null) {
       return false; // parametres incorrects
     }
-    Calendar calendar = new GregorianCalendar();
-    calendar.setTime(date);
-    Integer numeroSemaine = calendar.get(Calendar.WEEK_OF_YEAR);
     int taille = gestionReponses.getListeDesReponses().size();
-    // System.out.println(unSportif.getPseudo());
-    // System.out.println(unQuestionnaire.getNomQuestionnaire());
-    // System.out.println(numeroSemaine);
-    // System.out.println(taille);
     for (int i = 0; i < taille; i++) {
-
       if (gestionReponses.getListeDesReponses().get(i).getUnSportif().equals(unSportif)
           && gestionReponses.getListeDesReponses().get(i).getUnQuestionnaire()
               .equals(unQuestionnaire)
@@ -83,7 +76,6 @@ public class GestionReponsesBdd {
         return false; // deja present
       }
     }
-    System.out.println("je suis passez connard !");
     java.util.Date utilDate = date;
     java.sql.Date dateBdd = new java.sql.Date(utilDate.getTime());
 
@@ -122,10 +114,12 @@ public class GestionReponsesBdd {
     }
     java.util.Date utilDate = date;
     java.sql.Date dateBdd = new java.sql.Date(utilDate.getTime());
-
+    String pseudo = unSportif.getPseudo();
     for (Map.Entry<String, Integer> map : listeReponses.entrySet()) {
+      String intituleQuestion = map.getKey();
       String query = "UPDATE reponse SET derniereModification = DATE('" + dateBdd
-          + "'), valeurReponse = " + map.getValue();
+          + "'), valeurReponse = " + map.getValue() + " WHERE numeroSemaine = " + numeroSemaine
+          + " AND unSportif = '" + pseudo + "' AND uneQuestion = '" + intituleQuestion + "'";
       try {
         sqlStatement.executeUpdate(query);
       } catch (SQLException e) {
@@ -153,6 +147,7 @@ public class GestionReponsesBdd {
       List<String> intituleQuestionnaire = new ArrayList<String>();
       List<String> pseudoSportif = new ArrayList<String>();
       List<Date> date = new ArrayList<Date>();
+      List<Integer> numeroDesSemaines = new ArrayList<Integer>();
       List<Integer> valeur = new ArrayList<Integer>();
 
       // collecte des éléments (on rempli nos listes)
@@ -160,6 +155,7 @@ public class GestionReponsesBdd {
         intituleQuestionnaire.add(lesReponses.getString("unQuestionnaire"));
         pseudoSportif.add(lesReponses.getString("unSportif"));
         date.add(lesReponses.getDate("derniereModification"));
+        numeroDesSemaines.add(lesReponses.getInt("numeroSemaine"));
         valeur.add(lesReponses.getInt("valeurReponse"));
       }
 
@@ -171,8 +167,6 @@ public class GestionReponsesBdd {
       Date d;
       Sportif unSportif;
       Questionnaire unQuestionnaire;
-      Calendar calendar;
-      Calendar calendar2;
       Integer numeroSemaine;
       Integer numeroSemaine2;
       // tant qu'il reste un élément dans la liste, toute les reponses n'ont pas été crée
@@ -181,16 +175,12 @@ public class GestionReponsesBdd {
         questionnaire = intituleQuestionnaire.get(0);
         pseudo = pseudoSportif.get(0);
         d = date.get(0);
-        calendar = new GregorianCalendar();
-        calendar.setTime(d);
-        numeroSemaine = calendar.get(Calendar.WEEK_OF_YEAR);
+        numeroSemaine = numeroDesSemaines.get(0);
         reponses.add(valeur.get(0)); // On ajoute l'élément dans la liste des éléments à ajouté
         valeur.remove(0); // on supprimer l'élément qu'on va ajouté
         // On cherche si d'autre élément sont conforme au premier élément
         for (int i = 0; i < valeur.size(); i++) {
-          calendar2 = new GregorianCalendar();
-          calendar2.setTime(date.get(i));
-          numeroSemaine2 = calendar2.get(Calendar.WEEK_OF_YEAR);
+          numeroSemaine2 = numeroDesSemaines.get(i);
           if (intituleQuestionnaire.get(i) == questionnaire && pseudoSportif.get(0) == pseudo
               && numeroSemaine == numeroSemaine2) {
             // Il est conforme, on l'ajoute dans la liste des éléments à ajouté
@@ -201,12 +191,13 @@ public class GestionReponsesBdd {
         unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(questionnaire);
         unSportif = gestionSportif.consulterSportif(pseudo);
         // On fait l'ajout
-        boolean ret = gestionReponses.ajouterReponses(d, unSportif, unQuestionnaire, reponses);
+        boolean ret =
+            gestionReponses.ajouterReponses(numeroSemaine, d, unSportif, unQuestionnaire, reponses);
         if (!ret) {
           return false; // Une erreur c'est produite lors de la création
         }
         // On réinitialise la liste ajouté, pour le prochain tour de boucle
-        reponses = new ArrayList<Integer>(); 
+        reponses = new ArrayList<Integer>();
       }
     } catch (Exception e) {
       e.printStackTrace();
