@@ -43,60 +43,59 @@ export default function Login() {
                 }
             }
         });
-    }
 
+    };
 
-export default function Login() {
-    return (
+        return (
         
-        <div class="col-4">
-            <div class="card" id="card">
-                <div class="card-header">
-                    <center>Se connecter</center>
-                </div>
-                <div class="card-body">
-                    <form onSubmit={onSubmit} >
-                        <div class="form-group">
-                            <center><label for="pseudo">Pseudo</label></center>
-                            <input
-                                type="pseudo" 
-                                class="form-control" 
-                                id="pseudo" 
-                                name="pseudo"
-                                value={pseudo}
-                                placeholder = "Entrer votre pseudo"
-                                onChange = {onChange}
-                            
-                            />
-                        </div>
-
-                        <div class="form-group">
-                            <center><label for="password">Mot de passe</label></center>
-                            <input 
-                                type="password" 
-                                class="form-control" 
-                                id="password" 
-                                name="password"
-                                value = {password}
-                                placeholder = "Entrer votre mot de passe"
-                                onChange = {onChange}
-
-                            />
-
-
-                        </div>
-
-                        <center><button type="submit" class="btn btn-primary">Se connecter</button></center>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-
+            <div class="col-4">
+                <div class="card" id="card">
+                    <div class="card-header">
+                        <center>Se connecter</center>
+                    </div>
+                    <div class="card-body">
+                        <form onSubmit={onSubmit} >
+                            <div class="form-group">
+                                <center><label for="pseudo">Pseudo</label></center>
+                                <input
+                                    type="pseudo" 
+                                    class="form-control" 
+                                    id="pseudo" 
+                                    name="pseudo"
+                                    value={pseudo}
+                                    placeholder = "Entrer votre pseudo"
+                                    onChange = {onChange}
+                                
+                                />
+                            </div>
     
-    )};
+                            <div class="form-group">
+                                <center><label for="password">Mot de passe</label></center>
+                                <input 
+                                    type="password" 
+                                    class="form-control" 
+                                    id="password" 
+                                    name="password"
+                                    value = {password}
+                                    placeholder = "Entrer votre mot de passe"
+                                    onChange = {onChange}
+    
+                                />
+    
+    
+                            </div>
+    
+                            <center><button type="submit" class="btn btn-primary">Se connecter</button></center>
+                        </form>
+                    </div>
+                </div>
+    
+            </div>
+    
+        
+        )};
 
-}
+
 
 const titleStyle = {
     color :"#000",
