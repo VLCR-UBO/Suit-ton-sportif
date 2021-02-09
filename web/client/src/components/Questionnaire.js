@@ -15,8 +15,11 @@ export default class Questionnaire extends React.Component {
     }
 
     chargerQuestionnaire(nom){
-        console.log(nom);
+        this.props.nomQuestionnaire(nom);
+        this.props.charger('question');
     }
+
+    //charger la liste des questions
 
     render(){
         const listItems = this.state.list.map((nom) =>

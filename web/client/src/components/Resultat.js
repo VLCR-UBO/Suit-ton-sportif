@@ -30,6 +30,8 @@ export default class Resultat extends React.Component{
         this.props.changer('questionnaire');
     }
 
+    //envoyer les reponses
+
     render(){
         const listItems = this.fusionListe().map((nom) =>
             <button onClick={() => this.modifierQuestion(nom)} className="item">

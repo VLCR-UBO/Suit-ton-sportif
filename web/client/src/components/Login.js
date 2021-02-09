@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import React,{useState} from 'react';
 
-export default function Login() {
+export default function Login(props) {
     const [pseudo,setPseudo] = useState('');
     const [password , setPassword] = useState('');
 
@@ -43,7 +43,7 @@ export default function Login() {
                 }
             }
         });
-
+        props.charger('question');
     };
 
         return (
