@@ -10,7 +10,7 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-		charger : 'resultat',
+		charger : 'connexion',
 		questionnaire : null,
 		nbQuestion : -1,
 		question : null,

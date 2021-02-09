@@ -6,12 +6,12 @@ const Login = (props) => {
     const [password , setPassword] = useState('');
 
     const changerPage = (event) => {
-        props.charger(event);
+        props.page(event);
 
     }
 
-    const chargerPseudoSportif = (event)=> {
-        props.chargerSportif(event);
+    const changerUtilisateur = (event)=> {
+        props.utilisateur(event);
 
     }
 
@@ -47,7 +47,7 @@ const Login = (props) => {
 
                     default:
                         console.log("Bonjour  : "+res.data.prenomSportif+" "+res.data.nomSportif);
-                        chargerPseudoSportif(res.data.pseudo);
+                        changerUtilisateur(res.data);
                         changerPage('questionnaire');
                         break;
                 }
