@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Compilation de Suit ton sportif" xmlns:ivy="antlib:org.apache.ivy.ant"
+		 xmlns:fx="javafx:com.sun.javafx.tools.ant" default="compile" >
+
+	<property name="src.dir" location="${basedir}/src" />
+	<property name="lib.dir" location="${basedir}/lib" />
+	<property name="dist.dir" value="${basedir}/dist" />
+	<property name="bin.dir" value="${basedir}/bin" />
+
+	<target name="clean">
+		<echo message="Suppression des fichiers issus de la compilation"> </echo>
+		<delete dir="${bin.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${lib.dir}" />
+	</target>
+
+
+	<path id="build.classpath">
+		<fileset dir="${basedir}">
+			<include name="lib/*.jar"/>
+		</fileset>
+		<fileset dir="${basedir}">
+			<include name="lib/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="compile" depends="clean, retrieve">
+		<mkdir dir="${bin.dir}" />
+		<javac destdir="${bin.dir}" executable="${javac.version}">
+			<src path="${src.dir}" />
+
+			<classpath>
+			<pathelement path="${lib.dir}"/>
+			<fileset dir="lib">
+				<include name="**/*.jar"/>
+			</fileset>
+			</classpath>
+		</javac>
+
+		<copy todir="${bin.dir}/lib">
+		<!--	<fileset dir="${src.dir}" excludes="**/*.java" /> -->
+			<fileset dir="${lib.dir}" includes="*.jar" />
+		</copy>
+
+		<copy todir="${bin.dir}">
+			<!--	<fileset dir="${src.dir}" excludes="**/*.java" /> -->
+			<fileset dir="${src.dir}" includes="**/*.fxml" />
+		</copy>
+
+
+	</target>
+
+	<pathconvert property="manifest.classpath" pathsep=" ">
+		<path refid="build.classpath"/>
+		<mapper>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.jar" to="lib/*.jar"/>
+			</chainedmapper>
+		</mapper>
+	</pathconvert>
+
+	<target name="dist" depends="clean,compile">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${dist.dir}/META-INF"/>
+
+		<manifest file="${dist.dir}/META-INF/MANIFEST.MF">
+			<attribute name="Built-By" value="moi" />
+			<attribute name="Main-Class" value="viewController.Main"/>
+			<attribute name="Class-Path" value="${manifest.classpath}"/>
+		</manifest>
+
+
+		<echo>${manifest.classpath}</echo>
+		<jar jarfile="${basedir}/dist/AppSport.jar" basedir="${bin.dir}" manifest="${dist.dir}/META-INF/MANIFEST.MF" />
+
+	</target>
+
+	<target name="retrieve" >
+		<ivy:settings />
+		<ivy:resolve/>
+		<ivy:retrieve sync="true" type="jar"/>
+	</target>
+
+</project>

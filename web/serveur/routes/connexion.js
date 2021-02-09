@@ -9,9 +9,11 @@ router.get('/',function(req,res){
 });
 
 router.post('/sportif',function(req,res){
-    const pseudo = " ";
-    const motDePasseSportif = " ";
-
+    const pseudo = req.body.user.idUser;
+    const motDePasseSportif = req.body.user.passwordUser;
+    console.log("Pseudo : "+pseudo);
+    console.log("Mdp : "+motDePasseSportif);
+    
     sportif_dao.findByKey(pseudo,(err,rows)=>{
         if(err){
             console.log(err);
@@ -22,20 +24,22 @@ router.post('/sportif',function(req,res){
                     console.log("Le sportif : "+rows[0].pseudo+" est connecté ! ");
                     console.log("Bonjour "+rows[0].prenomSportif+" "+rows[0].nomSportif);
 
-                    res.
-                    res.json(rows[0]);
+                   res.send(rows[0]);
 
                 }
                 else{
                     console.log("Mot de passse incorrect");
-                    res.json(" ");
+                    res.send("MDPINCORR");
                 }
 
             }
             else{
                 console.log("Identifiant incorrect");
-                res.json(" ");
+                res.send("IDINCORR");
             }   
         }
     });
+    
 });
+
+module.exports = router;

@@ -7,5 +7,5 @@ const ReponseDAO = function(){
     }    
 };
 
-const dao = new QuestionnaireDAO();
+const dao = new ReponseDAO();
 module.exports = dao;

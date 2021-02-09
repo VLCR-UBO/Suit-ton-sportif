@@ -1,8 +1,8 @@
 package ihm;
 
-import fonctionnalite.Facade;
 import java.io.IOException;
 import java.net.URL;
+import fonctionnalite.Facade;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

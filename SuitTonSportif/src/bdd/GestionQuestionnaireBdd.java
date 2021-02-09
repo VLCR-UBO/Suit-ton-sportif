@@ -161,12 +161,14 @@ public class GestionQuestionnaireBdd {
   }
 
   /**
+   * Cette méthode permet d'ajouter une question dans la base de données.
    * 
-   * 
-   * @param nomQuestionnaire
-   * @param nomQuestion
-   * @param reponseParDefaut
-   * @return
+   * @param nomQuestionnaire : Chaine de caractères non nulle et non vide, permettant
+   *        l'identification unique d'un questionnaire.
+   * @param nomQuestion : Chaine de caractères non nulle et non vide, permettant l'identification
+   *        unique d'un question.
+   * @param reponseParDefaut : Valeur de la question passez en paramètre.
+   * @return true si l'ajout de la question est un succès, false sinon.
    */
   public boolean ajouterQuestion(String nomQuestionnaire, String nomQuestion,
       boolean reponseParDefaut) {
@@ -186,6 +188,16 @@ public class GestionQuestionnaireBdd {
     return false;
   }
 
+  /**
+   * Cette méthode permet de modifier une question dans la base de données.
+   * 
+   * @param ancienNomQuestion : Chaine de caractères non nulle et non vide, permettant
+   *        l'identification de l'élément à modifier.
+   * @param nouveauNomQuestion : Chaine de caractères non nulle et non vide, qui représente le
+   *        nouveau nom unique de notre question.
+   * @param defaut : La valeur par défault que doit prendre notre question.
+   * @return true si la modification c'est bien passé, false sinon.
+   */
   public boolean modifierQuestion(String ancienNomQuestion, String nouveauNomQuestion,
       boolean defaut) {
     if (ancienNomQuestion != null && ancienNomQuestion.length() > 0 && nouveauNomQuestion != null
@@ -207,6 +219,13 @@ public class GestionQuestionnaireBdd {
     return false;
   }
 
+  /**
+   * Cette méthode permet de supprimer une question dans la base de données.
+   * 
+   * @param intituleQuestion : Chaine de caractères non nulle et non vide, permettant
+   *        l'identification unique d'un question.
+   * @return true si la suppression c'est bien passé, false sinon.
+   */
   public boolean supprimerQuestion(String intituleQuestion) {
     if (intituleQuestion != null && intituleQuestion.length() > 0) {
       try {
