@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Questionnaire() {
+export default function Login() {
     return (
         <body className="Login">
             <div class="col-4">
