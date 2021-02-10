@@ -4,8 +4,8 @@ export default class Resultat extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            listQuestion : ['a', 'b', 'c'],
-            listReponse : [1, 2, 3],
+            listQuestion : this.props.question,
+            listReponse : this.props.reponses,
             chargement : true
         }
     }
@@ -19,7 +19,14 @@ export default class Resultat extends React.Component{
     }
 
     modifierQuestion(nom){
-
+        let tab = this.fusionListe();
+        for(let i=0; i<tab.length; i++){
+            if(tab[i].props.children[0] === nom.props.children[0]){
+                this.props.changerNumQuestion(i);
+                this.props.changerChangement(true);
+            }
+        }
+        this.props.charger('question');
     }
 
     envoieQuestionnaire(){
@@ -27,10 +34,9 @@ export default class Resultat extends React.Component{
     }
 
     retourChoixQuestionnaire(){
-        this.props.changer('questionnaire');
+        this.props.changerChangement(false);
+        this.props.charger('questionnaire');
     }
-
-    //envoyer les reponses
 
     render(){
         const listItems = this.fusionListe().map((nom) =>

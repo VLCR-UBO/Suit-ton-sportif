@@ -10,12 +10,14 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-		charger : 'connexion',
+		charger : 'question',
 		questionnaire : null,
 		nbQuestion : -1,
 		question : null,
 		reponses : null,
-		idSportif : -1
+		numQuestion : 0,
+		idSportif : -1,
+		changement : false
 		}
 	}
 
@@ -55,6 +57,18 @@ class App extends Component {
 		});
 	}
 
+	changerNumQuestion = (num) => {
+		this.setState({
+			numQuestion : num
+		});
+	}
+
+	changerChangement = (ch) => {
+		this.setState({
+			changement : ch
+		});
+	}
+
 	render(){
 		if(this.state.charger === 'connexion'){
 		return (
@@ -77,6 +91,8 @@ class App extends Component {
 			return(
 				<Resultat 
 					charger={this.changerPage}
+					changerNumQuestion={this.changerNumQuestion}
+					changerChangement={this.changerChangement}
 					sportif={this.state.idSportif}
 					question={this.state.question}
 					reponses={this.state.reponses}
@@ -84,14 +100,18 @@ class App extends Component {
 			);
 		}
 		else if(this.state.charger === 'question'){
-		return(
-			<Question 
-				charger={this.changerPage}
-				nomQuestionnaire={this.state.questionnaire}
-				chargerQuestion={this.chargerQuestion}
-				chargerReponse={this.chargerReponse}
-			/>
-		);
+			return(
+				<Question 
+					charger={this.changerPage}
+					nomQuestionnaire={this.state.questionnaire}
+					numQuestion={this.state.numQuestion}
+					chargerQuestion={this.chargerQuestion}
+					chargerReponse={this.chargerReponse}
+					changerNumQuestion={this.changerNumQuestion}
+					changerChangement={this.changerChangement}
+					changement={this.state.changement}
+				/>
+			);
 		}
 	}
 }
