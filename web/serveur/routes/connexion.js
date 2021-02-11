@@ -1,4 +1,5 @@
 const express = require ('express');
+const db = require('../models/connexionBDD');
 const router = express.Router();
 const sportif_dao = require('../models/SportifDAO');
 
@@ -38,8 +39,7 @@ router.post('/sportif',function(req,res){
                 res.send("IDINCORR");
             }   
         }
-    });
-    
+    });    
 });
 
 module.exports = router;

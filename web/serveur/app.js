@@ -11,8 +11,7 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const connexionRouter = require('./routes/connexion');
-
-
+const questionnaireRouter = require('./routes/questionnaire');
 
 var app = express();
 
@@ -26,22 +25,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Connexion à la base de donnée
-const db = mysql.createConnection({
-    host : process.env.BDD_HOST,
-    user : process.env.BDD_USER,
-    password : process.env.BDD_PASSWORD,
-    database: process.env.BDD_DATABASE
-});
-
-db.connect((err)=>{
-  if(err) throw err;
-  console.log("Connexion réussie ! ");
-});
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/connexion',connexionRouter);
+app.use('/questionnaire',questionnaireRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
