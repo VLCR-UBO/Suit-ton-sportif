@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios';
 
 export default class Resultat extends React.Component{
     constructor(props){
@@ -13,7 +14,7 @@ export default class Resultat extends React.Component{
     fusionListe(){
         let liste = [];
         for(let i=0; i<this.state.listQuestion.length; i++){
-            liste.push(<div>{this.state.listQuestion[i]} <br/> -&gt; {this.state.listReponse[i] == 0 ? 'Non' : 'Oui'}</div>);
+            liste.push(<div>{this.state.listQuestion[i]} <br/> -&gt; {this.state.listReponse[i] === 0 ? 'Non' : 'Oui'}</div>);
         }
         return liste;
     }
@@ -30,7 +31,54 @@ export default class Resultat extends React.Component{
     }
 
     envoieQuestionnaire(){
+        const questions = this.state.listQuestion;
+        const reponses = this.state.listReponse;
+        const sportif = this.props.sportif;
 
+        const date = new Date();
+        const day = date.getDate();
+        const month = date.getMonth();
+        const year = date.getFullYear();
+
+        const fulldate = {
+            day : day,
+            month : month,
+            year : year
+        };
+
+        const reponsesQuestionnaire = {
+            question: "",
+            reponse:"",
+            sportif : sportif,
+            date : fulldate
+
+        };
+        for(var i=0; i<questions.length; i++){
+            reponsesQuestionnaire.question = questions[i];
+            reponsesQuestionnaire.reponse = reponses[i];
+
+            Axios.post('/reponse/insertion',{reponsesQuestionnaire})
+            .then(res =>{
+                if(res.data !== undefined){
+                    
+                    // switch (res.data){
+                    //     case "SUCESS":
+                    //         alert("Les réponses ont été enregistrées, retour à la liste des questionnaires");
+                    //         /* faire le retour à la liste des questionnaires */
+                    //         break;
+                    //     default:
+                    //         alert("Erreur : les réponses n'ont pas été enregistrées, veuillez recommencer.");
+                    //         /* faire le retour à la liste des questionnaires */
+                    //         break;
+                    // }
+                }
+            });
+            this.props.charger('questionnaire');
+            
+
+        }
+
+        
     }
 
     retourChoixQuestionnaire(){

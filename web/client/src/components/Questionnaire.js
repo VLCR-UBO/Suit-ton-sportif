@@ -36,7 +36,6 @@ export default class Questionnaire extends React.Component {
                         var tab = [];
                         while(i<res.data.length){
                             tab[i] = res.data[i].intituleQuestionnaire;
-                            
                             i++;
                         }
                         

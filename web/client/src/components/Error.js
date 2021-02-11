@@ -14,4 +14,4 @@ const h1Style = {
     padding : "10px"
 
 
-}
+};

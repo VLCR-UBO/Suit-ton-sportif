@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import Axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 export default function Question(props) {
     const [numQuestion, setNumQuestion] = useState(props.numQuestion);
-    const [questions, setQuestions] = useState(['a', 'b', 'c']);
+    const [questions, setQuestions] = useState([]);
     const [reponses, setReponses] = useState([]);
     const [pourcentage, setPourcentage] = useState("0%");
     const [changement, setChangement] = useState(props.changement);
-    const nbQuestion = 3;
+    const nbQuestion = questions.length;
+    
+    // Ce petit bout de code remplace "ComponentDidMount() en version "fonction de react"
+    //l'argument "[]" sert à éviter que le code dans useEffect soit appelé à l'infini
+    useEffect(()=>{
+        listeQuestion();
+    
+    },[]);
 
     var suivant = () => {
         reponses[numQuestion] = document.getElementById("oui").checked ? 1 : 0;
@@ -33,7 +41,44 @@ export default function Question(props) {
         props.charger('questionnaire');
     }
 
-    //la faut charger la liste de question a partir de props.nomQuestionnaire
+    const listeQuestion = () =>{
+
+        const nomQuestionnaire = props.nomQuestionnaire;
+        console.log("Le nom du questionnaire : "+nomQuestionnaire);
+        Axios.post('/question/listeQuestions',{nomQuestionnaire})
+        .then(res =>{
+            console.log("Outside");
+            if(res.data !== undefined){
+                console.log("Inside");
+                switch (res.data) {
+                    case "LISTQUESTVIDE":
+                        alert("Le questionnaire "+nomQuestionnaire+" ne comporte aucune question, veuillez en sélectionner un autre.");
+                        /* retour à la liste des questionnaires */
+                        break;
+                
+                    default:
+                        console.log("default");
+                        var i = 0;
+                        var tab = [];
+                        while(i<res.data.length){
+                            tab[i] = res.data[i].intituleQuestion;
+                            console.log(tab[i]);
+                            i++;
+                        }
+                        setQuestions(tab);
+                        console.log("Nombre de question : "+nbQuestion);
+                        break;
+                }
+            }
+
+
+
+        });
+
+
+
+
+    }
 
     var validation = changement ?
         <div style={{textAlign:"center"}}>

@@ -3,7 +3,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mysql = require('mysql'); 
+const mysql = require('mysql');
+const currentWeekNumber = require('current-week-number'); 
 require('dotenv').config();  
 
 
@@ -12,6 +13,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const connexionRouter = require('./routes/connexion');
 const questionnaireRouter = require('./routes/questionnaire');
+const questionRouter = require('./routes/question');
+const reponseRouter = require('./routes/reponse');
 
 var app = express();
 
@@ -29,6 +32,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/connexion',connexionRouter);
 app.use('/questionnaire',questionnaireRouter);
+app.use('/question',questionRouter);
+app.use('/reponse',reponseRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
