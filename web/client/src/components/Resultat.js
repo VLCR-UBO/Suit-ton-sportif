@@ -13,7 +13,7 @@ export default class Resultat extends React.Component{
     fusionListe(){
         let liste = [];
         for(let i=0; i<this.state.listQuestion.length; i++){
-            liste.push(<div>{this.state.listQuestion[i]} <br/> -&gt; {this.state.listReponse[i]}</div>);
+            liste.push(<div>{this.state.listQuestion[i]} <br/> -&gt; {this.state.listReponse[i] == 0 ? 'Non' : 'Oui'}</div>);
         }
         return liste;
     }
