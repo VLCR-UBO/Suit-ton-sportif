@@ -81,7 +81,7 @@ public class GestionReponsesBdd {
 
     for (Map.Entry<String, Integer> map : listeReponses.entrySet()) {
       String query =
-          "INSERT INTO reponse (numeroSemaine, derniereModification, valeurReponse, unSportif, "
+          "INSERT INTO REPONSE (numeroSemaine, derniereModification, valeurReponse, unSportif, "
               + "uneQuestion)" + " VALUES (" + numeroSemaine + ",DATE('" + dateBdd + "'),"
               + map.getValue() + ",'" + pseudo + "','" + map.getKey() + "')";
       try {
@@ -117,7 +117,7 @@ public class GestionReponsesBdd {
     String pseudo = unSportif.getPseudo();
     for (Map.Entry<String, Integer> map : listeReponses.entrySet()) {
       String intituleQuestion = map.getKey();
-      String query = "UPDATE reponse SET derniereModification = DATE('" + dateBdd
+      String query = "UPDATE REPONSE SET derniereModification = DATE('" + dateBdd
           + "'), valeurReponse = " + map.getValue() + " WHERE numeroSemaine = " + numeroSemaine
           + " AND unSportif = '" + pseudo + "' AND uneQuestion = '" + intituleQuestion + "'";
       try {
@@ -141,7 +141,7 @@ public class GestionReponsesBdd {
       GestionQuestionnaire gestionQuestionnaire) {
     try {
       ResultSet lesReponses = this.sqlStatement.executeQuery(
-          ("SELECT DISTINCT reponse.*, question.unQuestionnaire FROM reponse, question"));
+          ("SELECT DISTINCT REPONSE.*, QUESTION.unQuestionnaire FROM REPONSE, QUESTION"));
 
       // initialisation des composantes nécessaire
       List<String> intituleQuestionnaire = new ArrayList<String>();

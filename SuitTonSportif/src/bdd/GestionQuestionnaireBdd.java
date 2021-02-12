@@ -49,7 +49,7 @@ public class GestionQuestionnaireBdd {
     List<String> lesNomsDesQuestions = new ArrayList<String>();
 
     try {
-      ResultSet lesQuestionnaires = this.sqlStatement.executeQuery(("SELECT * FROM questionnaire"));
+      ResultSet lesQuestionnaires = this.sqlStatement.executeQuery(("SELECT * FROM QUESTIONNAIRE"));
 
       while (lesQuestionnaires.next()) {
         lesNomsDesQuestionnaires.add(lesQuestionnaires.getString("intituleQuestionnaire"));
@@ -58,7 +58,7 @@ public class GestionQuestionnaireBdd {
       for (String nom : lesNomsDesQuestionnaires) {
         // récuperer les questions
         ResultSet lesQuestions = this.sqlStatement
-            .executeQuery(("SELECT * FROM question WHERE unQuestionnaire = '" + nom + "'"));
+            .executeQuery(("SELECT * FROM QUESTION WHERE unQuestionnaire = '" + nom + "'"));
 
         // creer le questionnaire vide
         gestion.ajouterQuestionnaire(nom, new ArrayList<String>());
@@ -93,12 +93,12 @@ public class GestionQuestionnaireBdd {
 
       try {
         String query =
-            "INSERT INTO questionnaire (intituleQuestionnaire) VALUES ('" + nomQuestionnaire + "')";
+            "INSERT INTO QUESTIONNAIRE (intituleQuestionnaire) VALUES ('" + nomQuestionnaire + "')";
         sqlStatement.executeUpdate(query);
 
         for (String intitule : questions) {
           String queryQuestion =
-              "INSERT INTO question (intituleQuestion, reponseParDefaut, unQuestionnaire) VALUES ('"
+              "INSERT INTO QUESTION (intituleQuestion, reponseParDefaut, unQuestionnaire) VALUES ('"
                   + intitule + "', 0 , '" + nomQuestionnaire + "')";
           sqlStatement.executeUpdate(queryQuestion);
         }
@@ -121,11 +121,11 @@ public class GestionQuestionnaireBdd {
     if (nomQuestionnaire != null && nomQuestionnaire.length() > 0) {
       try {
         String queryQuestions =
-            "DELETE FROM question WHERE unQuestionnaire = '" + nomQuestionnaire + "'";
+            "DELETE FROM QUESTION WHERE unQuestionnaire = '" + nomQuestionnaire + "'";
         sqlStatement.executeUpdate(queryQuestions);
 
         String queryQuestionnaire =
-            "DELETE FROM questionnaire WHERE intituleQuestionnaire = '" + nomQuestionnaire + "'";
+            "DELETE FROM QUESTIONNAIRE WHERE intituleQuestionnaire = '" + nomQuestionnaire + "'";
         sqlStatement.executeUpdate(queryQuestionnaire);
       } catch (SQLException e) {
         e.printStackTrace();
@@ -149,7 +149,7 @@ public class GestionQuestionnaireBdd {
         && nouveauNomQuestionnaire != null && nouveauNomQuestionnaire.length() > 0) {
       try {
         String queryQuestionnaire =
-            "UPDATE questionnaire SET intituleQuestionnaire = '" + nouveauNomQuestionnaire
+            "UPDATE QUESTIONNAIRE SET intituleQuestionnaire = '" + nouveauNomQuestionnaire
                 + "' WHERE intituleQuestionnaire = '" + ancienNomQuestionnaire + "'";
         sqlStatement.executeUpdate(queryQuestionnaire);
       } catch (SQLException e) {
@@ -176,7 +176,7 @@ public class GestionQuestionnaireBdd {
         && nomQuestion.length() > 0) {
       try {
         String queryQuestion =
-            "INSERT INTO question (intituleQuestion, reponseParDefaut, unQuestionnaire) VALUES ('"
+            "INSERT INTO QUESTION (intituleQuestion, reponseParDefaut, unQuestionnaire) VALUES ('"
                 + nomQuestion + "', " + (reponseParDefaut == true ? 1 : 0) + " , '"
                 + nomQuestionnaire + "')";
         sqlStatement.executeUpdate(queryQuestion);
@@ -207,7 +207,7 @@ public class GestionQuestionnaireBdd {
         if (defaut) {
           valeurDefaut = 1;
         }
-        String queryQuestion = "UPDATE question SET intituleQuestion = '" + nouveauNomQuestion
+        String queryQuestion = "UPDATE QUESTION SET intituleQuestion = '" + nouveauNomQuestion
             + "', reponseParDefaut = " + valeurDefaut + " WHERE intituleQuestion = '"
             + ancienNomQuestion + "'";
         sqlStatement.executeUpdate(queryQuestion);
@@ -230,7 +230,7 @@ public class GestionQuestionnaireBdd {
     if (intituleQuestion != null && intituleQuestion.length() > 0) {
       try {
         String queryQuestions =
-            "DELETE FROM question WHERE intituleQuestion = '" + intituleQuestion + "'";
+            "DELETE FROM QUESTION WHERE intituleQuestion = '" + intituleQuestion + "'";
         sqlStatement.executeUpdate(queryQuestions);
       } catch (SQLException e) {
         return false;

@@ -54,7 +54,7 @@ public class GestionSportifBdd {
     if (pseudo == null || pseudo.length() < 1) {
       return false; // parametres incorrects
     }
-    String query = "DELETE FROM sportif WHERE pseudo = '" + pseudo.toString() + "'";
+    String query = "DELETE FROM SPORTIF WHERE pseudo = '" + pseudo.toString() + "'";
     try {
       sqlStatement.executeUpdate(query);
     } catch (SQLException e) {
@@ -95,7 +95,7 @@ public class GestionSportifBdd {
     java.util.Date utilDate = dateDeNaissance.getTime();
     java.sql.Date date = new java.sql.Date(utilDate.getTime());
     String query =
-        "INSERT INTO sportif (pseudo, nomSportif, prenomSportif, dateDeNaissanceSportif, "
+        "INSERT INTO SPORTIF (pseudo, nomSportif, prenomSportif, dateDeNaissanceSportif, "
             + "motDePasseSportif) VALUES ('" + pseudo.toString() + "','" + nom.toString() + "','"
             + prenom.toString() + "',DATE('" + date + "'),'" + motDePasse.toString() + "')";
     try {
@@ -143,7 +143,7 @@ public class GestionSportifBdd {
     }
     java.util.Date utilDate = dateDeNaissance.getTime();
     java.sql.Date date = new java.sql.Date(utilDate.getTime());
-    String query = "UPDATE sportif SET pseudo = '" + pseudo.toString() + "', nomSportif = '"
+    String query = "UPDATE SPORTIF SET pseudo = '" + pseudo.toString() + "', nomSportif = '"
         + nom.toString() + "', prenomSportif = '" + prenom.toString()
         + "', dateDeNaissanceSportif = DATE('" + date + "'), motDePasseSportif = '"
         + motDePasse.toString() + "' WHERE pseudo = '" + ancienPseudo.toString() + "'";
@@ -171,7 +171,7 @@ public class GestionSportifBdd {
       List<String> lesMotDePasseSportifs = new ArrayList<String>();
       List<Calendar> lesDateDeNaissanceSportifs = new ArrayList<Calendar>();
 
-      ResultSet lesSportifs = this.sqlStatement.executeQuery(("SELECT * FROM sportif"));
+      ResultSet lesSportifs = this.sqlStatement.executeQuery(("SELECT * FROM SPORTIF"));
       while (lesSportifs.next()) {
         lesPseudoSportifs.add(lesSportifs.getString("pseudo"));
         lesNomSportifs.add(lesSportifs.getString("nomSportif"));

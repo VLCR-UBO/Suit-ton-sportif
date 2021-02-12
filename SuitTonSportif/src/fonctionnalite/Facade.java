@@ -284,8 +284,6 @@ public class Facade {
         || gestionSportif == null) {
       return false;
     }
-    System.out.println(date);
-    System.out.println(numeroSemaine);
     Sportif unSportif = gestionSportif.consulterSportif(pseudo);
     Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
     if (unSportif == null || unQuestionnaire == null) {
