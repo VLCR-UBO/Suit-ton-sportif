@@ -32,7 +32,7 @@ public class GestionSportifBdd {
     try {
       String url = "jdbc:mysql://localhost/enregistretonsportif";
       String user = "root";
-      String passwd = "motdepasse";
+      String passwd = "EfDWAnB98rnxyLO5";
 
       connection = DriverManager.getConnection(url, user, passwd);
       sqlStatement =

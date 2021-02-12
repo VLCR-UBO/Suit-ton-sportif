@@ -37,7 +37,7 @@ public class GestionReponsesBdd {
     try {
       String url = "jdbc:mysql://localhost/enregistretonsportif";
       String user = "root";
-      String passwd = "motdepasse";
+      String passwd = "EfDWAnB98rnxyLO5";
 
       connection = DriverManager.getConnection(url, user, passwd);
       sqlStatement =
@@ -141,7 +141,8 @@ public class GestionReponsesBdd {
       GestionQuestionnaire gestionQuestionnaire) {
     try {
       ResultSet lesReponses = this.sqlStatement.executeQuery(
-          ("SELECT DISTINCT REPONSE.*, QUESTION.unQuestionnaire FROM REPONSE, QUESTION"));
+          ("SELECT DISTINCT REPONSE.*, QUESTION.unQuestionnaire FROM REPONSE, "
+              + "QUESTION WHERE REPONSE.uneQuestion = QUESTION.intituleQuestion"));
 
       // initialisation des composantes nécessaire
       List<String> intituleQuestionnaire = new ArrayList<String>();
@@ -177,15 +178,38 @@ public class GestionReponsesBdd {
         d = date.get(0);
         numeroSemaine = numeroDesSemaines.get(0);
         reponses.add(valeur.get(0)); // On ajoute l'élément dans la liste des éléments à ajouté
+
         valeur.remove(0); // on supprimer l'élément qu'on va ajouté
+        intituleQuestionnaire.remove(0);
+        pseudoSportif.remove(0);
+        date.remove(0);
+        numeroDesSemaines.remove(0);
+
         // On cherche si d'autre élément sont conforme au premier élément
-        for (int i = 0; i < valeur.size(); i++) {
+
+        boolean a = false;
+        int i = 0; 
+        while (i < valeur.size()) {
           numeroSemaine2 = numeroDesSemaines.get(i);
-          if (intituleQuestionnaire.get(i) == questionnaire && pseudoSportif.get(0) == pseudo
+          if (intituleQuestionnaire.get(i).equals(questionnaire) 
+              && pseudoSportif.get(i).equals(pseudo)
               && numeroSemaine == numeroSemaine2) {
             // Il est conforme, on l'ajoute dans la liste des éléments à ajouté
             reponses.add(valeur.get(i));
+
             valeur.remove(i); // on supprimer l'élément qu'on va ajouté
+            intituleQuestionnaire.remove(i);
+            pseudoSportif.remove(i);
+            date.remove(i);
+            numeroDesSemaines.remove(i);
+            
+            a = true;
+          }
+          if (!a) {
+            i++;
+          } else {
+            i = 0;
+            a = false;
           }
         }
         unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(questionnaire);
