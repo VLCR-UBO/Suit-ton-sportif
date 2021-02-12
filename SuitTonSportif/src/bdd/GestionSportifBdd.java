@@ -1,12 +1,9 @@
 package bdd;
 
 import fonctionnalite.GestionSportif;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -21,25 +18,14 @@ import java.util.List;
  *
  */
 public class GestionSportifBdd {
-  private Connection connection;
-  private Statement sqlStatement;
+  private GestionBdd gestionBdd;
 
   /**
    * Constructeur de la classe GestionSportifBdd. Il initialise la connexion avec notre base de
    * données.
    */
   public GestionSportifBdd() {
-    try {
-      String url = "jdbc:mysql://localhost/enregistretonsportif";
-      String user = "root";
-      String passwd = "EfDWAnB98rnxyLO5";
-
-      connection = DriverManager.getConnection(url, user, passwd);
-      sqlStatement =
-          connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    gestionBdd = new GestionBdd();
   }
 
   /**
@@ -56,7 +42,7 @@ public class GestionSportifBdd {
     }
     String query = "DELETE FROM SPORTIF WHERE pseudo = '" + pseudo.toString() + "'";
     try {
-      sqlStatement.executeUpdate(query);
+      gestionBdd.executerRequete(query);
     } catch (SQLException e) {
       e.printStackTrace();
       return false; // problème sql
@@ -99,7 +85,7 @@ public class GestionSportifBdd {
             + "motDePasseSportif) VALUES ('" + pseudo.toString() + "','" + nom.toString() + "','"
             + prenom.toString() + "',DATE('" + date + "'),'" + motDePasse.toString() + "')";
     try {
-      sqlStatement.executeUpdate(query);
+      gestionBdd.executerRequete(query);
     } catch (SQLException e) {
       e.printStackTrace();
       return false;
@@ -148,7 +134,7 @@ public class GestionSportifBdd {
         + "', dateDeNaissanceSportif = DATE('" + date + "'), motDePasseSportif = '"
         + motDePasse.toString() + "' WHERE pseudo = '" + ancienPseudo.toString() + "'";
     try {
-      sqlStatement.executeUpdate(query);
+      gestionBdd.executerRequete(query);
     } catch (SQLException e) {
       e.printStackTrace();
       return false;
@@ -171,7 +157,8 @@ public class GestionSportifBdd {
       List<String> lesMotDePasseSportifs = new ArrayList<String>();
       List<Calendar> lesDateDeNaissanceSportifs = new ArrayList<Calendar>();
 
-      ResultSet lesSportifs = this.sqlStatement.executeQuery(("SELECT * FROM SPORTIF"));
+      String query = "SELECT * FROM SPORTIF";
+      ResultSet lesSportifs = gestionBdd.executerRequeteAvecReponse(query);
       while (lesSportifs.next()) {
         lesPseudoSportifs.add(lesSportifs.getString("pseudo"));
         lesNomSportifs.add(lesSportifs.getString("nomSportif"));

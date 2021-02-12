@@ -2,11 +2,8 @@ package bdd;
 
 import fonctionnalite.GestionQuestionnaire;
 import fonctionnalite.Questionnaire;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,39 +14,29 @@ import java.util.List;
  *
  */
 public class GestionQuestionnaireBdd {
-  private Connection connection;
-  private Statement sqlStatement;
+  private GestionBdd gestionBdd;
 
   /**
    * Etablie une connexion à la base de données.
    */
   public GestionQuestionnaireBdd() {
-    try {
-      String url = "jdbc:mysql://localhost/enregistretonsportif";
-      String user = "root";
-      String passwd = "EfDWAnB98rnxyLO5";
-
-      connection = DriverManager.getConnection(url, user, passwd);
-      sqlStatement =
-          connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    gestionBdd = new GestionBdd();
   }
 
   /**
    * Charge les questionnaires et les questions qui leurs sont associer dans le gestionnaire des
    * questionnaire.
    * 
-   * @param gestion : Gestionnaire des questionnaire
+   * @param gestionQuestionnaire : Gestionnaire des questionnaire
    * @return : true si c'est reussi false sinon
    */
-  public boolean load(GestionQuestionnaire gestion) {
+  public boolean load(GestionQuestionnaire gestionQuestionnaire) {
     List<String> lesNomsDesQuestionnaires = new ArrayList<String>();
     List<String> lesNomsDesQuestions = new ArrayList<String>();
 
     try {
-      ResultSet lesQuestionnaires = this.sqlStatement.executeQuery(("SELECT * FROM QUESTIONNAIRE"));
+      String query = "SELECT * FROM QUESTIONNAIRE";
+      ResultSet lesQuestionnaires = gestionBdd.executerRequeteAvecReponse(query);
 
       while (lesQuestionnaires.next()) {
         lesNomsDesQuestionnaires.add(lesQuestionnaires.getString("intituleQuestionnaire"));
@@ -57,14 +44,14 @@ public class GestionQuestionnaireBdd {
 
       for (String nom : lesNomsDesQuestionnaires) {
         // récuperer les questions
-        ResultSet lesQuestions = this.sqlStatement
-            .executeQuery(("SELECT * FROM QUESTION WHERE unQuestionnaire = '" + nom + "'"));
+        query = "SELECT * FROM QUESTION WHERE unQuestionnaire = '" + nom + "'";
+        ResultSet lesQuestions = gestionBdd.executerRequeteAvecReponse(query);
 
         // creer le questionnaire vide
-        gestion.ajouterQuestionnaire(nom, new ArrayList<String>());
+        gestionQuestionnaire.ajouterQuestionnaire(nom, new ArrayList<String>());
 
         // ajouter chaque question avec leur valeur par defaut
-        Questionnaire questionnaire = gestion.consulterListeQuestion(nom);
+        Questionnaire questionnaire = gestionQuestionnaire.consulterListeQuestion(nom);
         while (lesQuestions.next()) {
           int defaut = Integer.parseInt(lesQuestions.getString("reponseparDefaut"));
           questionnaire.ajouterQuestionBoolenne(lesQuestions.getString("intituleQuestion"),
@@ -94,13 +81,13 @@ public class GestionQuestionnaireBdd {
       try {
         String query =
             "INSERT INTO QUESTIONNAIRE (intituleQuestionnaire) VALUES ('" + nomQuestionnaire + "')";
-        sqlStatement.executeUpdate(query);
+        gestionBdd.executerRequete(query);
 
         for (String intitule : questions) {
           String queryQuestion =
               "INSERT INTO QUESTION (intituleQuestion, reponseParDefaut, unQuestionnaire) VALUES ('"
                   + intitule + "', 0 , '" + nomQuestionnaire + "')";
-          sqlStatement.executeUpdate(queryQuestion);
+          gestionBdd.executerRequete(queryQuestion);
         }
       } catch (SQLException e) {
         return false;
@@ -122,11 +109,11 @@ public class GestionQuestionnaireBdd {
       try {
         String queryQuestions =
             "DELETE FROM QUESTION WHERE unQuestionnaire = '" + nomQuestionnaire + "'";
-        sqlStatement.executeUpdate(queryQuestions);
+        gestionBdd.executerRequete(queryQuestions);
 
         String queryQuestionnaire =
             "DELETE FROM QUESTIONNAIRE WHERE intituleQuestionnaire = '" + nomQuestionnaire + "'";
-        sqlStatement.executeUpdate(queryQuestionnaire);
+        gestionBdd.executerRequete(queryQuestionnaire);
       } catch (SQLException e) {
         e.printStackTrace();
         return false;
@@ -151,7 +138,7 @@ public class GestionQuestionnaireBdd {
         String queryQuestionnaire =
             "UPDATE QUESTIONNAIRE SET intituleQuestionnaire = '" + nouveauNomQuestionnaire
                 + "' WHERE intituleQuestionnaire = '" + ancienNomQuestionnaire + "'";
-        sqlStatement.executeUpdate(queryQuestionnaire);
+        gestionBdd.executerRequete(queryQuestionnaire);
       } catch (SQLException e) {
         return false;
       }
@@ -179,7 +166,7 @@ public class GestionQuestionnaireBdd {
             "INSERT INTO QUESTION (intituleQuestion, reponseParDefaut, unQuestionnaire) VALUES ('"
                 + nomQuestion + "', " + (reponseParDefaut == true ? 1 : 0) + " , '"
                 + nomQuestionnaire + "')";
-        sqlStatement.executeUpdate(queryQuestion);
+        gestionBdd.executerRequete(queryQuestion);
       } catch (SQLException e) {
         return false;
       }
@@ -210,7 +197,7 @@ public class GestionQuestionnaireBdd {
         String queryQuestion = "UPDATE QUESTION SET intituleQuestion = '" + nouveauNomQuestion
             + "', reponseParDefaut = " + valeurDefaut + " WHERE intituleQuestion = '"
             + ancienNomQuestion + "'";
-        sqlStatement.executeUpdate(queryQuestion);
+        gestionBdd.executerRequete(queryQuestion);
       } catch (SQLException e) {
         return false;
       }
@@ -231,7 +218,7 @@ public class GestionQuestionnaireBdd {
       try {
         String queryQuestions =
             "DELETE FROM QUESTION WHERE intituleQuestion = '" + intituleQuestion + "'";
-        sqlStatement.executeUpdate(queryQuestions);
+        gestionBdd.executerRequete(queryQuestions);
       } catch (SQLException e) {
         return false;
       }

@@ -5,15 +5,10 @@ import fonctionnalite.GestionReponses;
 import fonctionnalite.GestionSportif;
 import fonctionnalite.Questionnaire;
 import fonctionnalite.Sportif;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -26,25 +21,14 @@ import java.util.Map;
  *
  */
 public class GestionReponsesBdd {
-  private Connection connection;
-  private Statement sqlStatement;
+  private GestionBdd gestionBdd;
 
   /**
    * Constructeur de la classe GestionReponsesBdd. Il initialise la connexion avec notre base de
    * données.
    */
   public GestionReponsesBdd() {
-    try {
-      String url = "jdbc:mysql://localhost/enregistretonsportif";
-      String user = "root";
-      String passwd = "EfDWAnB98rnxyLO5";
-
-      connection = DriverManager.getConnection(url, user, passwd);
-      sqlStatement =
-          connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    gestionBdd = new GestionBdd();
   }
 
   /**
@@ -85,7 +69,7 @@ public class GestionReponsesBdd {
               + "uneQuestion)" + " VALUES (" + numeroSemaine + ",DATE('" + dateBdd + "'),"
               + map.getValue() + ",'" + pseudo + "','" + map.getKey() + "')";
       try {
-        sqlStatement.executeUpdate(query);
+        gestionBdd.executerRequete(query);
       } catch (SQLException e) {
         e.printStackTrace();
         return false;
@@ -121,7 +105,7 @@ public class GestionReponsesBdd {
           + "'), valeurReponse = " + map.getValue() + " WHERE numeroSemaine = " + numeroSemaine
           + " AND unSportif = '" + pseudo + "' AND uneQuestion = '" + intituleQuestion + "'";
       try {
-        sqlStatement.executeUpdate(query);
+        gestionBdd.executerRequete(query);
       } catch (SQLException e) {
         e.printStackTrace();
         return false;
@@ -140,9 +124,9 @@ public class GestionReponsesBdd {
   public boolean load(GestionReponses gestionReponses, GestionSportif gestionSportif,
       GestionQuestionnaire gestionQuestionnaire) {
     try {
-      ResultSet lesReponses = this.sqlStatement.executeQuery(
-          ("SELECT DISTINCT REPONSE.*, QUESTION.unQuestionnaire FROM REPONSE, "
-              + "QUESTION WHERE REPONSE.uneQuestion = QUESTION.intituleQuestion"));
+      String query = "SELECT DISTINCT REPONSE.*, QUESTION.unQuestionnaire FROM REPONSE, "
+          + "QUESTION WHERE REPONSE.uneQuestion = QUESTION.intituleQuestion";
+      ResultSet lesReponses = gestionBdd.executerRequeteAvecReponse(query);
 
       // initialisation des composantes nécessaire
       List<String> intituleQuestionnaire = new ArrayList<String>();
@@ -188,12 +172,11 @@ public class GestionReponsesBdd {
         // On cherche si d'autre élément sont conforme au premier élément
 
         boolean a = false;
-        int i = 0; 
+        int i = 0;
         while (i < valeur.size()) {
           numeroSemaine2 = numeroDesSemaines.get(i);
-          if (intituleQuestionnaire.get(i).equals(questionnaire) 
-              && pseudoSportif.get(i).equals(pseudo)
-              && numeroSemaine == numeroSemaine2) {
+          if (intituleQuestionnaire.get(i).equals(questionnaire)
+              && pseudoSportif.get(i).equals(pseudo) && numeroSemaine == numeroSemaine2) {
             // Il est conforme, on l'ajoute dans la liste des éléments à ajouté
             reponses.add(valeur.get(i));
 
@@ -202,7 +185,7 @@ public class GestionReponsesBdd {
             pseudoSportif.remove(i);
             date.remove(i);
             numeroDesSemaines.remove(i);
-            
+
             a = true;
           }
           if (!a) {
