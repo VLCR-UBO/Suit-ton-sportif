@@ -1,8 +1,8 @@
 package ihm;
 
+import fonctionnalite.Facade;
 import java.io.IOException;
 import java.net.URL;
-import fonctionnalite.Facade;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
-    final URL fxmlUrl = getClass().getResource("view/onglet.fxml");
+    final URL fxmlUrl = getClass().getResource("/ihm/view/onglet.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 

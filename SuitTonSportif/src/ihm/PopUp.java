@@ -12,6 +12,7 @@ public class PopUp {
 
   /**
    *création d'une popup afin d'ajouter, modifier une question, un questionnaire ou une réponse.
+   *
    * @param p : emplacement du popup
    * @param titre : titre du popup
    */

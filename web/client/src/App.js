@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import Login from './components/Login';
 import Question from './components/Question';
 import Resultat from './components/Resultat';
+import Parametre from './components/Parametre';
 import './App.css';
 
 class App extends Component {
@@ -82,10 +83,17 @@ class App extends Component {
 		);
 		}else if(this.state.charger === 'questionnaire'){
 		return(
-			<Questionnaire 
-				charger={this.changerPage} 
-				nomQuestionnaire={this.chargerQuestionnaire}
-			/>
+			<div>
+				<Parametre
+					charger={this.changerPage} 
+					chargerSportif={this.chargerSportif}
+				/>
+				<Questionnaire 
+					charger={this.changerPage} 
+					nomQuestionnaire={this.chargerQuestionnaire}
+				/>
+			</div>
+			
 		);
 		}else if(this.state.charger === 'resultat'){
 			return(
