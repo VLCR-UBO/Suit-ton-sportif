@@ -213,6 +213,13 @@ public class GestionReponsesBdd {
     return true;
   }
 
+  /**
+   * Cette méthode permet de retourner toutes les réponses liée à un questionnaire.
+   * 
+   * @param nomQuestionnaire : Chaine de caractères non null et non vide, représentant le nom du
+   *        questionnaire.
+   * @return Retourne les réponses liée à un questionnaire, ou null en cas de problème.
+   */
   public ResultSet reponsesPourUnQuestionnaire(String nomQuestionnaire) {
     String query =
         "SELECT uneQuestion, unSportif, numeroSemaine, valeurReponse FROM REPONSE "

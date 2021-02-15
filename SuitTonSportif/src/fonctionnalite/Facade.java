@@ -516,8 +516,16 @@ public class Facade {
     return false;
   }
 
+  /**
+   * Cette méthode permet d'exporter toutes nos réponses pour un questionnaire.
+   * 
+   * @param nomQuestionnaire : Chaine de caractères non null et non vide, représentant le nom du
+   *        questionnaire.
+   * @return Retourne true si l'exportation c'est bien déroulé, false sinon.
+   */
   public boolean exporter(String nomQuestionnaire) {
-    if (gestionQuestionnaire == null || gestionReponsesBdd == null) {
+    if (gestionQuestionnaire == null || gestionReponsesBdd == null || nomQuestionnaire == null
+        || nomQuestionnaire.length() < 1) {
       return false;
     }
     Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
