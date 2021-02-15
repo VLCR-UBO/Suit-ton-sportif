@@ -17,7 +17,7 @@ router.post('/insertion', (req,res)=>{
     const unSportif = req.body.reponsesQuestionnaire.sportif;
     const id = 0;
 
-    reponse_dao.findByKey(question,(err,rows)=>{
+    reponse_dao.findByKey(question,numeroSemaine,(err,rows)=>{
         if(err){
             console.log(err);
         }
@@ -33,13 +33,17 @@ router.post('/insertion', (req,res)=>{
                 });
             }
             else{
-                // Faire l'update des questions quand l'utilisateur re-selectionne le questionnaire
-                res.send("ERRINSERT");
-
+                reponse_dao.update(question,numeroSemaine, {derniereModification, valeurReponse},(err)=>{
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        console.log("Update");
+                    }
+                });
             }
         }
     });  
-      
 });
 
 module.exports = router;
