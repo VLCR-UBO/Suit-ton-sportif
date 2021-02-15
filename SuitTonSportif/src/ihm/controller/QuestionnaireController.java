@@ -354,4 +354,17 @@ public class QuestionnaireController implements Initializable {
     this.remplirListQuestions();
 
   }
+  
+  /**
+   * permet d'exporter les reponses à un questionnaire.
+   */
+  @FXML
+  public void exporter(MouseEvent mouseEvent) throws IOException {
+    HBox selected = list.getSelectionModel().getSelectedItem();
+    if (selected != null) {
+      Label questionnaire = (Label) selected.getChildren().get(0);
+      questionnaireSelectionner = questionnaire.getText();
+      Main.facade.exporter(questionnaireSelectionner);
+    }
+  }
 }

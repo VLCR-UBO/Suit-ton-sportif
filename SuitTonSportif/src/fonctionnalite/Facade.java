@@ -3,6 +3,9 @@ package fonctionnalite;
 import bdd.GestionQuestionnaireBdd;
 import bdd.GestionReponsesBdd;
 import bdd.GestionSportifBdd;
+import java.io.FileWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -499,20 +502,78 @@ public class Facade {
    * @return Retourne true si le chargement des données c'est bien passé, false sinon.
    */
   public boolean load() {
+    if (gestionSportifBdd == null || gestionQuestionnaireBdd == null || gestionReponsesBdd == null
+        || gestionSportif == null || gestionQuestionnaire == null || gestionReponses == null) {
+      return false;
+    }
     boolean ret1 = this.gestionSportifBdd.load(this.gestionSportif);
     boolean ret2 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
     boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses, this.gestionSportif,
         this.gestionQuestionnaire);
-    // System.out.println(this.gestionReponses.getListeDesReponses().size());
     if (ret1 && ret2 && ret3) {
-      /*
-       * List<Integer> a = gestionReponses.consulterReponses(5,
-       * gestionSportif.consulterSportif("ytutru"),
-       * gestionQuestionnaire.consulterListeQuestion("zaeza")); System.out.println("test : " + a);
-       */
       return true;
     }
     return false;
+  }
+
+  public boolean exporter(String nomQuestionnaire) {
+    if (gestionQuestionnaire == null || gestionReponsesBdd == null) {
+      return false;
+    }
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unQuestionnaire == null) {
+      return false;
+    }
+    // recuperation des reponses liee au questionnaire
+    ResultSet lesReponses = gestionReponsesBdd.reponsesPourUnQuestionnaire(nomQuestionnaire);
+    if (lesReponses == null) {
+      return false;
+    }
+    System.out.println(lesReponses);
+    // initialisation des listes
+    List<String> pseudoSportif = new ArrayList<String>();
+    List<Integer> numeroDesSemaines = new ArrayList<Integer>();
+    List<String> intituleQuestion = new ArrayList<String>();
+    List<Integer> valeurReponse = new ArrayList<Integer>();
+
+    // collecte des éléments (on rempli nos listes)
+    try {
+      while (lesReponses.next()) {
+        pseudoSportif.add(lesReponses.getString("unSportif"));
+        numeroDesSemaines.add(lesReponses.getInt("numeroSemaine"));
+        intituleQuestion.add(lesReponses.getString("uneQuestion"));
+        valeurReponse.add(lesReponses.getInt("valeurReponse"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    int taille = intituleQuestion.size();
+    System.out.println(taille);
+    // exportation en csv
+    FileWriter file = null;
+    String separator = "\n";
+    String delimiter = ";";
+    try {
+      file = new FileWriter(nomQuestionnaire + ".csv");
+      file.append("UnSportif;numeroSemaine;uneQuestion;valeurReponse"); // l'en-tête
+      file.append(separator);
+      for (int i = 0; i < taille; i++) {
+        file.append(pseudoSportif.get(i));
+        file.append(delimiter);
+        file.append(numeroDesSemaines.get(i).toString());
+        file.append(delimiter);
+        file.append(intituleQuestion.get(i));
+        file.append(delimiter);
+        file.append(valeurReponse.get(i).toString());
+        file.append(separator);
+      }
+      file.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+    return true;
   }
 
 

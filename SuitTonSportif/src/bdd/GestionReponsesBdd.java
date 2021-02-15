@@ -212,4 +212,19 @@ public class GestionReponsesBdd {
     }
     return true;
   }
+
+  public ResultSet reponsesPourUnQuestionnaire(String nomQuestionnaire) {
+    String query =
+        "SELECT uneQuestion, unSportif, numeroSemaine, valeurReponse FROM REPONSE "
+        + ", QUESTION WHERE uneQuestion = intituleQuestion AND unQuestionnaire ="
+            + " '" + nomQuestionnaire + "'";
+    System.out.println(query);
+    try {
+      ResultSet lesReponses = gestionBdd.executerRequeteAvecReponse(query);
+      return lesReponses;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }
