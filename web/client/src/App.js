@@ -13,8 +13,8 @@ class App extends Component {
 		charger : 'connexion',
 		questionnaire : null,
 		nbQuestion : -1,
-		question : null,
-		reponses : null,
+		question : [],
+		reponses : [],
 		numQuestion : 0,
 		idSportif : -1,
 		changement : false
@@ -105,6 +105,7 @@ class App extends Component {
 					charger={this.changerPage}
 					nomQuestionnaire={this.state.questionnaire}
 					numQuestion={this.state.numQuestion}
+					reponses={this.state.reponses}
 					chargerQuestion={this.chargerQuestion}
 					chargerReponse={this.chargerReponse}
 					changerNumQuestion={this.changerNumQuestion}

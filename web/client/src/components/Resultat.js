@@ -74,11 +74,7 @@ export default class Resultat extends React.Component{
                 }
             });
             this.props.charger('questionnaire');
-            
-
         }
-
-        
     }
 
     retourChoixQuestionnaire(){

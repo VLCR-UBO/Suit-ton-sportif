@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 export default function Question(props) {
     const [numQuestion, setNumQuestion] = useState(props.numQuestion);
     const [questions, setQuestions] = useState([]);
-    const [reponses, setReponses] = useState([]);
+    const [reponses, setReponses] = useState(props.reponses);
     const [pourcentage, setPourcentage] = useState("0%");
     const [changement, setChangement] = useState(props.changement);
     const nbQuestion = questions.length;
@@ -42,7 +42,6 @@ export default function Question(props) {
     }
 
     const listeQuestion = () =>{
-
         const nomQuestionnaire = props.nomQuestionnaire;
         console.log("Le nom du questionnaire : "+nomQuestionnaire);
         Axios.post('/question/listeQuestions',{nomQuestionnaire})
@@ -70,14 +69,7 @@ export default function Question(props) {
                         break;
                 }
             }
-
-
-
         });
-
-
-
-
     }
 
     var validation = changement ?
