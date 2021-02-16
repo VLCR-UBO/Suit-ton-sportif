@@ -225,7 +225,6 @@ public class GestionReponsesBdd {
         "SELECT uneQuestion, unSportif, numeroSemaine, valeurReponse FROM REPONSE "
         + ", QUESTION WHERE uneQuestion = intituleQuestion AND unQuestionnaire ="
             + " '" + nomQuestionnaire + "'";
-    System.out.println(query);
     try {
       ResultSet lesReponses = gestionBdd.executerRequeteAvecReponse(query);
       return lesReponses;

@@ -537,7 +537,6 @@ public class Facade {
     if (lesReponses == null) {
       return false;
     }
-    System.out.println(lesReponses);
     // initialisation des listes
     List<String> pseudoSportif = new ArrayList<String>();
     List<Integer> numeroDesSemaines = new ArrayList<Integer>();
@@ -557,13 +556,12 @@ public class Facade {
       return false;
     }
     int taille = intituleQuestion.size();
-    System.out.println(taille);
     // exportation en csv
     FileWriter file = null;
     String separator = "\n";
     String delimiter = ";";
     try {
-      file = new FileWriter(nomQuestionnaire + ".csv");
+      file = new FileWriter("../" + nomQuestionnaire + ".csv");
       file.append("UnSportif;numeroSemaine;uneQuestion;valeurReponse"); // l'en-tête
       file.append(separator);
       for (int i = 0; i < taille; i++) {
