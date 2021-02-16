@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="652.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.StatistiqueController">
+   <children>
+      <VBox layoutX="14.0" layoutY="21.0" prefHeight="144.0" prefWidth="300.0" spacing="5.0">
+         <children>
+            <Label text="Questionnaire :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="listQuestionnaire" onMouseClicked="#selectionQuestionnaire" prefHeight="114.0" prefWidth="300.0" />
+         </children>
+      </VBox>
+      <VBox fx:id="vbQuestion" layoutX="14.0" layoutY="172.0" prefHeight="144.0" prefWidth="300.0" spacing="5.0">
+         <children>
+            <Label text="Question :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="listQuestion" onMouseClicked="#selectionQuestion" prefHeight="128.0" prefWidth="300.0" />
+         </children>
+      </VBox>
+      <HBox layoutX="14.0" layoutY="324.0" prefHeight="27.0" prefWidth="300.0">
+         <children>
+            <Label text="Date :  ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="date" prefHeight="26.0" prefWidth="173.0" />
+         </children>
+      </HBox>
+      <PieChart fx:id="statistique" layoutX="343.0" layoutY="51.0" prefHeight="288.0" prefWidth="290.0" title="Statistique" />
+   </children>
+</AnchorPane>

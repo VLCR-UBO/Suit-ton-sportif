@@ -582,6 +582,19 @@ public class Facade {
     return true;
   }
 
-
+  public List<Integer> obtenirReponses(String nomQuestionnaire) {
+    if (gestionQuestionnaire == null || gestionReponsesBdd == null || nomQuestionnaire == null
+        || nomQuestionnaire.length() < 1) {
+      return null;
+    }
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
+    if (unQuestionnaire == null) {
+      return null;
+    }
+    // recuperation des reponses liee au questionnaire
+    ResultSet lesReponses = gestionReponsesBdd.reponsesPourUnQuestionnaire(nomQuestionnaire);
+    return null;
+  }
+  
 }
 

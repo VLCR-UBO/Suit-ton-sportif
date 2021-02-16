@@ -34,6 +34,15 @@
                      </image>
                   </ImageView>
                </graphic></Tab>
+            <Tab fx:id="tabStatistique" text="Statistique">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/stat2.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

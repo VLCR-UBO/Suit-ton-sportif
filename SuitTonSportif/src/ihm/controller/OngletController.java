@@ -16,6 +16,8 @@ public class OngletController implements Initializable {
   private Tab tabQuestionnaire;
   @FXML
   private Tab tabReponse;
+  @FXML
+  private Tab tabStatistique;
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
@@ -40,6 +42,9 @@ public class OngletController implements Initializable {
 
     final URL fxmlUrl3 = getClass().getResource("../view/questionnaire.fxml");
     final FXMLLoader fxmlLoader3 = new FXMLLoader(fxmlUrl3);
+    
+    final URL fxmlUrl4 = getClass().getResource("../view/statistique.fxml");
+    final FXMLLoader fxmlLoader4 = new FXMLLoader(fxmlUrl4);
 
     try {
       Pane root = fxmlLoader.load();
@@ -47,6 +52,9 @@ public class OngletController implements Initializable {
 
       Pane root3 = fxmlLoader3.load();
       tabQuestionnaire.setContent(root3);
+      
+      Pane root4 = fxmlLoader4.load();
+      tabStatistique.setContent(root4);
 
     } catch (IOException e) {
       e.printStackTrace();
