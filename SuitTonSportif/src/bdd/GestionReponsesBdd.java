@@ -233,4 +233,17 @@ public class GestionReponsesBdd {
       return null;
     }
   }
+  
+  public ResultSet reponsesPourUneQuestionEtUneSemaine(String uneQuestion, Integer numeroSemaine) {
+    String query =
+        "SELECT valeurReponse FROM REPONSE WHERE uneQuestion = '" + uneQuestion 
+        + "' AND numeroSemaine = " + numeroSemaine;
+    try {
+      ResultSet lesReponses = gestionBdd.executerRequeteAvecReponse(query);
+      return lesReponses;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }

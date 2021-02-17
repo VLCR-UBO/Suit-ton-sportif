@@ -40,54 +40,54 @@ public class StatistiqueController implements Initializable {
   private ListView<String> listQuestionnaire;
   @FXML
   private ListView<String> listQuestion;
- 
+
   private List<String> questionnaire;
   private List<String> question;
 
   public String questionnaireSelectionner = null;
   public String questionSelectionner = null;
   private int semaineSelectionner = 0;
-  
+
   @FXML
   private VBox vbQuestion;
   @FXML
   private PieChart statistique;
   @FXML
   private DatePicker date;
-  
+
   private List<Integer> reponses;
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
     statistique.setVisible(false);
     vbQuestion.setVisible(false);
-    
+
     questionnaire = Main.facade.consulterLesQuestionnaire();
     if (questionnaire == null) {
       questionnaire = new ArrayList<String>();
     }
-    
+
     ObservableList<String> items = FXCollections.observableArrayList();
     items.addAll(questionnaire);
     listQuestionnaire.setItems(items);
-    
+
     date.valueProperty().addListener((ov, oldValue, newValue) -> {
       selectionDate();
     });
   }
-  
+
   @FXML
   public void selectionQuestionnaire(MouseEvent mouseEvent) {
     questionnaireSelectionner = listQuestionnaire.getSelectionModel().getSelectedItem();
     this.afficherQuestions();
   }
-  
+
   @FXML
   public void selectionQuestion(MouseEvent mouseEvent) {
     questionSelectionner = listQuestion.getSelectionModel().getSelectedItem();
     this.afficherReponses();
   }
-  
+
   public void selectionDate() {
     LocalDate jour = date.getValue();
     Date date = Date.from(jour.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -97,40 +97,47 @@ public class StatistiqueController implements Initializable {
     this.semaineSelectionner = calendar.get(Calendar.WEEK_OF_YEAR);
     this.afficherReponses();
   }
-  
+
   public void afficherQuestions() {
     if (this.questionnaireSelectionner != null) {
       vbQuestion.setVisible(true);
-      
+
       question = Main.facade.consulterLesQuestionDuQuestionnaire(this.questionnaireSelectionner);
       if (question == null) {
         question = new ArrayList<String>();
       }
-      
+
       ObservableList<String> items = FXCollections.observableArrayList();
       items.addAll(question);
       listQuestion.setItems(items);
     }
   }
-  
+
   public void afficherReponses() {
-    if (this.questionnaireSelectionner != null && this.questionSelectionner != null && this.semaineSelectionner != 0) {
+    if (this.questionnaireSelectionner != null && this.questionSelectionner != null
+        && this.semaineSelectionner != 0) {
       statistique.setVisible(true);
-      reponses = Main.facade.obtenirReponses(questionnaireSelectionner);
+      reponses = Main.facade.obtenirReponses(this.questionSelectionner, this.semaineSelectionner);
       this.remplirListeReponse(reponses);
     }
   }
-  
-  public void remplirListeReponse(List<Integer> reponses) {  
-    ObservableList<PieChart.Data> pieChartData =
-            FXCollections.observableArrayList(
-            new PieChart.Data("Grapefruit", 13),
-            new PieChart.Data("Oranges", 25),
-            new PieChart.Data("Plums", 10),
-            new PieChart.Data("Pears", 22),
-            new PieChart.Data("Apples", 30));
-    statistique.setData(pieChartData);
-    
+
+  public void remplirListeReponse(List<Integer> reponses) {
+    int nbReponsesPositives = reponses.get(0);
+    int nbReponsesNegatives = reponses.get(1);
+    int nbReponsesTotal = nbReponsesPositives + nbReponsesNegatives;
+    if (nbReponsesTotal != 0) {
+      double pourcentagePositif = (double) nbReponsesPositives /  (double) nbReponsesTotal;
+      double pourcentageNegatif = (double) nbReponsesNegatives / (double) nbReponsesTotal;
+      int pourcentagePositifInt = (int) (pourcentagePositif * 100);
+      int pourcentageNegatifInt = (int) (pourcentageNegatif * 100);
+      ObservableList<PieChart.Data> pieChartData =
+          FXCollections.observableArrayList(new PieChart.Data("Oui", pourcentagePositifInt),
+              new PieChart.Data("Non", pourcentageNegatifInt));
+      statistique.setData(pieChartData);
+    } else {
+      statistique.setVisible(false);
+    }
   }
-  
+
 }

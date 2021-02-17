@@ -582,19 +582,38 @@ public class Facade {
     return true;
   }
 
-  public List<Integer> obtenirReponses(String nomQuestionnaire) {
-    if (gestionQuestionnaire == null || gestionReponsesBdd == null || nomQuestionnaire == null
-        || nomQuestionnaire.length() < 1) {
+  public List<Integer> obtenirReponses(String uneQuestion, Integer numeroSemaine) {
+    if (gestionQuestionnaire == null || gestionReponsesBdd == null || uneQuestion == null
+        || uneQuestion.length() < 1 || numeroSemaine == null || numeroSemaine < 1) {
       return null;
     }
-    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
-    if (unQuestionnaire == null) {
+    // recuperation des reponses liee a ma question et à la date demandé
+    ResultSet lesReponses =
+        gestionReponsesBdd.reponsesPourUneQuestionEtUneSemaine(uneQuestion, numeroSemaine);
+    if (lesReponses == null) {
       return null;
     }
-    // recuperation des reponses liee au questionnaire
-    ResultSet lesReponses = gestionReponsesBdd.reponsesPourUnQuestionnaire(nomQuestionnaire);
-    return null;
+
+    List<Integer> reponses = new ArrayList<Integer>();
+    Integer nbReponsesPositives = 0;
+    Integer nbReponsesNegatives = 0;
+    try {
+      while (lesReponses.next()) {
+        Integer valeur = lesReponses.getInt("valeurReponse");
+        if (valeur == 1) {
+          nbReponsesPositives++;
+        } else {
+          nbReponsesNegatives++;
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+    reponses.add(nbReponsesPositives);
+    reponses.add(nbReponsesNegatives);
+    return reponses;
   }
-  
+
 }
 
