@@ -97,29 +97,41 @@ class App extends Component {
 		);
 		}else if(this.state.charger === 'resultat'){
 			return(
-				<Resultat 
-					charger={this.changerPage}
-					changerNumQuestion={this.changerNumQuestion}
-					changerChangement={this.changerChangement}
-					sportif={this.state.idSportif}
-					question={this.state.question}
-					reponses={this.state.reponses}
-				/>
+				<div>
+					<Parametre
+						charger={this.changerPage} 
+						chargerSportif={this.chargerSportif}
+					/>
+					<Resultat 
+						charger={this.changerPage}
+						changerNumQuestion={this.changerNumQuestion}
+						changerChangement={this.changerChangement}
+						sportif={this.state.idSportif}
+						question={this.state.question}
+						reponses={this.state.reponses}
+					/>
+				</div>
 			);
 		}
 		else if(this.state.charger === 'question'){
 			return(
-				<Question 
-					charger={this.changerPage}
-					nomQuestionnaire={this.state.questionnaire}
-					numQuestion={this.state.numQuestion}
-					reponses={this.state.reponses}
-					chargerQuestion={this.chargerQuestion}
-					chargerReponse={this.chargerReponse}
-					changerNumQuestion={this.changerNumQuestion}
-					changerChangement={this.changerChangement}
-					changement={this.state.changement}
-				/>
+				<div>
+					<Parametre
+						charger={this.changerPage} 
+						chargerSportif={this.chargerSportif}
+					/>
+					<Question 
+						charger={this.changerPage}
+						nomQuestionnaire={this.state.questionnaire}
+						numQuestion={this.state.numQuestion}
+						reponses={this.state.reponses}
+						chargerQuestion={this.chargerQuestion}
+						chargerReponse={this.chargerReponse}
+						changerNumQuestion={this.changerNumQuestion}
+						changerChangement={this.changerChangement}
+						changement={this.state.changement}
+					/>
+				</div>
 			);
 		}
 	}

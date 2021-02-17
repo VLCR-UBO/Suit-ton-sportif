@@ -9,7 +9,7 @@ export default class Parametre extends React.Component{
 
     render(){
         return (
-            <div style={{textAlign:'right'}}>
+            <div style={{textAlign: "right"}}>
                 <button onClick={() => this.deconnexion()} style={style.bouton}>
                     <img src={logout} alt="deconnexion" width="30" height="30"></img>
                 </button>
@@ -20,7 +20,8 @@ export default class Parametre extends React.Component{
 
 const style={
     bouton : {
-        backgroundColor : 'transparent',
-        borderWidth : "0px"
+        margin : "5px",
+        backgroundColor : 'white',
+        borderWidth : "0px",
     }
 }
