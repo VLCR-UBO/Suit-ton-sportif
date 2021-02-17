@@ -1,4 +1,4 @@
-package ihm.controller;
+package ihm;
 
 import java.io.IOException;
 import java.net.URL;

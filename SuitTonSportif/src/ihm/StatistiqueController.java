@@ -1,4 +1,4 @@
-package ihm.controller;
+package ihm;
 
 import ihm.Main;
 import ihm.PopUp;

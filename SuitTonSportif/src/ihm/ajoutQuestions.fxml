@@ -8,16 +8,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="125.0" prefWidth="300.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.AjoutQuestionnaireController">
+<AnchorPane prefHeight="138.0" prefWidth="300.0" stylesheets="@./style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.AjoutQuestionsController">
    <children>
-      <VBox layoutX="5.0" layoutY="5.0" prefHeight="134.0" prefWidth="290.0" spacing="5.0">
+      <VBox layoutX="5.0" layoutY="5.0" prefHeight="138.0" prefWidth="290.0" spacing="5.0">
          <children>
             <Label fx:id="titre" text="Titre">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="nom" />
+            <TextField fx:id="intitule" />
             <Label fx:id="erreure" text="Tout les champs doivent etre remplies" textFill="#e1a903" visible="false">
                <font>
                   <Font size="11.0" />
@@ -26,7 +26,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                <children>
                   <Button mnemonicParsing="false" onMouseClicked="#fermerPopUp" text="Retour" />
-                  <Button mnemonicParsing="false" onMouseClicked="#creationQuestionnaire" text="Valider" />
+                  <Button mnemonicParsing="false" onMouseClicked="#creationQuestions" text="Valider" />
                </children>
             </HBox>
          </children>

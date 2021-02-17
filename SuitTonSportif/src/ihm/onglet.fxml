@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="400.0" maxWidth="640.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@../../../bin/ihm/style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.OngletController">
+<AnchorPane maxHeight="400.0" maxWidth="640.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@./style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.OngletController">
    <children>
       <TabPane maxHeight="400.0" maxWidth="640.0" prefHeight="400.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -14,7 +14,7 @@
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icon/2.png" />
+                        <Image url="@./icon/2.png" />
                      </image>
                   </ImageView>
                </graphic></Tab>
@@ -22,7 +22,7 @@
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icon/questionnaire3.png" />
+                        <Image url="@./icon/questionnaire3.png" />
                      </image>
                   </ImageView>
                </graphic></Tab>
@@ -30,7 +30,7 @@
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icon/réponse2.png" />
+                        <Image url="@./icon/réponse2.png" />
                      </image>
                   </ImageView>
                </graphic></Tab>
@@ -38,7 +38,7 @@
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icon/stat2.jpg" />
+                        <Image url="@./icon/stat2.jpg" />
                      </image>
                   </ImageView>
                </graphic>

@@ -1,7 +1,5 @@
-package ihm.controller;
+package ihm;
 
-import ihm.Main;
-import ihm.PopUp;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,8 +65,8 @@ public class QuestionnaireController implements Initializable {
   }
 
   /**
-   * remplie la liste view avec les questionnaires.
-   * ainsi que les boutons modifier et supprimer pour chaque questionnaire.
+   * remplie la liste view avec les questionnaires. ainsi que les boutons modifier et supprimer pour
+   * chaque questionnaire.
    */
   public void remplirListeQuestionnaire() {
     lignes = new ArrayList<HBox>();
@@ -77,11 +75,13 @@ public class QuestionnaireController implements Initializable {
       ligne.setSpacing(10);
 
       Button modifier = new Button();
-      Image crayon = new Image(getClass().getResourceAsStream("../icon/crayon.png"));
+      Image crayon = new Image(getClass().getResourceAsStream("/ihm/icon/crayon.png"));
       ImageView image = new ImageView(crayon);
       image.setFitWidth(20);
       image.setPreserveRatio(true);
       modifier.setGraphic(image);
+      modifier.getStylesheets()
+          .add(getClass().getResource("/ihm/style/listView.css").toExternalForm());
       modifier.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
@@ -95,11 +95,13 @@ public class QuestionnaireController implements Initializable {
       });
 
       Button supprimer = new Button();
-      Image pbl = new Image(getClass().getResourceAsStream("../icon/poubelle.png"));
+      Image pbl = new Image(getClass().getResourceAsStream("/ihm/icon/poubelle.png"));
       ImageView image2 = new ImageView(pbl);
       image2.setFitWidth(20);
       image2.setPreserveRatio(true);
       supprimer.setGraphic(image2);
+      supprimer.getStylesheets()
+          .add(getClass().getResource("/ihm/style/listView.css").toExternalForm());
       supprimer.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
@@ -120,8 +122,8 @@ public class QuestionnaireController implements Initializable {
   }
 
   /**
-   * remplie la liste view avec les questions.
-   * ainsi que les boutons modifier et supprimer pour chaque question.
+   * remplie la liste view avec les questions. ainsi que les boutons modifier et supprimer pour
+   * chaque question.
    */
   public void remplirListQuestions() {
     lignes2 = new ArrayList<HBox>();
@@ -130,11 +132,13 @@ public class QuestionnaireController implements Initializable {
       ligne.setSpacing(10);
 
       Button modifier = new Button();
-      Image crayon = new Image(getClass().getResourceAsStream("../icon/crayon.png"));
+      Image crayon = new Image(getClass().getResourceAsStream("/ihm/icon/crayon.png"));
       ImageView image = new ImageView(crayon);
       image.setFitWidth(20);
       image.setPreserveRatio(true);
       modifier.setGraphic(image);
+      modifier.getStylesheets()
+          .add(getClass().getResource("/ihm/style/listView.css").toExternalForm());
       modifier.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
@@ -148,11 +152,13 @@ public class QuestionnaireController implements Initializable {
 
 
       Button supprimer = new Button();
-      Image pbl = new Image(getClass().getResourceAsStream("../icon/poubelle.png"));
+      Image pbl = new Image(getClass().getResourceAsStream("/ihm/icon/poubelle.png"));
       ImageView image2 = new ImageView(pbl);
       image2.setFitWidth(20);
       image2.setPreserveRatio(true);
       supprimer.setGraphic(image2);
+      supprimer.getStylesheets()
+          .add(getClass().getResource("/ihm/style/listView.css").toExternalForm());
       supprimer.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
@@ -196,7 +202,7 @@ public class QuestionnaireController implements Initializable {
   @FXML
   public void ajoutQuestionnaire(MouseEvent mouseEvent) throws IOException {
     nomSelectionner = null;
-    final URL fxmlUrl = getClass().getResource("../view/ajoutQuestionnaire.fxml");
+    final URL fxmlUrl = getClass().getResource("/ihm/ajoutQuestionnaire.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
@@ -218,7 +224,7 @@ public class QuestionnaireController implements Initializable {
    */
   @FXML
   public void ajoutQuestions(MouseEvent mouseEvent) throws IOException {
-    final URL fxmlUrl = getClass().getResource("../view/ajoutQuestions.fxml");
+    final URL fxmlUrl = getClass().getResource("/ihm/ajoutQuestions.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
@@ -274,7 +280,7 @@ public class QuestionnaireController implements Initializable {
    */
   public void modifierQuestionnaire(String nom) throws IOException {
     nomSelectionner = nom;
-    final URL fxmlUrl = getClass().getResource("../view/ajoutQuestionnaire.fxml");
+    final URL fxmlUrl = getClass().getResource("/ihm/ajoutQuestionnaire.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
@@ -301,7 +307,7 @@ public class QuestionnaireController implements Initializable {
    */
   public void modifierQuestions(String intitule, HBox selected) throws IOException {
     questionSelectionner = intitule;
-    final URL fxmlUrl = getClass().getResource("../view/ajoutQuestions.fxml");
+    final URL fxmlUrl = getClass().getResource("/ihm/ajoutQuestions.fxml");
     final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
     Pane root = fxmlLoader.load();
 
@@ -354,7 +360,7 @@ public class QuestionnaireController implements Initializable {
     this.remplirListQuestions();
 
   }
-  
+
   /**
    * permet d'exporter les reponses à un questionnaire.
    */

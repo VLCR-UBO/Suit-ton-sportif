@@ -1,6 +1,5 @@
-package ihm.controller;
+package ihm;
 
-import ihm.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;

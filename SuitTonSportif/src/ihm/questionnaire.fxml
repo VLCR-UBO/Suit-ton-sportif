@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="652.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.controller.QuestionnaireController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="652.0" stylesheets="@./style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihm.QuestionnaireController">
    <children>
       <VBox layoutX="14.0" layoutY="15.0" prefWidth="270.0" spacing="5.0">
          <children>
@@ -17,7 +17,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <ListView fx:id="list" onMouseClicked="#afficherQuestions" prefHeight="272.0" prefWidth="270.0" stylesheets="@../style/listView.css" />
+            <ListView fx:id="list" onMouseClicked="#afficherQuestions" prefHeight="272.0" prefWidth="270.0" stylesheets="@./style/listView.css" />
          </children>
       </VBox>
       <Button contentDisplay="CENTER" layoutX="118.0" layoutY="325.0" mnemonicParsing="false" onMouseClicked="#exporter" prefHeight="26.0" prefWidth="61.0" text="Exporter" textAlignment="CENTER" />
@@ -33,7 +33,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="list2" onMouseClicked="#selectionnerQuestion" prefHeight="314.0" prefWidth="263.0" stylesheets="@../style/listView.css" />
+                        <ListView fx:id="list2" onMouseClicked="#selectionnerQuestion" prefHeight="314.0" prefWidth="263.0" stylesheets="@./style/listView.css" />
                      </children>
                   </VBox>
                   <Button mnemonicParsing="false" onMouseClicked="#ajoutQuestions" text="+" />
