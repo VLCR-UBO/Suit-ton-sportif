@@ -52,7 +52,7 @@ public class AjoutQuestionsController implements Initializable {
 
   @FXML
   public void creationQuestions(MouseEvent mouseEvent) throws IOException {
-    boolean err;
+    int err;
 
     if (!intitule.getText().trim().isEmpty()) {
       if (QuestionnaireController.questionSelectionner != null) {
@@ -63,7 +63,7 @@ public class AjoutQuestionsController implements Initializable {
             intitule.getText());
       }
 
-      if (!err) {
+      if (err != 1) {
         erreure.setVisible(true);
         erreure.setText("Ce pseudo est déjà utilisé !");
         erreure.setTextFill(Paint.valueOf("#e00404"));

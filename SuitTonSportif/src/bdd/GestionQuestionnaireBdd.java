@@ -1,6 +1,8 @@
 package bdd;
 
 import fonctionnalite.GestionQuestionnaire;
+import fonctionnalite.Question;
+import fonctionnalite.QuestionBoolenne;
 import fonctionnalite.Questionnaire;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,16 +50,15 @@ public class GestionQuestionnaireBdd {
         ResultSet lesQuestions = gestionBdd.executerRequeteAvecReponse(query);
 
         // creer le questionnaire vide
-        gestionQuestionnaire.ajouterQuestionnaire(nom, new ArrayList<String>());
-
+        gestionQuestionnaire.getListeQuestionnaire()
+            .add(new Questionnaire(nom, new ArrayList<Question>()));
         // ajouter chaque question avec leur valeur par defaut
         Questionnaire questionnaire = gestionQuestionnaire.consulterListeQuestion(nom);
         while (lesQuestions.next()) {
           int defaut = Integer.parseInt(lesQuestions.getString("reponseparDefaut"));
-          questionnaire.ajouterQuestionBoolenne(lesQuestions.getString("intituleQuestion"),
-              defaut == 0 ? false : true);
+          questionnaire.getListeDeQuestions().add(new QuestionBoolenne(
+              lesQuestions.getString("intituleQuestion"), defaut == 0 ? false : true));
         }
-
         lesNomsDesQuestions.clear();
       }
     } catch (Exception e) {

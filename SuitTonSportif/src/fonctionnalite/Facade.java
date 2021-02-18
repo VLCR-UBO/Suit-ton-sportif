@@ -25,7 +25,6 @@ public class Facade {
   private GestionReponses gestionReponses;
   private GestionQuestionnaire gestionQuestionnaire;
 
-  private GestionQuestionnaireBdd gestionQuestionnaireBdd;
   private GestionReponsesBdd gestionReponsesBdd;
 
   /**
@@ -37,7 +36,6 @@ public class Facade {
     gestionQuestionnaire = new GestionQuestionnaire();
     gestionReponses = new GestionReponses();
 
-    gestionQuestionnaireBdd = new GestionQuestionnaireBdd();
     gestionReponsesBdd = new GestionReponsesBdd();
 
     load();
@@ -354,15 +352,11 @@ public class Facade {
    * @param questions : la liste de string utilisée pour créée les questions.
    * @return Retourne true si la demande c'est bien déroulé, false sinon.
    */
-  public boolean ajouterUnQuestionnaire(String nomQuestionnaire, List<String> questions) {
-    if (gestionQuestionnaire == null || gestionQuestionnaireBdd == null) {
-      return false;
+  public int ajouterUnQuestionnaire(String nomQuestionnaire, List<String> questions) {
+    if (gestionQuestionnaire == null) {
+      return -3;
     }
-    boolean retBdd = gestionQuestionnaireBdd.ajouterQuestionnaire(nomQuestionnaire, questions);
-    if (retBdd == true) {
-      return gestionQuestionnaire.ajouterQuestionnaire(nomQuestionnaire, questions);
-    }
-    return false;
+    return gestionQuestionnaire.ajouterQuestionnaire(nomQuestionnaire, questions);
   }
 
   // méthode incohérente
@@ -375,18 +369,13 @@ public class Facade {
    * @param questions : la liste de string utilisée pour créée les questions.
    * @return Retourne true si la demande c'est bien déroulé, false sinon.
    */
-  public boolean modifierUnQuestionnaire(String ancienNomQuestionnaire,
-      String nouveauNomQuestionnaire, List<String> questions) {
-    if (gestionQuestionnaire == null || gestionQuestionnaireBdd == null) {
-      return false;
+  public int modifierUnQuestionnaire(String ancienNomQuestionnaire, String nouveauNomQuestionnaire,
+      List<String> questions) {
+    if (gestionQuestionnaire == null) {
+      return -3;
     }
-    boolean retBdd = gestionQuestionnaireBdd.modifierQuestionnaire(ancienNomQuestionnaire,
-        nouveauNomQuestionnaire);
-    if (retBdd == true) {
-      return gestionQuestionnaire.modifierQuestionnaire(ancienNomQuestionnaire,
-          nouveauNomQuestionnaire, questions);
-    }
-    return false;
+    return gestionQuestionnaire.modifierQuestionnaire(ancienNomQuestionnaire,
+        nouveauNomQuestionnaire, questions);
   }
 
   /**
@@ -395,15 +384,11 @@ public class Facade {
    * @param nomQuestionnaire : L'identifiant unique du questionnaire à supprimer.
    * @return Retourne true si la demande c'est bien passé, false sinon.
    */
-  public boolean supprimerUnQuestionnaire(String nomQuestionnaire) {
+  public int supprimerUnQuestionnaire(String nomQuestionnaire) {
     if (gestionQuestionnaire == null) {
-      return false;
+      return -3;
     }
-    boolean retBdd = gestionQuestionnaireBdd.supprimerQuestionnaire(nomQuestionnaire);
-    if (retBdd == true) {
-      return gestionQuestionnaire.supprimerQuestionnaire(nomQuestionnaire);
-    }
-    return false;
+    return gestionQuestionnaire.supprimerQuestionnaire(nomQuestionnaire);
   }
 
   /**
@@ -414,19 +399,11 @@ public class Facade {
    * @param intitule : L'identifiant unique de la question.
    * @return Retourne true si la demande c'est bien passez, false sinon.
    */
-  public boolean ajouterUneQuestion(String nomQuestionnaire, String intitule) {
+  public int ajouterUneQuestion(String nomQuestionnaire, String intitule) {
     if (gestionQuestionnaire == null) {
-      return false;
+      return -4;
     }
-    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
-    if (unQuestionnaire == null) {
-      return false;
-    }
-    boolean retBdd = gestionQuestionnaireBdd.ajouterQuestion(nomQuestionnaire, intitule, false);
-    if (retBdd == true) {
-      return unQuestionnaire.ajouterQuestionBoolenne(intitule, false);
-    }
-    return false;
+    return gestionQuestionnaire.ajouterQuestion(nomQuestionnaire, intitule);
   }
 
   /**
@@ -439,21 +416,13 @@ public class Facade {
    * @param nouveauIntitule : Le nouveau identifiant unique de la question.
    * @return Retourne true si la demande c'est bien passez, false sinon.
    */
-  public boolean modifierUneQuestion(String nomQuestionnaire, String ancienIntitule,
+  public int modifierUneQuestion(String nomQuestionnaire, String ancienIntitule,
       String nouveauIntitule, boolean defaut) {
     if (gestionQuestionnaire == null) {
-      return false;
+      return -4;
     }
-    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
-    if (unQuestionnaire == null) {
-      return false;
-    }
-    boolean retBdd =
-        gestionQuestionnaireBdd.modifierQuestion(ancienIntitule, nouveauIntitule, defaut);
-    if (retBdd == true) {
-      return unQuestionnaire.modifierQuestionBoolenne(ancienIntitule, nouveauIntitule, defaut);
-    }
-    return false;
+    return gestionQuestionnaire.modifierQuestion(nomQuestionnaire, ancienIntitule, nouveauIntitule,
+        defaut);
   }
 
   /**
@@ -464,20 +433,11 @@ public class Facade {
    * @param intitule : L'identifiant unique de la question.
    * @return Retourne true si la demande c'est bien passez, false sinon.
    */
-  public boolean supprimerUneQuestion(String nomQuestionnaire, String intitule) {
+  public int supprimerUneQuestion(String nomQuestionnaire, String intitule) {
     if (gestionQuestionnaire == null) {
-      return false;
+      return -4;
     }
-    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
-    if (unQuestionnaire == null) {
-      return false;
-    }
-    boolean retBdd = gestionQuestionnaireBdd.supprimerQuestion(intitule);
-    if (retBdd == true) {
-      return unQuestionnaire.supprimerQuestion(intitule);
-    }
-    return false;
-
+    return gestionQuestionnaire.supprimerQuestion(nomQuestionnaire, intitule);
   }
 
   /**
@@ -486,12 +446,12 @@ public class Facade {
    * @return Retourne true si le chargement des données c'est bien passé, false sinon.
    */
   public boolean load() {
-    if (gestionQuestionnaireBdd == null || gestionReponsesBdd == null
-        || gestionSportif == null || gestionQuestionnaire == null || gestionReponses == null) {
+    if (gestionReponsesBdd == null || gestionSportif == null || gestionQuestionnaire == null
+        || gestionReponses == null) {
       return false;
     }
     boolean ret1 = this.gestionSportif.load();
-    boolean ret2 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
+    boolean ret2 = this.gestionQuestionnaire.load();
     boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses, this.gestionSportif,
         this.gestionQuestionnaire);
     if (ret1 && ret2 && ret3) {

@@ -60,7 +60,7 @@ public class AjoutQuestionnaireController implements Initializable {
     ArrayList<String> questionnaire = new ArrayList<String>();
     
     if (!nom.getText().trim().isEmpty()) {
-      boolean err;
+      int err;
       
       if (QuestionnaireController.nomSelectionner != null) {
         err = Main.facade.modifierUnQuestionnaire(QuestionnaireController.nomSelectionner,
@@ -69,7 +69,7 @@ public class AjoutQuestionnaireController implements Initializable {
         err = Main.facade.ajouterUnQuestionnaire(nom.getText(), questionnaire);
       }
       
-      if (!err) {
+      if (err != 1) {
         erreure.setVisible(true);
         erreure.setText("Ce pseudo est déjà utilisé !");
         erreure.setTextFill(Paint.valueOf("#e00404"));

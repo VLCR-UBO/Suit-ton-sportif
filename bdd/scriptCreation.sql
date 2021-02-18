@@ -48,11 +48,11 @@ CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`RELATION_SPORTIF_ACTIVITE_SPO
   CONSTRAINT `fk_RELATION_SPORTIF_ACTIVITE_SPORTIVE_SPORTIF`
     FOREIGN KEY (`unSportif`)
     REFERENCES `enregistretonsportif`.`SPORTIF` (`pseudo`)
-    ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `fk_RELATION_SPORTIF_ACTIVITE_SPORTIVE_ACTIVITE_SPORTIVE`
     FOREIGN KEY (`uneActiviteSportive`)
     REFERENCES `enregistretonsportif`.`ACTIVITE_SPORTIVE` (`nomActivite`)
-    ON DELETE CASCADE)
+    ON DELETE CASCADE ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -80,11 +80,11 @@ CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`RELATION_SPORTIF_QUESTIONNAIR
   CONSTRAINT `fk_RELATION_SPORTIF_QUESTIONNAIRE_SPORTIF`
     FOREIGN KEY (`unSportif`)
     REFERENCES `enregistretonsportif`.`SPORTIF` (`pseudo`)
-    ON DELETE CASCADE,
+    ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_RELATION_SPORTIF_QUESTIONNAIRE_QUESTIONNAIRE`
     FOREIGN KEY (`unQuestionnaire`)
     REFERENCES `enregistretonsportif`.`QUESTIONNAIRE` (`intituleQuestionnaire`)
-    ON DELETE CASCADE)
+    ON DELETE CASCADE ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`QUESTION` (
   CONSTRAINT `fk_QUESTION_QUESTIONNAIRE`
     FOREIGN KEY (`unQuestionnaire`)
     REFERENCES `enregistretonsportif`.`QUESTIONNAIRE` (`intituleQuestionnaire`)
-    ON DELETE CASCADE)
+    ON DELETE CASCADE ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -123,9 +123,9 @@ CREATE TABLE IF NOT EXISTS `enregistretonsportif`.`REPONSE` (
   CONSTRAINT `fk_REPONSE_SPORTIF`
     FOREIGN KEY (`unSportif`)
     REFERENCES `enregistretonsportif`.`SPORTIF` (`pseudo`)
-    ON DELETE CASCADE,
+    ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_REPONSE_QUESTION`
     FOREIGN KEY (`uneQuestion`)
     REFERENCES `enregistretonsportif`.`QUESTION` (`intituleQuestion`)
-    ON DELETE CASCADE)
+    ON DELETE CASCADE ON UPDATE CASCADE)
 ENGINE = InnoDB;
