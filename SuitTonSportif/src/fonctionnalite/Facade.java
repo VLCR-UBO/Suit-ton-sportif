@@ -25,7 +25,6 @@ public class Facade {
   private GestionReponses gestionReponses;
   private GestionQuestionnaire gestionQuestionnaire;
 
-  private GestionSportifBdd gestionSportifBdd;
   private GestionQuestionnaireBdd gestionQuestionnaireBdd;
   private GestionReponsesBdd gestionReponsesBdd;
 
@@ -38,7 +37,6 @@ public class Facade {
     gestionQuestionnaire = new GestionQuestionnaire();
     gestionReponses = new GestionReponses();
 
-    gestionSportifBdd = new GestionSportifBdd();
     gestionQuestionnaireBdd = new GestionQuestionnaireBdd();
     gestionReponsesBdd = new GestionReponsesBdd();
 
@@ -127,15 +125,11 @@ public class Facade {
    *        manière unique.
    * @return Retourne true si la demande c'est bien passé, false sinon.
    */
-  public boolean supprimerUnSportif(String pseudo) {
-    if (gestionSportif == null || gestionSportifBdd == null) {
-      return false;
+  public int supprimerUnSportif(String pseudo) {
+    if (gestionSportif == null) {
+      return -3;
     }
-    boolean retBdd = gestionSportifBdd.supprimerSportif(pseudo);
-    if (retBdd) {
-      return gestionSportif.supprimerSportif(pseudo);
-    }
-    return false;
+    return gestionSportif.supprimerSportif(pseudo);
   }
 
   /**
@@ -155,18 +149,13 @@ public class Facade {
    *        sportif.
    * @return Retourne true si la demande c'est bien passé, false sinon.
    */
-  public boolean modifierUnSportif(String ancienPseudo, String nom, String prenom, String pseudo,
+  public int modifierUnSportif(String ancienPseudo, String nom, String prenom, String pseudo,
       String motDePasse, Calendar dateDeNaissance) {
-    if (gestionSportif == null || gestionSportifBdd == null) {
-      return false;
+    if (gestionSportif == null) {
+      return -4;
     }
-    boolean retBdd = gestionSportifBdd.modifierSportif(gestionSportif, ancienPseudo, nom, prenom,
-        pseudo, motDePasse, dateDeNaissance);
-    if (retBdd) {
-      return gestionSportif.modifierSportif(ancienPseudo, nom, prenom, pseudo, motDePasse,
-          dateDeNaissance);
-    }
-    return false;
+    return gestionSportif.modifierSportif(ancienPseudo, nom, prenom, pseudo, motDePasse,
+        dateDeNaissance);
   }
 
   /**
@@ -181,17 +170,12 @@ public class Facade {
    * @param dateDeNaissance : Une date non null.
    * @return Retourne true si la demande c'est bien passé, false sinon.
    */
-  public boolean ajouterUnSportif(String nom, String prenom, String pseudo, String motDePasse,
+  public int ajouterUnSportif(String nom, String prenom, String pseudo, String motDePasse,
       Calendar dateDeNaissance) {
-    if (gestionSportif == null || gestionSportifBdd == null) {
-      return false;
+    if (gestionSportif == null) {
+      return -3;
     }
-    boolean retBdd = gestionSportifBdd.ajouterSportif(gestionSportif, nom, prenom, pseudo,
-        motDePasse, dateDeNaissance);
-    if (retBdd) {
-      return gestionSportif.ajouterSportif(nom, prenom, pseudo, motDePasse, dateDeNaissance);
-    }
-    return false;
+    return gestionSportif.ajouterSportif(nom, prenom, pseudo, motDePasse, dateDeNaissance);
   }
 
   /**
@@ -502,11 +486,11 @@ public class Facade {
    * @return Retourne true si le chargement des données c'est bien passé, false sinon.
    */
   public boolean load() {
-    if (gestionSportifBdd == null || gestionQuestionnaireBdd == null || gestionReponsesBdd == null
+    if (gestionQuestionnaireBdd == null || gestionReponsesBdd == null
         || gestionSportif == null || gestionQuestionnaire == null || gestionReponses == null) {
       return false;
     }
-    boolean ret1 = this.gestionSportifBdd.load(this.gestionSportif);
+    boolean ret1 = this.gestionSportif.load();
     boolean ret2 = this.gestionQuestionnaireBdd.load(this.gestionQuestionnaire);
     boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses, this.gestionSportif,
         this.gestionQuestionnaire);

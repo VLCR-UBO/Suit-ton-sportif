@@ -76,7 +76,7 @@ public class AjoutSportifController implements Initializable {
           .setDate(naissance.getYear(), naissance.getMonthValue(), naissance.getDayOfMonth())
           .build();
 
-      boolean err;
+      int err;
 
       if (SportifController.nomSelectionner != null) {
         err = Main.facade.modifierUnSportif(SportifController.nomSelectionner, nom.getText(),
@@ -86,7 +86,7 @@ public class AjoutSportifController implements Initializable {
             "pouet", calendar);
       }
 
-      if (!err) {
+      if (err != 1) {
         erreure.setVisible(true);
         erreure.setText("Ce pseudo est déjà utilisé !");
         erreure.setTextFill(Paint.valueOf("#e00404"));

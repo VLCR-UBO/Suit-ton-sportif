@@ -1,6 +1,7 @@
 package bdd;
 
 import fonctionnalite.GestionSportif;
+import fonctionnalite.Sportif;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,9 +38,6 @@ public class GestionSportifBdd {
    * @return Retourne true si le sportif est supprimé, false sinon.
    */
   public boolean supprimerSportif(String pseudo) {
-    if (pseudo == null || pseudo.length() < 1) {
-      return false; // parametres incorrects
-    }
     String query = "DELETE FROM SPORTIF WHERE pseudo = '" + pseudo.toString() + "'";
     try {
       gestionBdd.executerRequete(query);
@@ -173,9 +171,10 @@ public class GestionSportifBdd {
 
       int taille = lesPseudoSportifs.size();
       for (int i = 0; i < taille; i++) {
-        gestionSportif.ajouterSportif(lesNomSportifs.get(i), lesPrenomSportifs.get(i),
-            lesPseudoSportifs.get(i), lesMotDePasseSportifs.get(i),
-            lesDateDeNaissanceSportifs.get(i));
+        gestionSportif.getListeDesSportifs()
+            .add(new Sportif(lesNomSportifs.get(i), lesPrenomSportifs.get(i),
+                lesPseudoSportifs.get(i), lesMotDePasseSportifs.get(i),
+                lesDateDeNaissanceSportifs.get(i)));
       }
     } catch (Exception e) {
       e.printStackTrace();
