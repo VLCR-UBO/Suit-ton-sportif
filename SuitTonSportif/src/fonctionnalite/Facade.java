@@ -25,8 +25,6 @@ public class Facade {
   private GestionReponses gestionReponses;
   private GestionQuestionnaire gestionQuestionnaire;
 
-  private GestionReponsesBdd gestionReponsesBdd;
-
   /**
    * Le constructeur de la classe Facade. Il initialise les objets dont nous allons avoir besoins
    * pour accéder et intéragir avec nos différentes ressources.
@@ -35,8 +33,6 @@ public class Facade {
     gestionSportif = new GestionSportif();
     gestionQuestionnaire = new GestionQuestionnaire();
     gestionReponses = new GestionReponses();
-
-    gestionReponsesBdd = new GestionReponsesBdd();
 
     load();
   }
@@ -224,8 +220,14 @@ public class Facade {
     }
     List<Integer> listeReponses =
         gestionReponses.consulterReponses(numeroSemaine, unSportif, unQuestionnaire);
+    for (int j = 0; j < listeReponses.size(); j++) {
+      System.out.println("consulterReponses : " + listeReponses.get(j).toString() + "\n");
+    }
     HashMap<String, Integer> ret = new HashMap<String, Integer>();
     List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
+    for (int j = 0; j < listeQuestions.size(); j++) {
+      System.out.println("consulterQuestions : " + listeQuestions.get(j).getIntituleQuestion() + "\n");
+    }
     int taille = listeQuestions.size();
     if (listeReponses == null) { // Pas de reponses -> On va chercher les reponses par défaut
       Integer reponseQuestion;
@@ -246,6 +248,10 @@ public class Facade {
       for (int i = 0; i < taille; i++) {
         ret.put(listeQuestions.get(i).getIntituleQuestion(), listeReponses.get(i));
       }
+      for (String key : ret.keySet()) {
+        System.out.println("question : " + key);
+        System.out.println("valeur : " + ret.get(key).toString());
+      }
     }
     return ret;
   }
@@ -263,16 +269,15 @@ public class Facade {
    * @param nomQuestionnaire : Ces réponses correspondent à ce questionnaire.
    * @return Retourne true si la modification c'est bien passé, false sinon.
    */
-  public boolean modifierReponses(Date date, String pseudo, String nomQuestionnaire,
+  public int modifierReponses(Date date, String pseudo, String nomQuestionnaire,
       Map<String, Integer> listeReponses, Integer numeroSemaine) {
-    if (gestionReponses == null || gestionReponsesBdd == null || gestionQuestionnaire == null
-        || gestionSportif == null) {
-      return false;
+    if (gestionReponses == null || gestionQuestionnaire == null || gestionSportif == null) {
+      return -4;
     }
     Sportif unSportif = gestionSportif.consulterSportif(pseudo);
     Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
     if (unSportif == null || unQuestionnaire == null) {
-      return false;
+      return -3;
     }
 
     // On procède à la modification
@@ -280,24 +285,15 @@ public class Facade {
     for (String key : listeReponses.keySet()) {
       listeDesReponses.add(listeReponses.get(key));
     }
-    boolean retBdd = gestionReponsesBdd.modifierReponses(numeroSemaine, date, unSportif,
+    int modification = gestionReponses.modifierReponses(numeroSemaine, date, unSportif,
         unQuestionnaire, listeReponses);
-    if (retBdd) {
-      boolean modification = gestionReponses.modifierReponses(numeroSemaine, date, unSportif,
-          unQuestionnaire, listeDesReponses);
-      if (modification == true) {
-        return true;
-      }
+    if (modification == 1) {
+      return modification;
     }
 
     // On fait l'ajout
-    boolean retBdd2 = gestionReponsesBdd.ajouterReponses(gestionReponses, numeroSemaine, date,
-        unSportif, pseudo, unQuestionnaire, listeReponses);
-    if (retBdd2) {
-      return gestionReponses.ajouterReponses(numeroSemaine, date, unSportif, unQuestionnaire,
-          listeDesReponses);
-    }
-    return false;
+    return gestionReponses.ajouterReponses(numeroSemaine, date, unSportif, unQuestionnaire,
+        listeReponses);
   }
 
   /**
@@ -446,14 +442,12 @@ public class Facade {
    * @return Retourne true si le chargement des données c'est bien passé, false sinon.
    */
   public boolean load() {
-    if (gestionReponsesBdd == null || gestionSportif == null || gestionQuestionnaire == null
-        || gestionReponses == null) {
+    if (gestionSportif == null || gestionQuestionnaire == null || gestionReponses == null) {
       return false;
     }
     boolean ret1 = this.gestionSportif.load();
     boolean ret2 = this.gestionQuestionnaire.load();
-    boolean ret3 = this.gestionReponsesBdd.load(this.gestionReponses, this.gestionSportif,
-        this.gestionQuestionnaire);
+    boolean ret3 = this.gestionReponses.load(this.gestionSportif, this.gestionQuestionnaire);
     if (ret1 && ret2 && ret3) {
       return true;
     }
@@ -467,96 +461,18 @@ public class Facade {
    *        questionnaire.
    * @return Retourne true si l'exportation c'est bien déroulé, false sinon.
    */
-  public boolean exporter(String nomQuestionnaire) {
-    if (gestionQuestionnaire == null || gestionReponsesBdd == null || nomQuestionnaire == null
-        || nomQuestionnaire.length() < 1) {
-      return false;
+  public int exporter(String nomQuestionnaire) {
+    if (gestionReponses == null) {
+      return -5;
     }
-    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(nomQuestionnaire);
-    if (unQuestionnaire == null) {
-      return false;
-    }
-    // recuperation des reponses liee au questionnaire
-    ResultSet lesReponses = gestionReponsesBdd.reponsesPourUnQuestionnaire(nomQuestionnaire);
-    if (lesReponses == null) {
-      return false;
-    }
-    // initialisation des listes
-    List<String> pseudoSportif = new ArrayList<String>();
-    List<Integer> numeroDesSemaines = new ArrayList<Integer>();
-    List<String> intituleQuestion = new ArrayList<String>();
-    List<Integer> valeurReponse = new ArrayList<Integer>();
-
-    // collecte des éléments (on rempli nos listes)
-    try {
-      while (lesReponses.next()) {
-        pseudoSportif.add(lesReponses.getString("unSportif"));
-        numeroDesSemaines.add(lesReponses.getInt("numeroSemaine"));
-        intituleQuestion.add(lesReponses.getString("uneQuestion"));
-        valeurReponse.add(lesReponses.getInt("valeurReponse"));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-    int taille = intituleQuestion.size();
-    // exportation en csv
-    FileWriter file = null;
-    String separator = "\n";
-    String delimiter = ";";
-    try {
-      file = new FileWriter("../" + nomQuestionnaire + ".csv");
-      file.append("UnSportif;numeroSemaine;uneQuestion;valeurReponse"); // l'en-tête
-      file.append(separator);
-      for (int i = 0; i < taille; i++) {
-        file.append(pseudoSportif.get(i));
-        file.append(delimiter);
-        file.append(numeroDesSemaines.get(i).toString());
-        file.append(delimiter);
-        file.append(intituleQuestion.get(i));
-        file.append(delimiter);
-        file.append(valeurReponse.get(i).toString());
-        file.append(separator);
-      }
-      file.close();
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
-    }
-    return true;
+    return gestionReponses.exporter(gestionQuestionnaire, nomQuestionnaire);
   }
 
   public List<Integer> obtenirReponses(String uneQuestion, Integer numeroSemaine) {
-    if (gestionQuestionnaire == null || gestionReponsesBdd == null || uneQuestion == null
-        || uneQuestion.length() < 1 || numeroSemaine == null || numeroSemaine < 1) {
+    if (gestionReponses == null) {
       return null;
     }
-    // recuperation des reponses liee a ma question et à la date demandé
-    ResultSet lesReponses =
-        gestionReponsesBdd.reponsesPourUneQuestionEtUneSemaine(uneQuestion, numeroSemaine);
-    if (lesReponses == null) {
-      return null;
-    }
-
-    List<Integer> reponses = new ArrayList<Integer>();
-    Integer nbReponsesPositives = 0;
-    Integer nbReponsesNegatives = 0;
-    try {
-      while (lesReponses.next()) {
-        Integer valeur = lesReponses.getInt("valeurReponse");
-        if (valeur == 1) {
-          nbReponsesPositives++;
-        } else {
-          nbReponsesNegatives++;
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return null;
-    }
-    reponses.add(nbReponsesPositives);
-    reponses.add(nbReponsesNegatives);
-    return reponses;
+    return gestionReponses.obtenirReponses(gestionQuestionnaire, uneQuestion, numeroSemaine);
   }
 
 }

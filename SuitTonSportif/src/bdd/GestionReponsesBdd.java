@@ -4,6 +4,7 @@ import fonctionnalite.GestionQuestionnaire;
 import fonctionnalite.GestionReponses;
 import fonctionnalite.GestionSportif;
 import fonctionnalite.Questionnaire;
+import fonctionnalite.Reponses;
 import fonctionnalite.Sportif;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -198,11 +199,8 @@ public class GestionReponsesBdd {
         unQuestionnaire = gestionQuestionnaire.consulterListeQuestion(questionnaire);
         unSportif = gestionSportif.consulterSportif(pseudo);
         // On fait l'ajout
-        boolean ret =
-            gestionReponses.ajouterReponses(numeroSemaine, d, unSportif, unQuestionnaire, reponses);
-        if (!ret) {
-          return false; // Une erreur c'est produite lors de la création
-        }
+        gestionReponses.getListeDesReponses()
+            .add(new Reponses(d, numeroSemaine, reponses, unSportif, unQuestionnaire));;
         // On réinitialise la liste ajouté, pour le prochain tour de boucle
         reponses = new ArrayList<Integer>();
       }
@@ -221,10 +219,9 @@ public class GestionReponsesBdd {
    * @return Retourne les réponses liée à un questionnaire, ou null en cas de problème.
    */
   public ResultSet reponsesPourUnQuestionnaire(String nomQuestionnaire) {
-    String query =
-        "SELECT uneQuestion, unSportif, numeroSemaine, valeurReponse FROM REPONSE "
-        + ", QUESTION WHERE uneQuestion = intituleQuestion AND unQuestionnaire ="
-            + " '" + nomQuestionnaire + "'";
+    String query = "SELECT uneQuestion, unSportif, numeroSemaine, valeurReponse FROM REPONSE "
+        + ", QUESTION WHERE uneQuestion = intituleQuestion AND unQuestionnaire =" + " '"
+        + nomQuestionnaire + "'";
     try {
       ResultSet lesReponses = gestionBdd.executerRequeteAvecReponse(query);
       return lesReponses;
@@ -233,10 +230,9 @@ public class GestionReponsesBdd {
       return null;
     }
   }
-  
+
   public ResultSet reponsesPourUneQuestionEtUneSemaine(String uneQuestion, Integer numeroSemaine) {
-    String query =
-        "SELECT valeurReponse FROM REPONSE WHERE uneQuestion = '" + uneQuestion 
+    String query = "SELECT valeurReponse FROM REPONSE WHERE uneQuestion = '" + uneQuestion
         + "' AND numeroSemaine = " + numeroSemaine;
     try {
       ResultSet lesReponses = gestionBdd.executerRequeteAvecReponse(query);
