@@ -74,7 +74,6 @@ class App extends Component {
 		if(this.state.charger === 'connexion'){
 		return (
 			<div className="App">
-			<Header />
 			<Login 
 				charger={this.changerPage}
 				chargerSportif={this.chargerSportif}

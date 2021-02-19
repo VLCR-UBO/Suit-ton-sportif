@@ -220,14 +220,10 @@ public class Facade {
     }
     List<Integer> listeReponses =
         gestionReponses.consulterReponses(numeroSemaine, unSportif, unQuestionnaire);
-    for (int j = 0; j < listeReponses.size(); j++) {
-      System.out.println("consulterReponses : " + listeReponses.get(j).toString() + "\n");
-    }
+    
     HashMap<String, Integer> ret = new HashMap<String, Integer>();
     List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
-    for (int j = 0; j < listeQuestions.size(); j++) {
-      System.out.println("consulterQuestions : " + listeQuestions.get(j).getIntituleQuestion() + "\n");
-    }
+    
     int taille = listeQuestions.size();
     if (listeReponses == null) { // Pas de reponses -> On va chercher les reponses par défaut
       Integer reponseQuestion;

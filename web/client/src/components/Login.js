@@ -91,7 +91,7 @@ const Login = (props) => {
                                 />
                             </div>
 
-                            <center><button type="submit" className="btn btn-primary">Se connecter</button></center>
+                            <center><button type="submit" className="btn btn-primary" style={style.bouton}>Se connecter</button></center>
                         </form>
                     </div>
                 </div>
@@ -103,11 +103,11 @@ const Login = (props) => {
 
 }
 
-const titleStyle = {
-    color :"#000",
-    textAlign : "center",
-    padding : "#10 px"
-
-};
+const style = {
+    bouton : {
+        backgroundColor : 'yellowgreen',
+        borderColor : 'yellowgreen'
+    }
+}
 
 export default Login;
