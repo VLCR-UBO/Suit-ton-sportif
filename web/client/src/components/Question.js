@@ -52,7 +52,6 @@ export default function Question(props) {
                 switch (res.data) {
                     case "LISTQUESTVIDE":
                         alert("Le questionnaire "+nomQuestionnaire+" ne comporte aucune question, veuillez en sélectionner un autre.");
-                        /* retour à la liste des questionnaires */
                         break;
                 
                     default:

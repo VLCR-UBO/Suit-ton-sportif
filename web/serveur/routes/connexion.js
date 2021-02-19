@@ -1,12 +1,35 @@
 const express = require ('express');
 const router = express.Router();
 const sportif_dao = require('../models/SportifDAO');
+const bcrypt = require('bcrypt');
 
 router.get('/',function(req,res){
 
 
 
 });
+
+
+/*
+bcrypt.compare(motDePasseSportif,rows[0].motDePasseSportif,(err,res)=>{
+    if(err){
+        console.log(err);
+    }
+    else{
+        if(res){
+            console.log("Le sportif :"+rows[0].pseudo+"est connecté ! ");
+            console.log("Bonjour "+rows[0].prenomSportif+" "+rows[0].nomSportif);
+
+            res.send(rows[0]);
+        }
+        else{
+            console.log("Mot de passse incorrect");
+            res.send("MDPINCORR");
+        }
+
+    }
+});
+*/
 
 router.post('/sportif',function(req,res){
     const pseudo = req.body.user.idUser;

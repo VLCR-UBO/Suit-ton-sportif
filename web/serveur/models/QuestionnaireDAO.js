@@ -3,7 +3,7 @@ const db = require('./connexionBDD.js');
 const QuestionnaireDAO = function(){
 
     this.findByKey = function(callback){
-        db.query("SELECT * FROM QUESTIONNAIRE",[],callback);
+        db.query("SELECT DISTINCT intituleQuestionnaire FROM QUESTIONNAIRE, QUESTION WHERE intituleQuestionnaire = unQuestionnaire",[],callback);
 
     }
 };
