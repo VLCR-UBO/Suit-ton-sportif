@@ -38,15 +38,11 @@ public class GestionQuestionnaire {
     List<Question> listeQuestions = new ArrayList<Question>();
     Iterator<Questionnaire> questionnaireIterator = this.listeQuestionnaire.iterator();
     Questionnaire questionnaireVerif;
-    boolean verif = false;
-    while (questionnaireIterator.hasNext() && (!verif)) {
+    while (questionnaireIterator.hasNext()) {
       questionnaireVerif = questionnaireIterator.next();
       if (questionnaireVerif.getNomQuestionnaire() == nomQuestionnaire) {
-        verif = true;
+        return -1;
       }
-    }
-    if (verif) {
-      return -1;
     }
     boolean retBdd = gestionQuestionnaireBdd.ajouterQuestionnaire(nomQuestionnaire, questions);
     if (!retBdd) {

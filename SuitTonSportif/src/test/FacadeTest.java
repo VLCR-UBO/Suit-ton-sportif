@@ -24,40 +24,39 @@ public class FacadeTest {
     // Vérification de l'ajout des sportifs
     Calendar dateSportif1 = Calendar.getInstance();
     dateSportif1.set(1976, 7, 3); // annee/mois/jour
-    boolean ajoutSportif1 =
+    int ajoutSportif1 =
         facade.ajouterUnSportif("Ondra", "Adam", "grinpeurDu57", "leRageux", dateSportif1);
-    assertTrue(ajoutSportif1, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
+    assertEquals(ajoutSportif1, 1, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
 
     Calendar dateSportif2 = Calendar.getInstance();
     dateSportif2.set(1978, 10, 26); // annee/mois/jour
-    boolean ajoutSportif2 =
+    int ajoutSportif2 =
         facade.ajouterUnSportif("Qim", "Jahin", "QimJahin", "theBest", dateSportif2);
-    assertTrue(ajoutSportif2, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
+    assertEquals(ajoutSportif2, 1, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
 
     Calendar dateSportif3 = Calendar.getInstance();
     dateSportif3.set(1978, 10, 26); // annee/mois/jour
-    boolean ajoutSportif3 =
-        facade.ajouterUnSportif("Fiet", "Jean", "FietJean", "01234", dateSportif3);
-    assertTrue(ajoutSportif3, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
+    int ajoutSportif3 = facade.ajouterUnSportif("Fiet", "Jean", "FietJean", "01234", dateSportif3);
+    assertEquals(ajoutSportif3, 1, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
 
     Calendar dateSportif4 = Calendar.getInstance();
     dateSportif4.set(1978, 10, 26); // annee/mois/jour
-    boolean ajoutSportif4 =
+    int ajoutSportif4 =
         facade.ajouterUnSportif("Mandela", "Nelson", "MandelaNelson", "azerty", dateSportif4);
-    assertTrue(ajoutSportif4, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
+    assertEquals(ajoutSportif4, 1, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
 
     // cas d'erreur
     Calendar dateSportif5 = Calendar.getInstance();
     dateSportif5.set(1978, 10, 26); // annee/mois/jour
-    boolean ajoutSportif5 =
+    int ajoutSportif5 =
         facade.ajouterUnSportif(null, "Nelson", "MandelaNelson", "azerty", dateSportif5);
-    assertFalse(ajoutSportif5, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
+    assertEquals(ajoutSportif5, -2, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
 
     Calendar dateSportif6 = Calendar.getInstance();
     dateSportif6.set(1978, 10, 26); // annee/mois/jour
-    boolean ajoutSportif6 =
+    int ajoutSportif6 =
         facade.ajouterUnSportif("Mandela", "", "MandelaNelson", "azerty", dateSportif6);
-    assertFalse(ajoutSportif6, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
+    assertEquals(ajoutSportif6, -2, "FacadeTest : L'ajout d'un sportif à échouer anormalement");
 
     // Verification de la liste des pseudos
     List<String> listePseudo = facade.obtenirListeSportif();
@@ -135,15 +134,15 @@ public class FacadeTest {
         "FacadeTest : L'obtention de la liste des activités sportives à partir du pseudo échoue");
 
     // Vérification de la suppression d'un sportif
-    assertTrue(facade.supprimerUnSportif("QimJahin"),
+    assertEquals(facade.supprimerUnSportif("QimJahin"), 1,
         "FacadeTest : La suppression à partir du pseudo échoue");
 
     // cas d'erreur
-    assertFalse(facade.supprimerUnSportif(null),
+    assertEquals(facade.supprimerUnSportif(null), -2,
         "FacadeTest : La suppression à partir du pseudo échoue");
-    assertFalse(facade.supprimerUnSportif(""),
+    assertEquals(facade.supprimerUnSportif(""), -2,
         "FacadeTest : La suppression à partir du pseudo échoue");
-    assertFalse(facade.supprimerUnSportif("test"),
+    assertEquals(facade.supprimerUnSportif("test"), 0,
         "FacadeTest : La suppression à partir du pseudo échoue");
 
     // Verification du bon dérouler de la suppression précédente
@@ -162,16 +161,16 @@ public class FacadeTest {
     // Vérification de la modification d'un sportif
     Calendar dateSportif7 = Calendar.getInstance();
     dateSportif7.set(1980, 12, 28); // annee/mois/jour
-    assertTrue(facade.modifierUnSportif("grinpeurDu57", "nomTest", "prenomTest", "pseudoTest",
-        "mdpTest", dateSportif7), "FacadeTest : La modification à partir du pseudo échoue");
+    assertEquals(facade.modifierUnSportif("grinpeurDu57", "nomTest", "prenomTest", "pseudoTest",
+        "mdpTest", dateSportif7), 1, "FacadeTest : La modification à partir du pseudo échoue");
 
     // cas d'erreur
-    assertFalse(facade.modifierUnSportif(null, "nomTest", "prenomTest", "pseudoTest", "mdpTest",
-        dateSportif7), "FacadeTest : La modification à partir du pseudo échoue");
-    assertFalse(facade.modifierUnSportif("grinpeurDu57", "", "prenomTest", "pseudoTest", "mdpTest",
-        dateSportif7), "FacadeTest : La modification à partir du pseudo échoue");
-    assertFalse(facade.modifierUnSportif("QimJahin", "nomTest", "prenomTest", "pseudoTest",
-        "mdpTest", dateSportif7), "FacadeTest : La modification à partir du pseudo échoue");
+    assertEquals(facade.modifierUnSportif(null, "nomTest", "prenomTest", "pseudoTest", "mdpTest",
+        dateSportif7), -3, "FacadeTest : La modification à partir du pseudo échoue");
+    assertEquals(facade.modifierUnSportif("grinpeurDu57", "", "prenomTest", "pseudoTest", "mdpTest",
+        dateSportif7), -3, "FacadeTest : La modification à partir du pseudo échoue");
+    assertEquals(facade.modifierUnSportif("QimJahin", "nomTest", "prenomTest", "pseudoTest",
+        "mdpTest", dateSportif7), -2, "FacadeTest : La modification à partir du pseudo échoue");
 
     // Verification du bon dérouler de la modification précédente
     List<String> listePseudo4 = facade.obtenirListeSportif();
@@ -192,19 +191,19 @@ public class FacadeTest {
     // Vérification de l'ajout d'un questionnaire
     List<String> questions = new ArrayList<String>();
     List<String> questions2 = new ArrayList<String>();
-    assertTrue(facade.ajouterUnQuestionnaire("monQuestionnaire", questions),
+    assertEquals(facade.ajouterUnQuestionnaire("monQuestionnaire", questions), 1,
         "FacadeTest : L'ajout d'un questionnaire échoue");
-    assertTrue(facade.ajouterUnQuestionnaire("monDeuxiemeQuestionnaire", questions2),
+    assertEquals(facade.ajouterUnQuestionnaire("monDeuxiemeQuestionnaire", questions2), 1,
         "FacadeTest : L'ajout d'un questionnaire échoue");
 
     // Cas d'erreur
-    assertFalse(facade.ajouterUnQuestionnaire(null, questions),
+    assertEquals(facade.ajouterUnQuestionnaire(null, questions), -2,
         "FacadeTest : L'ajout d'un questionnaire échoue");
-    assertFalse(facade.ajouterUnQuestionnaire("", questions),
+    assertEquals(facade.ajouterUnQuestionnaire("", questions), -2,
         "FacadeTest : L'ajout d'un questionnaire échoue");
-    assertFalse(facade.ajouterUnQuestionnaire("monQuestionnaire", questions),
+    assertEquals(facade.ajouterUnQuestionnaire("monQuestionnaire", questions), -1,
         "FacadeTest : L'ajout d'un questionnaire échoue");
-    assertFalse(facade.ajouterUnQuestionnaire("monAutreQuestionnaire", null),
+    assertEquals(facade.ajouterUnQuestionnaire("monAutreQuestionnaire", null), -2,
         "FacadeTest : L'ajout d'un questionnaire échoue");
 
     // Verification de la liste des questionnaire
@@ -217,15 +216,15 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
 
     // Vérification de la suppression d'un questionnaire
-    assertTrue(facade.supprimerUnQuestionnaire("monDeuxiemeQuestionnaire"),
+    assertEquals(facade.supprimerUnQuestionnaire("monDeuxiemeQuestionnaire"), 1,
         "FacadeTest : La suppression d'un questionnaire échoue");
 
     // Cas d'erreur
-    assertFalse(facade.supprimerUnQuestionnaire(null),
+    assertEquals(facade.supprimerUnQuestionnaire(null), -2,
         "FacadeTest : La suppression d'un questionnaire échoue");
-    assertFalse(facade.supprimerUnQuestionnaire(""),
+    assertEquals(facade.supprimerUnQuestionnaire(""), -2,
         "FacadeTest : La suppression d'un questionnaire échoue");
-    assertFalse(facade.supprimerUnQuestionnaire("Test"),
+    assertEquals(facade.supprimerUnQuestionnaire("Test"), -1,
         "FacadeTest : La suppression d'un questionnaire échoue");
 
     // Verification du bon dérouler de la suppression précédente
@@ -236,21 +235,21 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
 
     // Vérification de l'ajout d'une question
-    assertTrue(facade.ajouterUneQuestion("monQuestionnaire", "Question1"),
+    assertEquals(facade.ajouterUneQuestion("monQuestionnaire", "Question1"), 1,
         "FacadeTest : L'ajout d'une question à échouer");
-    assertTrue(facade.ajouterUneQuestion("monQuestionnaire", "Question2"),
+    assertEquals(facade.ajouterUneQuestion("monQuestionnaire", "Question2"), 1,
         "FacadeTest : L'ajout d'une question à échouer");
 
     // Cas d'erreur
-    assertFalse(facade.ajouterUneQuestion(null, "Question3"),
+    assertEquals(facade.ajouterUneQuestion(null, "Question3"), -3,
         "FacadeTest : L'ajout d'une question à échouer");
-    assertFalse(facade.ajouterUneQuestion("", "Question4"),
+    assertEquals(facade.ajouterUneQuestion("", "Question4"), -3,
         "FacadeTest : L'ajout d'une question à échouer");
-    assertFalse(facade.ajouterUneQuestion("Test", "Question5"),
+    assertEquals(facade.ajouterUneQuestion("Test", "Question5"), -2,
         "FacadeTest : L'ajout d'une question à échouer");
-    assertFalse(facade.ajouterUneQuestion("monQuestionnaire", ""),
+    assertEquals(facade.ajouterUneQuestion("monQuestionnaire", ""), -3,
         "FacadeTest : L'ajout d'une question à échouer");
-    assertFalse(facade.ajouterUneQuestion("monQuestionnaire", null),
+    assertEquals(facade.ajouterUneQuestion("monQuestionnaire", null), -3,
         "FacadeTest : L'ajout d'une question à échouer");
 
     // Vérification de la liste des questions du questionnaire
@@ -271,21 +270,21 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
 
     // Vérification de la suppression d'une question
-    assertTrue(facade.supprimerUneQuestion("monQuestionnaire", "Question1"),
+    assertEquals(facade.supprimerUneQuestion("monQuestionnaire", "Question1"), 1,
         "FacadeTest : La suppression d'une question à échouer");
 
     // cas d'erreur
-    assertFalse(facade.supprimerUneQuestion(null, "Question2"),
+    assertEquals(facade.supprimerUneQuestion(null, "Question2"), -3,
         "FacadeTest : La suppression d'une question à échouer");
-    assertFalse(facade.supprimerUneQuestion("", "Question2"),
+    assertEquals(facade.supprimerUneQuestion("", "Question2"), -3,
         "FacadeTest : La suppression d'une question à échouer");
-    assertFalse(facade.supprimerUneQuestion("Test", "Question2"),
+    assertEquals(facade.supprimerUneQuestion("Test", "Question2"), -2,
         "FacadeTest : La suppression d'une question à échouer");
-    assertFalse(facade.supprimerUneQuestion("monQuestionnaire", null),
+    assertEquals(facade.supprimerUneQuestion("monQuestionnaire", null), -3,
         "FacadeTest : La suppression d'une question à échouer");
-    assertFalse(facade.supprimerUneQuestion("monQuestionnaire", ""),
+    assertEquals(facade.supprimerUneQuestion("monQuestionnaire", ""), -3,
         "FacadeTest : La suppression d'une question à échouer");
-    assertFalse(facade.supprimerUneQuestion("monQuestionnaire", "Question3"),
+    assertEquals(facade.supprimerUneQuestion("monQuestionnaire", "Question3"), 0,
         "FacadeTest : La suppression d'une question à échouer");
 
     // Vérification du bon dérouler de la suppression précédente
@@ -297,22 +296,22 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
 
     // Vérification de la modification d'une question
-    assertTrue(facade.modifierUneQuestion("monQuestionnaire", "Question2", "Question1", true),
+    assertEquals(facade.modifierUneQuestion("monQuestionnaire", "Question2", "Question1", true), 1,
         "FacadeTest : La modification d'une question à échouer");
 
     // Cas d'erreur
-    assertFalse(facade.modifierUneQuestion("monQuestionnaire", "QuestionTest", "Question3", true),
+    assertEquals(facade.modifierUneQuestion("monQuestionnaire", "QuestionTest", "Question3", true),
+        0, "FacadeTest : La modification d'une question à échouer");
+    assertEquals(facade.modifierUneQuestion("monQuestionnaire", "", "Question3", true), -3,
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion("monQuestionnaire", "", "Question3", true),
+    assertEquals(facade.modifierUneQuestion("monQuestionnaire", null, "Question3", true), -3,
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion("monQuestionnaire", null, "Question3", true),
+    assertEquals(facade.modifierUneQuestion("", "QuestionTest", "Question3", true), -3,
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion("", "QuestionTest", "Question3", true),
+    assertEquals(facade.modifierUneQuestion(null, "QuestionTest", "Question3", true), -3,
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUneQuestion(null, "QuestionTest", "Question3", true),
-        "FacadeTest : La modification d'une question à échouer");
-    assertFalse(
-        facade.modifierUneQuestion("monQuestionnaire345", "QuestionTest", "Question3", true),
+    assertEquals(
+        facade.modifierUneQuestion("monQuestionnaire345", "QuestionTest", "Question3", true), -2,
         "FacadeTest : La modification d'une question à échouer");
 
     // Vérification du bon dérouler de la modification précédente
@@ -332,21 +331,23 @@ public class FacadeTest {
     facade3.ajouterUneQuestion("azerty", "Question3");
     listeDesQuestions4 = facade3.consulterLesQuestionDuQuestionnaire("azerty");
 
-    assertTrue(facade.modifierUnQuestionnaire("monQuestionnaire", "MonNouveauQuestionnaire",
-        listeDesQuestions4), "FacadeTest : La modification d'une question à échouer");
+    assertEquals(facade.modifierUnQuestionnaire("monQuestionnaire", "MonNouveauQuestionnaire",
+        listeDesQuestions4), 1, "FacadeTest : La modification d'une question à échouer");
 
     // Cas d'erreur
-    assertFalse(facade.modifierUnQuestionnaire("", "MonNouveauQuestionnaire", listeDesQuestions4),
+    assertEquals(facade.modifierUnQuestionnaire("", "MonNouveauQuestionnaire", listeDesQuestions4),
+        -2, "FacadeTest : La modification d'une question à échouer");
+    assertEquals(
+        facade.modifierUnQuestionnaire(null, "MonNouveauQuestionnaire", listeDesQuestions4), -2,
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUnQuestionnaire(null, "MonNouveauQuestionnaire", listeDesQuestions4),
+    assertEquals(facade.modifierUnQuestionnaire("unFauxQuestionnaire", "MonNouveauQuestionnaire",
+        listeDesQuestions4), -1, "FacadeTest : La modification d'une question à échouer");
+    assertEquals(facade.modifierUnQuestionnaire("unFauxQuestionnaire", "", listeDesQuestions4), -2,
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUnQuestionnaire("unFauxQuestionnaire", "MonNouveauQuestionnaire",
-        listeDesQuestions4), "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUnQuestionnaire("unFauxQuestionnaire", "", listeDesQuestions4),
+    assertEquals(facade.modifierUnQuestionnaire("monQuestionnaire", null, listeDesQuestions4), -2,
         "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUnQuestionnaire("monQuestionnaire", null, listeDesQuestions4),
-        "FacadeTest : La modification d'une question à échouer");
-    assertFalse(facade.modifierUnQuestionnaire("monQuestionnaire", "MonNouveauQuestionnaire", null),
+    assertEquals(
+        facade.modifierUnQuestionnaire("monQuestionnaire", "MonNouveauQuestionnaire", null), -2,
         "FacadeTest : La modification d'une question à échouer");
 
     // Vérification de la modification précédente

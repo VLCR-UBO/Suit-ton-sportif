@@ -1,7 +1,7 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -42,62 +42,64 @@ public class GestionSportifTest {
   public void ajout() { // Test de l'ajout d'un sportif
     Calendar date = Calendar.getInstance();
     date.set(1976, 7, 4);
-    assertTrue(gestion.ajouterSportif("Ondra", "Adam", "adam", "coucou", date));
+    assertEquals(gestion.ajouterSportif("Ondra", "Adam", "adam", "coucou", date), 1);
 
     // avec un attribut null
-    assertFalse(gestion.ajouterSportif(null, "Adam", "adam1", "coucou", date));
-    assertFalse(gestion.ajouterSportif("Ondra", null, "adam2", "coucou", date));
-    assertFalse(gestion.ajouterSportif("Ondra", "Adam", null, "coucou", date));
-    assertFalse(gestion.ajouterSportif("Ondra", "Adam", "adam3", null, date));
-    assertFalse(gestion.ajouterSportif("Ondra", "Adam", "adam4", "coucou", null));
+    assertEquals(gestion.ajouterSportif(null, "Adam", "adam1", "coucou", date), -2);
+    assertEquals(gestion.ajouterSportif("Ondra", null, "adam2", "coucou", date), -2);
+    assertEquals(gestion.ajouterSportif("Ondra", "Adam", null, "coucou", date), -2);
+    assertEquals(gestion.ajouterSportif("Ondra", "Adam", "adam3", null, date), -2);
+    assertEquals(gestion.ajouterSportif("Ondra", "Adam", "adam4", "coucou", null), -2);
 
     // avec un attribut vide
-    assertFalse(gestion.ajouterSportif("", "Adam", "adam5", "coucou", date));
-    assertFalse(gestion.ajouterSportif("Ondra", "", "adam6", "coucou", date));
-    assertFalse(gestion.ajouterSportif("Ondra", "Adam", "", "coucou", date));
-    assertFalse(gestion.ajouterSportif("Ondra", "Adam", "adam7", "", date));
+    assertEquals(gestion.ajouterSportif("", "Adam", "adam5", "coucou", date), -2);
+    assertEquals(gestion.ajouterSportif("Ondra", "", "adam6", "coucou", date), -2);
+    assertEquals(gestion.ajouterSportif("Ondra", "Adam", "", "coucou", date), -2);
+    assertEquals(gestion.ajouterSportif("Ondra", "Adam", "adam7", "", date), -2);
 
     // Si le pseudo existe deja
-    assertFalse(gestion.ajouterSportif("Honold", "Aranaud", "adam", "coucou", date));
+    assertEquals(gestion.ajouterSportif("Honold", "Aranaud", "adam", "coucou", date), -1);
   }
 
   @Test
   public void suppression() { // test de la suppression d'un sportif
-    assertTrue(gestion.supprimerSportif("quarta"));
+    assertEquals(gestion.supprimerSportif("quarta"), 1);
     // supprier un sportif qui existe pas
-    assertFalse(gestion.supprimerSportif("KimYahin"));
+    assertEquals(gestion.supprimerSportif("KimYahin"), 0);
     // supprimer un sportif qui à deja été supprimer
-    assertFalse(gestion.supprimerSportif("quarta"));
+    assertEquals(gestion.supprimerSportif("quarta"), 0);
     // ajout de quarta pour à nouveau le supprimer
     Calendar date = Calendar.getInstance();
     date.set(1999, 4, 12);
     gestion.ajouterSportif("Quartararo", "Fabio", "quarta", "boop*&=", date);
-    assertTrue(gestion.supprimerSportif("quarta"));
+    assertEquals(gestion.supprimerSportif("quarta"), 1);
   }
 
   @Test
   public void modification() { // test de la modification d'un sportif
     Calendar date = Calendar.getInstance();
     date.set(1976, 7, 4);
-    assertTrue(gestion.modifierSportif("monster", "Zarco", "Johann", "NewMonster", "boop", date));
+    assertEquals(gestion.modifierSportif("monster", "Zarco", "Johann", "NewMonster", "boop", date),
+        1);
     // sportif qui n'existe pas
-    assertFalse(gestion.modifierSportif("Bas", "Basil", "Loris", "bous", "wooop", date));
+    assertEquals(gestion.modifierSportif("Bas", "Basil", "Loris", "bous", "wooop", date), -1);
     // avec un argument null
-    assertFalse(gestion.modifierSportif(null, "Ondra", "Adam", "adam", "coucou", date));
-    assertFalse(gestion.modifierSportif("quarta", null, "Adam", "adam", "coucou", date));
-    assertFalse(gestion.modifierSportif("quarta", "Ondra", null, "adam", "coucou", date));
-    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", null, "coucou", date));
-    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", null, date));
-    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", "coucou", null));
+    assertEquals(gestion.modifierSportif(null, "Ondra", "Adam", "adam", "coucou", date), -3);
+    assertEquals(gestion.modifierSportif("quarta", null, "Adam", "adam", "coucou", date), -3);
+    assertEquals(gestion.modifierSportif("quarta", "Ondra", null, "adam", "coucou", date), -3);
+    assertEquals(gestion.modifierSportif("quarta", "Ondra", "Adam", null, "coucou", date), -3);
+    assertEquals(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", null, date), -3);
+    assertEquals(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", "coucou", null), -3);
     // avec un argument vide
-    assertFalse(gestion.modifierSportif("", "Ondra", "Adam", "adam", "coucou", date));
-    assertFalse(gestion.modifierSportif("quarta", "", "Adam", "adam", "coucou", date));
-    assertFalse(gestion.modifierSportif("quarta", "Ondra", "", "adam", "coucou", date));
-    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", "", "coucou", date));
-    assertFalse(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", "", date));
+    assertEquals(gestion.modifierSportif("", "Ondra", "Adam", "adam", "coucou", date), -3);
+    assertEquals(gestion.modifierSportif("quarta", "", "Adam", "adam", "coucou", date), -3);
+    assertEquals(gestion.modifierSportif("quarta", "Ondra", "", "adam", "coucou", date), -3);
+    assertEquals(gestion.modifierSportif("quarta", "Ondra", "Adam", "", "coucou", date), -3);
+    assertEquals(gestion.modifierSportif("quarta", "Ondra", "Adam", "adam", "", date), -3);
     // modifier le pseudo en quelque chose qui existe deja
-    assertFalse(
-        gestion.modifierSportif("quarta", "Quartararo", "Fabio", "NewMonster", "boop*&=", date));
+    assertEquals(
+        gestion.modifierSportif("quarta", "Quartararo", "Fabio", "NewMonster", "boop*&=", date),
+        -2);
   }
 
   @Test

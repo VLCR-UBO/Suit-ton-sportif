@@ -64,27 +64,27 @@ public class GestionQuestionnaireTest {
     listeIntituleQuestions.add("Aime tu le beurre salé ?");
     listeIntituleQuestions.add("Aime tu la pluie ?");
     // Le fonctionnement normal fonctionne ?
-    assertTrue(gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions),
-        "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
+    assertEquals(gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions),
+        1, "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
     assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() > 0,
         "TestGestionQuestionnaire : Le questionnaire n'a pas été ajouté à la liste");
     // Le cas de doublons est t-il gérer ?
-    assertFalse(gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions),
-        "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
+    assertEquals(gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions),
+        -1, "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() > 1,
         "TestGestionQuestionnaire : Le questionnaire n'a pas été ajouté à la liste");
     // L'ajout est t-il arreté si l'intitulé est null ?
-    assertFalse(gestionQuestionnaire.ajouterQuestionnaire(null, listeIntituleQuestions),
+    assertEquals(gestionQuestionnaire.ajouterQuestionnaire(null, listeIntituleQuestions), -2,
         "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() > 1,
         "TestGestionQuestionnaire : Le questionnaire a été ajouté ànormalement à la liste");
     // L'ajout est t-il arreté si l'intitulé est une chaine vide ?
-    assertFalse(gestionQuestionnaire.ajouterQuestionnaire("", listeIntituleQuestions),
+    assertEquals(gestionQuestionnaire.ajouterQuestionnaire("", listeIntituleQuestions), -2,
         "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() > 1,
         "TestGestionQuestionnaire : Le questionnaire a été ajouté ànormalement à la liste");
     // L'ajout est t-il arreté si la liste de question est null ?
-    assertFalse(gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", null),
+    assertEquals(gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", null), -2,
         "TestGestionQuestionnaire : L'ajout d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() > 1,
         "TestGestionQuestionnaire : Le questionnaire a été ajouté ànormalement à la liste");
@@ -100,10 +100,10 @@ public class GestionQuestionnaireTest {
     listeIntituleQuestions2.add("Aime tu le beurre doux ?");
 
     // Le fonctionnement normal fonctionne ?
-    assertTrue(
+    assertEquals(
         gestionQuestionnaire.modifierQuestionnaire("Questionnaire", "newQuestionnaire",
             listeIntituleQuestions2),
-        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+        1, "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
     assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 1,
         "TestGestionQuestionnaire : Le questionnaire n'est pas présent dans la liste");
     assertTrue(
@@ -113,34 +113,34 @@ public class GestionQuestionnaireTest {
     assertNotNull(gestionQuestionnaire.consulterListeQuestion("newQuestionnaire"),
         "TestGestionQuestionnaire : Le questionnaire n'a pas été mise à jour");
     // La modification est t-elle arreté si le nom du questionnaire est null ?
-    assertFalse(
+    assertEquals(
         gestionQuestionnaire.modifierQuestionnaire(null, "newQuestionnaire",
             listeIntituleQuestions),
-        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+        -2, "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
     assertTrue(
         gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
             .getIntituleQuestion() == "Aime tu le beurre doux ?",
         "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
     // La modification est t-elle arreté si le nom du questionnaire est une chaine vide ?
-    assertFalse(
+    assertEquals(
         gestionQuestionnaire.modifierQuestionnaire("", "newQuestionnaire", listeIntituleQuestions),
-        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+        -2, "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
     assertTrue(
         gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
             .getIntituleQuestion() == "Aime tu le beurre doux ?",
         "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
     // La modification est t-elle arreté si le nom du questionnaire est inconnu ?
-    assertFalse(
+    assertEquals(
         gestionQuestionnaire.modifierQuestionnaire("test", "newQuestionnaire",
             listeIntituleQuestions),
-        "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
+        -1, "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
     assertTrue(
         gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
             .getIntituleQuestion() == "Aime tu le beurre doux ?",
         "TestGestionQuestionnaire : Le questionnaire a été mise à jour");
     // La modification est t-elle arreté si la nouvelle liste est null ?
-    assertFalse(
-        gestionQuestionnaire.modifierQuestionnaire("Questionnaire", "newQuestionnaire", null),
+    assertEquals(
+        gestionQuestionnaire.modifierQuestionnaire("Questionnaire", "newQuestionnaire", null), -2,
         "TestGestionQuestionnaire : La modification d'un questionnaire à échouer anormalement");
     assertTrue(
         gestionQuestionnaire.getListeQuestionnaire().get(0).getListeDeQuestions().get(0)
@@ -151,7 +151,7 @@ public class GestionQuestionnaireTest {
   @Test
   public void supprimerQuestionnaire() {
     // La suppression fonctionne t-elle s'il n'y a pas de questionnaire ?
-    assertFalse(gestionQuestionnaire.supprimerQuestionnaire("Questionnaire"),
+    assertEquals(gestionQuestionnaire.supprimerQuestionnaire("Questionnaire"), -1,
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
 
     List<String> listeIntituleQuestions = new ArrayList<String>();
@@ -167,22 +167,22 @@ public class GestionQuestionnaireTest {
     assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 2,
         "TestGestionQuestionnaire : Le questionnaire est présent dans la liste");
     // La suppression fonctionne t-elle ?
-    assertTrue(gestionQuestionnaire.supprimerQuestionnaire("Questionnaire"),
+    assertEquals(gestionQuestionnaire.supprimerQuestionnaire("Questionnaire"), 1,
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
     assertTrue(gestionQuestionnaire.getListeQuestionnaire().size() == 1,
         "TestGestionQuestionnaire : Le questionnaire n'a pas été supprimer de la liste");
     // La suppression est t-elle arreté si l'élément n'est pas présent ?
-    assertFalse(gestionQuestionnaire.supprimerQuestionnaire("Questionnaire3"),
+    assertEquals(gestionQuestionnaire.supprimerQuestionnaire("Questionnaire3"), -1,
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() == 0,
         "TestGestionQuestionnaire : Le questionnaire a été supprimer de la liste");
     // La suppression est t-elle arreté si l'intitulé est null ?
-    assertFalse(gestionQuestionnaire.supprimerQuestionnaire(null),
+    assertEquals(gestionQuestionnaire.supprimerQuestionnaire(null), -2,
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() == 0,
         "TestGestionQuestionnaire : Le questionnaire a été supprimer de la liste");
     // La suppression est t-elle arreté si l'intitulé est vide ?
-    assertFalse(gestionQuestionnaire.supprimerQuestionnaire(""),
+    assertEquals(gestionQuestionnaire.supprimerQuestionnaire(""), -2,
         "TestGestionQuestionnaire : La suppression d'un questionnaire à échouer anormalement");
     assertFalse(gestionQuestionnaire.getListeQuestionnaire().size() == 0,
         "TestGestionQuestionnaire : Le questionnaire a été supprimer de la liste");

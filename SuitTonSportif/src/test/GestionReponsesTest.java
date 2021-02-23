@@ -20,21 +20,15 @@ import org.junit.jupiter.api.Test;
 
 
 class GestionReponsesTest {
-
-
   @Test
   public void testGestionReponses() {
     GestionReponses gestion = new GestionReponses();
     assertNotNull(gestion, "Error : testGestionReponses : L'instance n'a pas été créée");
-
-
   }
 
 
   @Test
   public void testAjoutReponses() {
-
-
     // Test dans le cas normal
     List<Question> listeQuestion = new ArrayList<Question>();
     Question question1 = new QuestionBoolenne("Avez-vous pris de la drogue ?", false);
@@ -44,8 +38,8 @@ class GestionReponsesTest {
 
 
     List<Integer> reponse = new ArrayList<Integer>();
-    reponse.add(new Integer(1));
-    reponse.add(new Integer(0));
+    reponse.add(1);
+    reponse.add(0);
 
     Questionnaire question = new Questionnaire("Sondage", listeQuestion);
 
@@ -79,7 +73,7 @@ class GestionReponsesTest {
     GestionReponses gestion = new GestionReponses();
 
     // Test dans le cas erreur
-    assertFalse(gestion.modifierReponses(null, null, null, null, null));
+    assertEquals(gestion.modifierReponses(null, null, null, null, null), -2);
 
 
     // Test dans le cas normal
@@ -93,8 +87,8 @@ class GestionReponsesTest {
 
 
     List<Integer> reponse = new ArrayList<Integer>();
-    reponse.add(new Integer(1));
-    reponse.add(new Integer(0));
+    reponse.add(1);
+    reponse.add(0);
 
     Calendar dateNaissance = Calendar.getInstance();
     dateNaissance.set(1974, 3, 9);
@@ -107,7 +101,6 @@ class GestionReponsesTest {
 
     List<Reponses> listeReponse = gestion.getListeDesReponses();
     int numero = listeReponse.get(0).getNumeroSemaine();
-    Integer numeroSemaine = new Integer(numero);
 
     Date nouvelleDate = new Date();
 
@@ -115,13 +108,13 @@ class GestionReponsesTest {
     reponse.add(new Integer(0));
     reponse.add(new Integer(0));
 
-    assertTrue(
-        gestion.modifierReponses(numeroSemaine, nouvelleDate, sportif, question, nouvelleReponse));
+    assertEquals(
+        gestion.modifierReponses(numero, nouvelleDate, sportif, question, nouvelleReponse), 1);
 
 
     // Test dans le cas ou on entre les mêmes informations
     assertTrue(
-        gestion.modifierReponses(numeroSemaine, nouvelleDate, sportif, question, nouvelleReponse));
+        gestion.modifierReponses(numero, nouvelleDate, sportif, question, nouvelleReponse));
 
 
   }
