@@ -185,11 +185,13 @@ public class QuestionnaireController implements Initializable {
    */
   @FXML
   public void selectionnerQuestion(MouseEvent mouseEvent) throws IOException {
-    HBox selected2 = list2.getSelectionModel().getSelectedItem();
-    Label question = (Label) selected2.getChildren().get(0);
-    questionSelectionner = question.getText();
+    HBox selected = list2.getSelectionModel().getSelectedItem();
+    if (selected != null) {
+      Label question = (Label) selected.getChildren().get(0);
+      questionSelectionner = question.getText();
 
-    this.modifierQuestions(question.getText(), selected2);
+      this.modifierQuestions(question.getText(), selected);
+    }
   }
 
 
@@ -224,24 +226,26 @@ public class QuestionnaireController implements Initializable {
    */
   @FXML
   public void ajoutQuestions(MouseEvent mouseEvent) throws IOException {
-    final URL fxmlUrl = getClass().getResource("/ihm/ajoutQuestions.fxml");
-    final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
-    Pane root = fxmlLoader.load();
+    if (questionnaireSelectionner != null) {
+      final URL fxmlUrl = getClass().getResource("/ihm/ajoutQuestions.fxml");
+      final FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+      Pane root = fxmlLoader.load();
 
-    PopUp popup = new PopUp(root, "Ajout d'une question");
-    popup.display();
+      PopUp popup = new PopUp(root, "Ajout d'une question");
+      popup.display();
 
-    HBox selected = list.getSelectionModel().getSelectedItem();
-    Label questionnaire = (Label) selected.getChildren().get(0);
+      HBox selected = list.getSelectionModel().getSelectedItem();
+      Label questionnaire = (Label) selected.getChildren().get(0);
 
-    questions = Main.facade.consulterLesQuestionDuQuestionnaire(questionnaire.getText());
+      questions = Main.facade.consulterLesQuestionDuQuestionnaire(questionnaire.getText());
 
-    if (questions == null) {
-      questions = new ArrayList<String>();
+      if (questions == null) {
+        questions = new ArrayList<String>();
+      }
+      this.remplirListQuestions();
+      this.afficherQuestions(questionnaireSelectionner);
+      list.getSelectionModel().select(selected);
     }
-    this.remplirListQuestions();
-    this.afficherQuestions(questionnaireSelectionner);
-    list.getSelectionModel().select(selected);
   }
 
   /**
@@ -252,11 +256,13 @@ public class QuestionnaireController implements Initializable {
   @FXML
   public void afficherQuestions(MouseEvent mouseEvent) {
     HBox selected = list.getSelectionModel().getSelectedItem();
-    Label questionnaire = (Label) selected.getChildren().get(0);
-    nomSelectionner = questionnaire.getText();
+    if (selected != null) {
+      Label questionnaire = (Label) selected.getChildren().get(0);
+      nomSelectionner = questionnaire.getText();
 
-    questionnaireSelectionner = questionnaire.getText();
-    this.afficherQuestions(questionnaire.getText());
+      questionnaireSelectionner = questionnaire.getText();
+      this.afficherQuestions(questionnaire.getText());
+    }
   }
 
   /**

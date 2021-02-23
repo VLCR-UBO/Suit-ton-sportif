@@ -143,8 +143,10 @@ public class SportifController implements Initializable {
   @FXML
   public void afficherInformationSportif(MouseEvent mouseEvent) {
     HBox selected = list.getSelectionModel().getSelectedItem();
-    Label sportif = (Label) selected.getChildren().get(0);
-    this.afficherInformationSportif(sportif.getText());
+    if (selected != null) {
+      Label sportif = (Label) selected.getChildren().get(0);
+      this.afficherInformationSportif(sportif.getText());
+    }
   }
 
   /**

@@ -28,7 +28,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label styleClass="attribut" stylesheets="@../style/style.css" text="Nom :">
+                  <Label styleClass="attribut" stylesheets="@./style/style.css" text="Nom :">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -38,7 +38,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label styleClass="attribut" stylesheets="@../style/style.css" text="Prénom :">
+                  <Label styleClass="attribut" stylesheets="@./style/style.css" text="Prénom :">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
