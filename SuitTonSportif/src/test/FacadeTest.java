@@ -431,7 +431,7 @@ public class FacadeTest {
     assertEquals(map2, null, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
     
     HashMap<String, Integer> map3 =
-        facade4.obtenirQuestionnaireEtReponses(11, "grinpeurDu57", "azety");
+        facade4.obtenirQuestionnaireEtReponses(11, "grinpeurDu57", "azerty");
     assertEquals(map3, null, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
     
     // Test exporter 

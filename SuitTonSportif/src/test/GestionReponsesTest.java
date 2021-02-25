@@ -147,13 +147,58 @@ class GestionReponsesTest {
   }
   
   @Test
+  public void testConsulterReponses() {
+    // Test dans le cas normal
+    List<String> listeDesQuestions6 = new ArrayList<String>();
+    this.facade.ajouterUnQuestionnaire("azerty", listeDesQuestions6);
+    this.facade.ajouterUneQuestion("azerty", "Question1");
+    this.facade.ajouterUneQuestion("azerty", "Question2");
+    this.facade.ajouterUneQuestion("azerty", "Question3");
+    Calendar dateSportif8 = Calendar.getInstance();
+    dateSportif8.set(1976, 7, 3); // annee/mois/jour
+    this.facade.ajouterUnSportif("Ondra", "Adam", "grinpeurDu57", "leRageux", dateSportif8);
+
+    HashMap<String, Integer> listeReponses = new HashMap<String, Integer>();
+    listeReponses.put("Question1", 1);
+    listeReponses.put("Question2", 0);
+    listeReponses.put("Question3", 1);
+    int numeroSemaine = 10;
+
+    // Ajout réponse
+    GestionReponses gestionReponses = facade.getGestionReponses();
+    GestionSportif gestionSportif = facade.getGestionSportif();
+    GestionQuestionnaire gestionQuestionnaire = facade.getGestionQuestionnaire();
+
+    Sportif unSportif = gestionSportif.consulterSportif("grinpeurDu57");
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion("azerty");
+    int ret = gestionReponses.ajouterReponses(numeroSemaine, new Date(), unSportif, unQuestionnaire,
+        listeReponses);
+    assertEquals(ret, 1, "FacadeTest : L'ajout de réponses à échouer anormalement");
+
+    // Consulter réponse
+    HashMap<String, Integer> map =
+        this.facade.obtenirQuestionnaireEtReponses(10, "grinpeurDu57", "azerty");
+    assertEquals(map.size(), 3, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
+    assertEquals(map.get("Question1"), 1,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    assertEquals(map.get("Question2"), 0,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    assertEquals(map.get("Question3"), 1,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+
+
+    // Test dans le cas erreur
+    int ret1 = gestionReponses.ajouterReponses(null, null, null, null, null);
+    assertEquals(ret1, -2);
+  }
+  
+  @Test
   public void testExporter() {
     List<String> listeDesQuestions = new ArrayList<String>();
     this.facade.ajouterUnQuestionnaire("test", listeDesQuestions);
     this.facade.ajouterUneQuestion("test", "Question1");
     
     GestionReponses gestionReponses = facade.getGestionReponses();
-    GestionSportif gestionSportif = facade.getGestionSportif();
     GestionQuestionnaire gestionQuestionnaire = facade.getGestionQuestionnaire();
     int ret = gestionReponses.exporter(gestionQuestionnaire, "test");
     assertEquals(ret, 1);
