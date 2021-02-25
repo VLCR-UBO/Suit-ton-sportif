@@ -430,10 +430,6 @@ public class FacadeTest {
         facade4.obtenirQuestionnaireEtReponses(10, "grinpeurDu57", "aze");
     assertEquals(map2, null, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
     
-    HashMap<String, Integer> map3 =
-        facade4.obtenirQuestionnaireEtReponses(11, "grinpeurDu57", "azerty");
-    assertEquals(map3, null, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
-    
     // Test exporter 
     List<String> listQuestions = new ArrayList<String>();
     facade.ajouterUnQuestionnaire("test", listQuestions);
