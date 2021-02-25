@@ -145,5 +145,50 @@ class GestionReponsesTest {
     int ret1 = gestionReponses.modifierReponses(null, null, null, null, null);
     assertEquals(ret1, -2);
   }
+  
+  @Test
+  public void testExporter() {
+    List<String> listeDesQuestions = new ArrayList<String>();
+    this.facade.ajouterUnQuestionnaire("test", listeDesQuestions);
+    this.facade.ajouterUneQuestion("test", "Question1");
+    
+    GestionReponses gestionReponses = facade.getGestionReponses();
+    GestionSportif gestionSportif = facade.getGestionSportif();
+    GestionQuestionnaire gestionQuestionnaire = facade.getGestionQuestionnaire();
+    int ret = gestionReponses.exporter(gestionQuestionnaire, "test");
+    assertEquals(ret, 1);
+  }
+  
+  @Test
+  public void testObtenirReponses() {
+    List<String> listeDesQuestions = new ArrayList<String>();
+    this.facade.ajouterUnQuestionnaire("test", listeDesQuestions);
+    this.facade.ajouterUneQuestion("test", "Question5");
+    Calendar dateSportif = Calendar.getInstance();
+    dateSportif.set(1976, 7, 3); // annee/mois/jour
+    this.facade.ajouterUnSportif("Ondra", "Adam", "pseudo", "leRageux", dateSportif);
+    
+    GestionReponses gestionReponses = facade.getGestionReponses();
+    GestionSportif gestionSportif = facade.getGestionSportif();
+    GestionQuestionnaire gestionQuestionnaire = facade.getGestionQuestionnaire();
+    
+    Sportif unSportif = gestionSportif.consulterSportif("pseudo");
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion("test");
+    HashMap<String, Integer> listeReponses = new HashMap<String, Integer>();
+    listeReponses.put("Question5", 1);
+    
+    gestionReponses.ajouterReponses(10, new Date(), unSportif, unQuestionnaire,
+        listeReponses);
+    
+    List<Integer> list = gestionReponses.obtenirReponses(gestionQuestionnaire, "Question5", 10);
+    assertEquals(list.size(), 2,
+        "FacadeTest : Les réponses n'ont pas été correctement récupéré");
+    // nombres de réponses positives
+    assertEquals(list.get(0), 1,
+        "FacadeTest : Les réponses n'ont pas été correctement récupéré");
+    // nombres de réponses négatives
+    assertEquals(list.get(1), 0,
+        "FacadeTest : Les réponses n'ont pas été correctement récupéré");
+  }
 
 }

@@ -6,6 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import fonctionnalite.Facade;
+import fonctionnalite.GestionQuestionnaire;
+import fonctionnalite.GestionReponses;
+import fonctionnalite.GestionSportif;
+import fonctionnalite.Questionnaire;
+import fonctionnalite.Sportif;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -429,6 +434,42 @@ public class FacadeTest {
         facade4.obtenirQuestionnaireEtReponses(11, "grinpeurDu57", "azety");
     assertEquals(map3, null, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
     
-
+    // Test exporter 
+    List<String> listQuestions = new ArrayList<String>();
+    facade.ajouterUnQuestionnaire("test", listQuestions);
+    facade.ajouterUneQuestion("test", "Question1");
+    
+    GestionReponses gestionReponses = facade.getGestionReponses();
+    GestionQuestionnaire gestionQuestionnaire = facade.getGestionQuestionnaire();
+    int retour = gestionReponses.exporter(gestionQuestionnaire, "test");
+    assertEquals(retour, 1);
+    
+    // Test pour le menu statistique
+    List<String> listQuestions2 = new ArrayList<String>();
+    facade.ajouterUnQuestionnaire("test2", listQuestions2);
+    facade.ajouterUneQuestion("test2", "Question6");
+    Calendar date = Calendar.getInstance();
+    date.set(1976, 7, 3); // annee/mois/jour
+    GestionSportif gestionSportif = facade.getGestionSportif();
+    facade.ajouterUnSportif("Ondra", "Adam", "pseudo", "leRageux", date);
+    
+    Sportif unSportif = gestionSportif.consulterSportif("pseudo");
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion("test2");
+    HashMap<String, Integer> listeDesReponses = new HashMap<String, Integer>();
+    listeDesReponses.put("Question6", 1);
+    
+    gestionReponses.ajouterReponses(10, new Date(), unSportif, unQuestionnaire,
+        listeDesReponses);
+    
+    List<Integer> list = gestionReponses.obtenirReponses(gestionQuestionnaire, "Question6", 10);
+    assertEquals(list.size(), 2,
+        "FacadeTest : Les réponses n'ont pas été correctement récupéré");
+    // nombres de réponses positives
+    assertEquals(list.get(0), 1,
+        "FacadeTest : Les réponses n'ont pas été correctement récupéré");
+    // nombres de réponses négatives
+    assertEquals(list.get(1), 0,
+        "FacadeTest : Les réponses n'ont pas été correctement récupéré");
+    
   }
 }
