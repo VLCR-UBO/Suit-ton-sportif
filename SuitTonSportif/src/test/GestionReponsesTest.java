@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import fonctionnalite.Facade;
+import fonctionnalite.GestionQuestionnaire;
 import fonctionnalite.GestionReponses;
+import fonctionnalite.GestionSportif;
 import fonctionnalite.Question;
 import fonctionnalite.QuestionBoolenne;
 import fonctionnalite.Questionnaire;
@@ -15,11 +17,23 @@ import fonctionnalite.Sportif;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+// consulterReponses n'est pas tester à part car déjà utiliser à deux reprise, dans le test
+// d'ajouterReponses, et dans le tests modifierReponses.
 
 class GestionReponsesTest {
+  private Facade facade;
+
+  @BeforeEach
+  public void initialiser() {
+    // pour effacer des données qui pourrait altérer le résultat des tests
+    this.facade = new Facade(true);
+  }
+
   @Test
   public void testGestionReponses() {
     GestionReponses gestion = new GestionReponses();
@@ -30,156 +44,106 @@ class GestionReponsesTest {
   @Test
   public void testAjoutReponses() {
     // Test dans le cas normal
-    List<Question> listeQuestion = new ArrayList<Question>();
-    Question question1 = new QuestionBoolenne("Avez-vous pris de la drogue ?", false);
-    Question question2 = new QuestionBoolenne("En prenez-vous régulièrement ?", false);
-    listeQuestion.add(question1);
-    listeQuestion.add(question2);
+    List<String> listeDesQuestions6 = new ArrayList<String>();
+    this.facade.ajouterUnQuestionnaire("azerty", listeDesQuestions6);
+    this.facade.ajouterUneQuestion("azerty", "Question1");
+    this.facade.ajouterUneQuestion("azerty", "Question2");
+    this.facade.ajouterUneQuestion("azerty", "Question3");
+    Calendar dateSportif8 = Calendar.getInstance();
+    dateSportif8.set(1976, 7, 3); // annee/mois/jour
+    this.facade.ajouterUnSportif("Ondra", "Adam", "grinpeurDu57", "leRageux", dateSportif8);
 
+    HashMap<String, Integer> listeReponses = new HashMap<String, Integer>();
+    listeReponses.put("Question1", 1);
+    listeReponses.put("Question2", 0);
+    listeReponses.put("Question3", 1);
+    int numeroSemaine = 10;
 
-    List<Integer> reponse = new ArrayList<Integer>();
-    reponse.add(1);
-    reponse.add(0);
+    // Ajout réponse
+    GestionReponses gestionReponses = facade.getGestionReponses();
+    GestionSportif gestionSportif = facade.getGestionSportif();
+    GestionQuestionnaire gestionQuestionnaire = facade.getGestionQuestionnaire();
 
-    Questionnaire question = new Questionnaire("Sondage", listeQuestion);
+    Sportif unSportif = gestionSportif.consulterSportif("grinpeurDu57");
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion("azerty");
+    int ret = gestionReponses.ajouterReponses(numeroSemaine, new Date(), unSportif, unQuestionnaire,
+        listeReponses);
+    assertEquals(ret, 1, "FacadeTest : L'ajout de réponses à échouer anormalement");
 
-
-    GestionReponses gestion = new GestionReponses();
-    // Calendar date = Calendar.getInstance();
-    // date.set(2020, 06, 22);
-
-    Calendar dateNaissance = Calendar.getInstance();
-    dateNaissance.set(1974, 3, 9);
-
-    Date date = new Date(2020, 06, 22);
-    Sportif sportif = new Sportif("Velo", "Marco", "theSportif", "marcovelo", dateNaissance);
-
-    assertTrue(gestion.ajouterReponses(20, date, sportif, question, reponse));
+    // Consulter réponse
+    HashMap<String, Integer> map =
+        this.facade.obtenirQuestionnaireEtReponses(10, "grinpeurDu57", "azerty");
+    assertEquals(map.size(), 3, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
+    assertEquals(map.get("Question1"), 1,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    assertEquals(map.get("Question2"), 0,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    assertEquals(map.get("Question3"), 1,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
 
 
     // Test dans le cas erreur
-
-    assertFalse(gestion.ajouterReponses(null, null, null, null, null));
-
-
-    // Test Questionnaire déja présent
-
-    assertFalse(gestion.ajouterReponses(20, date, sportif, question, reponse));
-
+    int ret1 = gestionReponses.ajouterReponses(null, null, null, null, null);
+    assertEquals(ret1, -2);
   }
 
   @Test
   public void testModifierReponses() {
-    GestionReponses gestion = new GestionReponses();
+    // Test dans le cas normal
+    List<String> listeDesQuestions6 = new ArrayList<String>();
+    this.facade.ajouterUnQuestionnaire("azerty", listeDesQuestions6);
+    this.facade.ajouterUneQuestion("azerty", "Question1");
+    this.facade.ajouterUneQuestion("azerty", "Question2");
+    this.facade.ajouterUneQuestion("azerty", "Question3");
+    Calendar dateSportif8 = Calendar.getInstance();
+    dateSportif8.set(1976, 7, 3); // annee/mois/jour
+    this.facade.ajouterUnSportif("Ondra", "Adam", "grinpeurDu57", "leRageux", dateSportif8);
+
+    HashMap<String, Integer> listeReponses = new HashMap<String, Integer>();
+    listeReponses.put("Question1", 1);
+    listeReponses.put("Question2", 0);
+    listeReponses.put("Question3", 1);
+
+    int numeroSemaine = 10;
+
+    // Ajout réponse
+    GestionReponses gestionReponses = facade.getGestionReponses();
+    GestionSportif gestionSportif = facade.getGestionSportif();
+    GestionQuestionnaire gestionQuestionnaire = facade.getGestionQuestionnaire();
+
+    Sportif unSportif = gestionSportif.consulterSportif("grinpeurDu57");
+    Questionnaire unQuestionnaire = gestionQuestionnaire.consulterListeQuestion("azerty");
+    HashMap<String, Integer> listeReponses2 = new HashMap<String, Integer>();
+    listeReponses2.put("Question1", 0);
+    listeReponses2.put("Question2", 0);
+    listeReponses2.put("Question3", 0);
+
+    // cas d'erreur avant l'ajout
+    int ret2 = gestionReponses.modifierReponses(numeroSemaine, new Date(), unSportif,
+        unQuestionnaire, listeReponses2);
+    assertEquals(ret2, -1);
+
+    gestionReponses.ajouterReponses(numeroSemaine, new Date(), unSportif, unQuestionnaire,
+        listeReponses);
+
+    int ret = gestionReponses.modifierReponses(numeroSemaine, new Date(), unSportif,
+        unQuestionnaire, listeReponses2);
+    assertEquals(ret, 1, "FacadeTest : L'ajout de réponses à échouer anormalement");
+
+    // Consulter réponse
+    HashMap<String, Integer> map =
+        this.facade.obtenirQuestionnaireEtReponses(10, "grinpeurDu57", "azerty");
+    assertEquals(map.size(), 3, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
+    assertEquals(map.get("Question1"), 0,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    assertEquals(map.get("Question2"), 0,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    assertEquals(map.get("Question3"), 0,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
 
     // Test dans le cas erreur
-    assertEquals(gestion.modifierReponses(null, null, null, null, null), -2);
-
-
-    // Test dans le cas normal
-
-
-    List<Question> listeQuestion = new ArrayList<Question>();
-    Question question1 = new QuestionBoolenne("Avez-vous pris de la drogue ?", false);
-    Question question2 = new QuestionBoolenne("En prenez-vous régulièrement ?", false);
-    listeQuestion.add(question1);
-    listeQuestion.add(question2);
-
-
-    List<Integer> reponse = new ArrayList<Integer>();
-    reponse.add(1);
-    reponse.add(0);
-
-    Calendar dateNaissance = Calendar.getInstance();
-    dateNaissance.set(1974, 3, 9);
-    Date date = new Date(2020, 06, 22);
-    Sportif sportif = new Sportif("Velo", "Marco", "theSportif", "marcovelo", dateNaissance);
-
-    Questionnaire question = new Questionnaire("Sondage", listeQuestion);
-
-    gestion.ajouterReponses(20, date, sportif, question, reponse);
-
-    List<Reponses> listeReponse = gestion.getListeDesReponses();
-    int numero = listeReponse.get(0).getNumeroSemaine();
-
-    Date nouvelleDate = new Date();
-
-    List<Integer> nouvelleReponse = new ArrayList<Integer>();
-    reponse.add(new Integer(0));
-    reponse.add(new Integer(0));
-
-    assertEquals(
-        gestion.modifierReponses(numero, nouvelleDate, sportif, question, nouvelleReponse), 1);
-
-
-    // Test dans le cas ou on entre les mêmes informations
-    assertTrue(
-        gestion.modifierReponses(numero, nouvelleDate, sportif, question, nouvelleReponse));
-
-
+    int ret1 = gestionReponses.modifierReponses(null, null, null, null, null);
+    assertEquals(ret1, -2);
   }
-
-  @Test
-  public void testConsulterReponses() {
-
-    // Test dans le cas erreur : paramètres incorrects
-    GestionReponses gestion = new GestionReponses();
-    assertNull(gestion.consulterReponses(null, null, null));
-
-    // Test dans le cas normal
-
-    List<Question> listeQuestion = new ArrayList<Question>();
-    Question question1 = new QuestionBoolenne("Avez-vous pris de la drogue ?", false);
-    Question question2 = new QuestionBoolenne("En prenez-vous régulièrement ?", false);
-    listeQuestion.add(question1);
-    listeQuestion.add(question2);
-
-    List<Integer> reponse = new ArrayList<Integer>();
-    reponse.add(new Integer(1));
-    reponse.add(new Integer(0));
-
-    Calendar dateNaissance = Calendar.getInstance();
-    dateNaissance.set(1974, 3, 9);
-    Sportif sportif = new Sportif("Velo", "Marco", "theSportif", "marcovelo", dateNaissance);
-    Date date = new Date(2020, 6, 22);
-    Questionnaire question = new Questionnaire("Sondage", listeQuestion);
-
-    gestion.ajouterReponses(20, date, sportif, question, reponse);
-
-
-    List<Question> listeQuestion2 = new ArrayList<Question>();
-    Question question3 = new QuestionBoolenne("Avez-vous pris de la drogue ?", false);
-    Question question4 = new QuestionBoolenne("En prenez-vous régulièrement ?", false);
-    listeQuestion.add(question1);
-    listeQuestion.add(question2);
-
-    Calendar dateNaissance2 = Calendar.getInstance();
-    dateNaissance.set(1974, 3, 9);
-    Sportif sportif2 =
-        new Sportif("Champion", "Dimitri", "Campione", "dimitriChampion", dateNaissance2);
-
-    Questionnaire questionnaire = new Questionnaire("Sondage2", listeQuestion);
-
-    List<Integer> reponse2 = new ArrayList<Integer>();
-    reponse.add(new Integer(0));
-    reponse.add(new Integer(1));
-
-    Date date2 = new Date(2020, 8, 16);
-
-    gestion.ajouterReponses(20, date2, sportif2, questionnaire, reponse2);
-
-    List<Reponses> listeReponse = gestion.getListeDesReponses();
-    int numero = listeReponse.get(0).getNumeroSemaine();
-    Integer numeroSemaine = new Integer(numero);
-
-    List<Integer> res;
-    res = gestion.consulterReponses(numeroSemaine, sportif, question);
-
-    assertEquals(reponse, res);
-
-
-  }
-
-
 
 }

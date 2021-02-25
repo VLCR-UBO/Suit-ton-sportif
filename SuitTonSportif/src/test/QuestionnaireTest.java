@@ -2,7 +2,7 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import fonctionnalite.Facade;
 import fonctionnalite.Question;
 import fonctionnalite.QuestionBoolenne;
 import fonctionnalite.Questionnaire;
@@ -17,6 +17,7 @@ public class QuestionnaireTest {
 
   @BeforeEach
   public void initialiser() {
+    new Facade(true); // pour effacer des données qui pourrait altérer le résultat des tests
     QuestionBoolenne uneQuestion = new QuestionBoolenne("intitule", true);
     List<Question> listeDeQuestion = new ArrayList<Question>();
     listeDeQuestion.add(uneQuestion);

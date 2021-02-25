@@ -1,15 +1,13 @@
 package fonctionnalite;
 
+import bdd.GestionReponsesBdd;
 import java.io.FileWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
-import bdd.GestionReponsesBdd;
 
 /**
  * La classe GestionReponses contient la liste des objet Reponses. Elle permet l'ajout, la
@@ -31,6 +29,11 @@ public class GestionReponses {
     gestionReponsesBdd = new GestionReponsesBdd();
   }
 
+  /**
+   * Permet de charger les données depuis la base de données, dans l'application.
+   * 
+   * @return true si la demande c'est bien passé, false sinon.
+   */
   public boolean load(GestionSportif gestionSportif, GestionQuestionnaire gestionQuestionnaire) {
     return this.gestionReponsesBdd.load(this, gestionSportif, gestionQuestionnaire);
   }
@@ -45,7 +48,7 @@ public class GestionReponses {
    * @param listeReponses : Cette liste de Integer est la liste des reponses a un questionnaire.
    * @param unSportif : Ces réponses correspondent à ce sportif.
    * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
-   * @return Retourne true si la reponses est ajoutée, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int ajouterReponses(Integer numeroSemaine, Date date, Sportif unSportif,
       Questionnaire unQuestionnaire, Map<String, Integer> listeReponses) {
@@ -85,7 +88,7 @@ public class GestionReponses {
    * @param listeReponses : Cette liste de Integer est la liste des reponses à un questionnaire.
    * @param unSportif : Ces réponses correspondent à ce sportif.
    * @param unQuestionnaire : Ces réponses correspondent à ce questionnaire.
-   * @return Retourne true si la reponses est modifié, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int modifierReponses(Integer numeroSemaine, Date date, Sportif unSportif,
       Questionnaire unQuestionnaire, Map<String, Integer> listeReponses) {
@@ -119,6 +122,15 @@ public class GestionReponses {
     return 1;
   }
 
+  /**
+   * Cette méthode permet d'exporter toutes nos réponses pour un questionnaire.
+   * 
+   * @param gestionQuestionnaire : Objet non null, permettant à GestionReponses d'utiliser les
+   *        méthode présentes dans GestionQuestionnaire.
+   * @param nomQuestionnaire : Chaine de caractères non null et non vide, représentant le nom du
+   *        questionnaire.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
+   */
   public int exporter(GestionQuestionnaire gestionQuestionnaire, String nomQuestionnaire) {
     if (gestionQuestionnaire == null || gestionReponsesBdd == null || nomQuestionnaire == null
         || nomQuestionnaire.length() < 1) {
@@ -178,6 +190,16 @@ public class GestionReponses {
     return 1;
   }
 
+  /**
+   * Cette méthode permet de récupérer la liste de toutes les réponses, concernant une question, et
+   * à une semaine bien précise.
+   * 
+   * @param gestionQuestionnaire : Objet non null, permettant à GestionReponses d'utiliser les
+   *        méthode présentes dans GestionQuestionnaire.
+   * @param uneQuestion : Chaine non null et non vide, contenant l'intitulé de la question.
+   * @param numeroSemaine : Numéro supérieur à 0, qui représente une semaine dans l'année.
+   * @return Retourne la liste des réponses, ou null en cas d'erreur.
+   */
   public List<Integer> obtenirReponses(GestionQuestionnaire gestionQuestionnaire,
       String uneQuestion, Integer numeroSemaine) {
     if (gestionQuestionnaire == null || gestionReponsesBdd == null || uneQuestion == null
@@ -245,6 +267,18 @@ public class GestionReponses {
 
   public void setListeDesReponses(List<Reponses> listeDesReponses) {
     this.listeDesReponses = listeDesReponses;
+  }
+
+  /**
+   * Permet d'effacer l'ensemble des données.
+   * 
+   * @return true si la demande est passé, false sinon.
+   */
+  public boolean effacerLaBdd() {
+    if (gestionReponsesBdd == null) {
+      return false;
+    }
+    return gestionReponsesBdd.effacerLesDonnees();
   }
 
 }

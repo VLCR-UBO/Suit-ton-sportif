@@ -1,9 +1,9 @@
 package fonctionnalite;
 
+import bdd.GestionSportifBdd;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import bdd.GestionSportifBdd;
 
 /**
  * La classe GestionSportif contient la liste des sportifs. Elle permet l'ajout, la modification, la
@@ -25,6 +25,11 @@ public class GestionSportif {
     gestionSportifBdd = new GestionSportifBdd();
   }
   
+  /**
+   * Permet de charger les données depuis la base de données, dans l'application.
+   * 
+   * @return true si la demande c'est bien passé, false sinon.
+   */
   public boolean load() {
     return this.gestionSportifBdd.load(this);
   }
@@ -40,7 +45,7 @@ public class GestionSportif {
    *        sportif.
    * @param motDePasse : Chaine de caractères non null et non vide.
    * @param dateDeNaissance : Une date non null.
-   * @return Retourne true si le sportif est ajoutée, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int ajouterSportif(String nom, String prenom, String pseudo, String motDePasse,
       Calendar dateDeNaissance) {
@@ -70,7 +75,7 @@ public class GestionSportif {
    * 
    * @param pseudo : Chaine de caractères non null et non vide qui permet l'identification du
    *        sportif.
-   * @return Retourne true si le sportif est supprimé, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int supprimerSportif(String pseudo) {
     if (pseudo == null || pseudo.length() < 1) {
@@ -107,7 +112,7 @@ public class GestionSportif {
    *        du sportif.
    * @param dateDeNaissance : une date non null. Il s'agit de la nouvelle dateDeNaissance du
    *        sportif.
-   * @return Retourne true si le sportif est modifié, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int modifierSportif(String ancienPseudo, String nom, String prenom, String pseudo,
       String motDePasse, Calendar dateDeNaissance) {

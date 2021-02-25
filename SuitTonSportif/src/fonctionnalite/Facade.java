@@ -1,11 +1,5 @@
 package fonctionnalite;
 
-import bdd.GestionQuestionnaireBdd;
-import bdd.GestionReponsesBdd;
-import bdd.GestionSportifBdd;
-import java.io.FileWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,11 +23,15 @@ public class Facade {
    * Le constructeur de la classe Facade. Il initialise les objets dont nous allons avoir besoins
    * pour accéder et intéragir avec nos différentes ressources.
    */
-  public Facade() {
+  public Facade(boolean pourTestOuPas) {
     gestionSportif = new GestionSportif();
     gestionQuestionnaire = new GestionQuestionnaire();
     gestionReponses = new GestionReponses();
 
+    if (pourTestOuPas) {
+      // efface toutes les données de la bdd (utile pour garantir le bon fonctionnement des tests)
+      toutEffacer();
+    }
     load();
   }
 
@@ -117,7 +115,7 @@ public class Facade {
    * 
    * @param pseudo : Chaine non null et non vide, qui permet l'identifiaction d'un sportif de
    *        manière unique.
-   * @return Retourne true si la demande c'est bien passé, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int supprimerUnSportif(String pseudo) {
     if (gestionSportif == null) {
@@ -141,7 +139,8 @@ public class Facade {
    *        du sportif.
    * @param dateDeNaissance : une date non null. Il s'agit de la nouvelle dateDeNaissance du
    *        sportif.
-   * @return Retourne true si la demande c'est bien passé, false sinon.
+   * @return @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas
+   *         d'erreur.
    */
   public int modifierUnSportif(String ancienPseudo, String nom, String prenom, String pseudo,
       String motDePasse, Calendar dateDeNaissance) {
@@ -162,7 +161,8 @@ public class Facade {
    *        sportif de manière unique.
    * @param motDePasse : Chaine de caractères non null et non vide.
    * @param dateDeNaissance : Une date non null.
-   * @return Retourne true si la demande c'est bien passé, false sinon.
+   * @return @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas
+   *         d'erreur.
    */
   public int ajouterUnSportif(String nom, String prenom, String pseudo, String motDePasse,
       Calendar dateDeNaissance) {
@@ -220,10 +220,17 @@ public class Facade {
     }
     List<Integer> listeReponses =
         gestionReponses.consulterReponses(numeroSemaine, unSportif, unQuestionnaire);
-    
+    /*
+     * if (listeReponses != null) { for (int j = 0; j < listeReponses.size(); j++) {
+     * System.out.println("consulterReponses : " + listeReponses.get(j).toString() + "\n"); } }
+     */
     HashMap<String, Integer> ret = new HashMap<String, Integer>();
     List<Question> listeQuestions = unQuestionnaire.getListeDeQuestions();
-    
+    /*
+     * if (listeQuestions != null) { for (int j = 0; j < listeQuestions.size(); j++) {
+     * System.out.println("consulterQuestions : " + listeQuestions.get(j).getIntituleQuestion() +
+     * "\n"); } }
+     */
     int taille = listeQuestions.size();
     if (listeReponses == null) { // Pas de reponses -> On va chercher les reponses par défaut
       Integer reponseQuestion;
@@ -235,8 +242,11 @@ public class Facade {
         } else {
           reponseQuestion = 1;
         }
+        // System.out.println(listeQuestions.get(i).getIntituleQuestion() + " : " +
+        // reponseQuestion);
         ret.put(listeQuestions.get(i).getIntituleQuestion(), reponseQuestion);
       }
+      // System.out.println(ret);
     } else {
       if (taille != listeReponses.size()) { // Problème
         return null;
@@ -244,10 +254,10 @@ public class Facade {
       for (int i = 0; i < taille; i++) {
         ret.put(listeQuestions.get(i).getIntituleQuestion(), listeReponses.get(i));
       }
-      for (String key : ret.keySet()) {
-        System.out.println("question : " + key);
-        System.out.println("valeur : " + ret.get(key).toString());
-      }
+      /*
+       * for (String key : ret.keySet()) { System.out.println("question : " + key);
+       * System.out.println("valeur : " + ret.get(key).toString()); }
+       */
     }
     return ret;
   }
@@ -263,11 +273,12 @@ public class Facade {
    * @param listeReponses : Contient les questions, et respectivement leurs réponses a ajouté.
    * @param pseudo : Ces réponses correspondent à ce sportif.
    * @param nomQuestionnaire : Ces réponses correspondent à ce questionnaire.
-   * @return Retourne true si la modification c'est bien passé, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int modifierReponses(Date date, String pseudo, String nomQuestionnaire,
       Map<String, Integer> listeReponses, Integer numeroSemaine) {
-    if (gestionReponses == null || gestionQuestionnaire == null || gestionSportif == null) {
+    if (gestionReponses == null || gestionQuestionnaire == null || gestionSportif == null
+        || listeReponses == null) {
       return -4;
     }
     Sportif unSportif = gestionSportif.consulterSportif(pseudo);
@@ -342,7 +353,7 @@ public class Facade {
    * 
    * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire.
    * @param questions : la liste de string utilisée pour créée les questions.
-   * @return Retourne true si la demande c'est bien déroulé, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int ajouterUnQuestionnaire(String nomQuestionnaire, List<String> questions) {
     if (gestionQuestionnaire == null) {
@@ -359,7 +370,7 @@ public class Facade {
    * @param ancienNomQuestionnaire : L'identifiant unique du questionnaire.
    * @param nouveauNomQuestionnaire : L'identifiant unique du nouveau questionnaire.
    * @param questions : la liste de string utilisée pour créée les questions.
-   * @return Retourne true si la demande c'est bien déroulé, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int modifierUnQuestionnaire(String ancienNomQuestionnaire, String nouveauNomQuestionnaire,
       List<String> questions) {
@@ -374,7 +385,7 @@ public class Facade {
    * Cette méthode permet la suppression du questionnaire passé en paramètre.
    * 
    * @param nomQuestionnaire : L'identifiant unique du questionnaire à supprimer.
-   * @return Retourne true si la demande c'est bien passé, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int supprimerUnQuestionnaire(String nomQuestionnaire) {
     if (gestionQuestionnaire == null) {
@@ -387,9 +398,11 @@ public class Facade {
    * Cette méthode permet l'ajout d'une question, avec l'intitulé fourni pour identifiant, au
    * questionnaire cible également fourni en paramètre.
    * 
-   * @param nomQuestionnaire : L'identifiant unique du questionnaire.
-   * @param intitule : L'identifiant unique de la question.
-   * @return Retourne true si la demande c'est bien passez, false sinon.
+   * @param nomQuestionnaire : Chaine non null et non vide qui représente l'identifiant unique du
+   *        questionnaire.
+   * @param intitule : Chaine non null et non vide qui représente l'identifiant unique de la
+   *        question.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int ajouterUneQuestion(String nomQuestionnaire, String intitule) {
     if (gestionQuestionnaire == null) {
@@ -403,10 +416,13 @@ public class Facade {
    * question est identifié avec l'ancienIntitule, et celle-ci va être modifié avec les autres
    * paramètres fourni.
    * 
-   * @param nomQuestionnaire : L'identifiant unique du questionnaire.
-   * @param ancienIntitule : L'identifiant unique de la question.
-   * @param nouveauIntitule : Le nouveau identifiant unique de la question.
-   * @return Retourne true si la demande c'est bien passez, false sinon.
+   * @param nomQuestionnaire : Chaine non null et non vide qui représente l'identifiant unique du
+   *        questionnaire.
+   * @param ancienIntitule : Chaine non null et non vide qui représente l'identifiant unique de la
+   *        question.
+   * @param nouveauIntitule : Chaine non null et non vide qui représente le nouveau identifiant
+   *        unique de la question.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int modifierUneQuestion(String nomQuestionnaire, String ancienIntitule,
       String nouveauIntitule, boolean defaut) {
@@ -421,9 +437,11 @@ public class Facade {
    * Cette méthode permet la suppression d'une question présent dans le questionnaire cible. La
    * question est identifié avec l'intitulé de la question fourni en paramètre.
    * 
-   * @param nomQuestionnaire : L'identifiant unique du questionnaire.
-   * @param intitule : L'identifiant unique de la question.
-   * @return Retourne true si la demande c'est bien passez, false sinon.
+   * @param nomQuestionnaire : Chaine non null et non vide qui représente l'identifiant unique du
+   *        questionnaire.
+   * @param intitule : Chaine non null et non vide qui représente l'identifiant unique de la
+   *        question.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int supprimerUneQuestion(String nomQuestionnaire, String intitule) {
     if (gestionQuestionnaire == null) {
@@ -455,7 +473,7 @@ public class Facade {
    * 
    * @param nomQuestionnaire : Chaine de caractères non null et non vide, représentant le nom du
    *        questionnaire.
-   * @return Retourne true si l'exportation c'est bien déroulé, false sinon.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int exporter(String nomQuestionnaire) {
     if (gestionReponses == null) {
@@ -464,11 +482,43 @@ public class Facade {
     return gestionReponses.exporter(gestionQuestionnaire, nomQuestionnaire);
   }
 
+  /**
+   * Cette méthode permet de récupérer la liste de toutes les réponses, concernant une question, et
+   * à une semaine bien précise.
+   * 
+   * @param uneQuestion : Chaine non null et non vide, contenant l'intitulé de la question.
+   * @param numeroSemaine : Numéro supérieur à 0, qui représente une semaine dans l'année.
+   * @return Retourne la liste des réponses, ou null en cas d'erreur.
+   */
   public List<Integer> obtenirReponses(String uneQuestion, Integer numeroSemaine) {
     if (gestionReponses == null) {
       return null;
     }
     return gestionReponses.obtenirReponses(gestionQuestionnaire, uneQuestion, numeroSemaine);
+  }
+
+  /**
+   * Permet d'effacer l'ensemble des données.
+   * 
+   * @return true si la demande est passé, false sinon.
+   */
+  public boolean toutEffacer() {
+    if (gestionReponses == null) {
+      return false;
+    }
+    return gestionReponses.effacerLaBdd();
+  }
+
+  public GestionSportif getGestionSportif() {
+    return gestionSportif;
+  }
+
+  public GestionReponses getGestionReponses() {
+    return gestionReponses;
+  }
+
+  public GestionQuestionnaire getGestionQuestionnaire() {
+    return gestionQuestionnaire;
   }
 
 }

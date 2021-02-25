@@ -200,7 +200,7 @@ public class GestionReponsesBdd {
         unSportif = gestionSportif.consulterSportif(pseudo);
         // On fait l'ajout
         gestionReponses.getListeDesReponses()
-            .add(new Reponses(d, numeroSemaine, reponses, unSportif, unQuestionnaire));;
+            .add(new Reponses(d, numeroSemaine, reponses, unSportif, unQuestionnaire));
         // On réinitialise la liste ajouté, pour le prochain tour de boucle
         reponses = new ArrayList<Integer>();
       }
@@ -231,6 +231,14 @@ public class GestionReponsesBdd {
     }
   }
 
+  /**
+   * Cette méthode retourne le résultat d'une requête envoyé à notre base de données. Cette requête
+   * à pour but de récupérer toutes les réponses à une question, et pour une semaine donnée.
+   * 
+   * @param uneQuestion : Chaine non null et non vide représentant l'intitulé de la question.
+   * @param numeroSemaine : Numéro supérieur à 0, représentant une numéro de semaine.
+   * @return les résultats de la requête.
+   */
   public ResultSet reponsesPourUneQuestionEtUneSemaine(String uneQuestion, Integer numeroSemaine) {
     String query = "SELECT valeurReponse FROM REPONSE WHERE uneQuestion = '" + uneQuestion
         + "' AND numeroSemaine = " + numeroSemaine;
@@ -240,6 +248,24 @@ public class GestionReponsesBdd {
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
+    }
+  }
+  
+  /**
+   * Permet d'effacer l'ensemble des données.
+   * 
+   * @return true si la demande est passé, false sinon.
+   */
+  public boolean effacerLesDonnees() {
+    try {
+      gestionBdd.executerRequete("DELETE FROM QUESTION");
+      gestionBdd.executerRequete("DELETE FROM QUESTIONNAIRE");
+      gestionBdd.executerRequete("DELETE FROM REPONSE");
+      gestionBdd.executerRequete("DELETE FROM SPORTIF");
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
     }
   }
 }

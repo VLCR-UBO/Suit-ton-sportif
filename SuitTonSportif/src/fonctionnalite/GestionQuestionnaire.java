@@ -1,10 +1,9 @@
 package fonctionnalite;
 
+import bdd.GestionQuestionnaireBdd;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import bdd.GestionQuestionnaireBdd;
-import bdd.GestionSportifBdd;
 
 public class GestionQuestionnaire {
   private GestionQuestionnaireBdd gestionQuestionnaireBdd;
@@ -19,6 +18,11 @@ public class GestionQuestionnaire {
     gestionQuestionnaireBdd = new GestionQuestionnaireBdd();
   }
 
+  /**
+   * Permet de charger les données depuis la base de données, dans l'application.
+   * 
+   * @return true si la demande c'est bien passé, false sinon.
+   */
   public boolean load() {
     return this.gestionQuestionnaireBdd.load(this);
   }
@@ -30,6 +34,7 @@ public class GestionQuestionnaire {
    * 
    * @param nomQuestionnaire : L'identifiant unique du nouveau questionnaire.
    * @param questions : la liste de string utilisée pour créée les questions.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int ajouterQuestionnaire(String nomQuestionnaire, List<String> questions) {
     if (nomQuestionnaire == null || nomQuestionnaire.length() < 1 || questions == null) {
@@ -67,7 +72,7 @@ public class GestionQuestionnaire {
    * @param ancienNomQuestionnaire : L'identifiant unique pour retrouver notre questionnaire
    * @param nouveauNomQuestionnaire : Le nouvelle identifiant unique pour notre questionnaire
    * @param questions : la liste de string utilisée pour le nouveau questionnaire
-   * @return Retourne vrai si le questionnaire à été modifié, faux sinon
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int modifierQuestionnaire(String ancienNomQuestionnaire, String nouveauNomQuestionnaire,
       List<String> questions) {
@@ -117,7 +122,7 @@ public class GestionQuestionnaire {
    * Une méthode pour supprimer un questionnaire.
    * 
    * @param nomQuestionnaire : L'identifiant unique du questionnaire à supprimer
-   * @return Retourne vrai si le questionnaire à été supprimé, faux sinon
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
    */
   public int supprimerQuestionnaire(String nomQuestionnaire) {
     int ret = -2;
@@ -140,6 +145,16 @@ public class GestionQuestionnaire {
     return -1;
   }
 
+  /**
+   * Cette méthode permet l'ajout d'une question, avec l'intitulé fourni pour identifiant, au
+   * questionnaire cible également fourni en paramètre.
+   * 
+   * @param nomQuestionnaire : Chaine non null et non vide qui représente l'identifiant unique du
+   *        questionnaire.
+   * @param intitule : Chaine non null et non vide qui représente l'identifiant unique de la
+   *        question.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
+   */
   public int ajouterQuestion(String nomQuestionnaire, String intitule) {
     if (nomQuestionnaire == null || nomQuestionnaire.length() < 1 || intitule == null
         || intitule.length() < 1) {
@@ -159,12 +174,24 @@ public class GestionQuestionnaire {
     }
     return 1;
   }
-  
+
+  /**
+   * Cette méthode permet la modification d'une question présent de le questionnaire cible, la
+   * question est identifié avec l'ancienIntitule, et celle-ci va être modifié avec les autres
+   * paramètres fourni.
+   * 
+   * @param nomQuestionnaire : Chaine non null et non vide qui représente l'identifiant unique du
+   *        questionnaire.
+   * @param ancienIntitule : Chaine non null et non vide qui représente l'identifiant unique de la
+   *        question.
+   * @param nouveauIntitule : Chaine non null et non vide qui représente le nouveau identifiant
+   *        unique de la question.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
+   */
   public int modifierQuestion(String nomQuestionnaire, String ancienIntitule,
       String nouveauIntitule, boolean defaut) {
     if (nomQuestionnaire == null || nomQuestionnaire.length() < 1 || ancienIntitule == null
-        || ancienIntitule.length() < 1 || nouveauIntitule == null
-        || nouveauIntitule.length() < 1) {
+        || ancienIntitule.length() < 1 || nouveauIntitule == null || nouveauIntitule.length() < 1) {
       return -3;
     }
     Questionnaire unQuestionnaire = consulterListeQuestion(nomQuestionnaire);
@@ -182,7 +209,17 @@ public class GestionQuestionnaire {
     }
     return 1;
   }
-  
+
+  /**
+   * Cette méthode permet la suppression d'une question présent dans le questionnaire cible. La
+   * question est identifié avec l'intitulé de la question fourni en paramètre.
+   * 
+   * @param nomQuestionnaire : Chaine non null et non vide qui représente l'identifiant unique du
+   *        questionnaire.
+   * @param intitule : Chaine non null et non vide qui représente l'identifiant unique de la
+   *        question.
+   * @return Retourne 1 si la demande c'est bien passé, ou un nombre inférieur en cas d'erreur.
+   */
   public int supprimerQuestion(String nomQuestionnaire, String intitule) {
     if (nomQuestionnaire == null || nomQuestionnaire.length() < 1 || intitule == null
         || intitule.length() < 1) {

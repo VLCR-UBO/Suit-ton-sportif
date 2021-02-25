@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import fonctionnalite.Facade;
 import fonctionnalite.GestionQuestionnaire;
 import fonctionnalite.Question;
 import fonctionnalite.QuestionBoolenne;
@@ -22,6 +22,7 @@ public class GestionQuestionnaireTest {
 
   @BeforeEach
   public void initialiser() {
+    new Facade(true); // pour effacer des données qui pourrait altérer le résultat des tests
     gestionQuestionnaire = new GestionQuestionnaire();
   }
 
@@ -197,7 +198,7 @@ public class GestionQuestionnaireTest {
     List<String> listeIntituleQuestions = new ArrayList<String>();
     listeIntituleQuestions.add("Aime tu le beurre salé ?");
     listeIntituleQuestions.add("Aime tu la pluie ?");
-    gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions);
+    int ret = gestionQuestionnaire.ajouterQuestionnaire("Questionnaire", listeIntituleQuestions);
 
     // La consultation fonctionne t-elle ?
     Questionnaire questionnaire = gestionQuestionnaire.consulterListeQuestion("Questionnaire");

@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import fonctionnalite.Facade;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ public class FacadeTest {
   // individuellement. Ici nous testons que le tout marche bien ensemble.
   @Test
   public void facade() {
-    Facade facade = new Facade();
+    Facade facade = new Facade(true);
 
     // Vérification de l'ajout des sportifs
     Calendar dateSportif1 = Calendar.getInstance();
@@ -70,11 +71,6 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
     assertEquals(listePseudo.get(3), "MandelaNelson",
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
-
-    // cas d'erreur
-    Facade facade2 = new Facade();
-    List<String> listePseudo2 = facade2.obtenirListeSportif();
-    assertNull(listePseudo2, "FacadeTest : La liste n'est pas conforme");
 
     // Verification de l'obtention du nom
     assertEquals(facade.obtenirNomSportif("QimJahin"), "Qim",
@@ -323,7 +319,7 @@ public class FacadeTest {
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
 
     // Vérification de modifier un questionnaire
-    Facade facade3 = new Facade();
+    Facade facade3 = new Facade(true);
     List<String> listeDesQuestions4 = new ArrayList<String>();
     facade3.ajouterUnQuestionnaire("azerty", listeDesQuestions4);
     facade3.ajouterUneQuestion("azerty", "Question1");
@@ -362,10 +358,77 @@ public class FacadeTest {
     assertEquals(listeDesQuestions5.get(2), "Question3",
         "FacadeTest : La liste n'est pas conforme aux ajouts précédent");
 
-    // Vérification de la méthode obtenirQuestionnaireEtReponses (pas testable dans ce sprint)
+    // Vérification de la partie réponse
+    Facade facade4 = new Facade(true);
+    List<String> listeDesQuestions6 = new ArrayList<String>();
+    facade4.ajouterUnQuestionnaire("azerty", listeDesQuestions6);
+    facade4.ajouterUneQuestion("azerty", "Question1");
+    facade4.ajouterUneQuestion("azerty", "Question2");
+    facade4.ajouterUneQuestion("azerty", "Question3");
+    Calendar dateSportif8 = Calendar.getInstance();
+    dateSportif8.set(1976, 7, 3); // annee/mois/jour
+    facade4.ajouterUnSportif("Ondra", "Adam", "grinpeurDu57", "leRageux", dateSportif8);
 
-    // HashMap<String, Integer> map = facade.obtenirQuestionnaireEtReponses(null, "MandelaNelson",
-    // "MonNouveauQuestionnaire");
+    HashMap<String, Integer> listeReponses = new HashMap<String, Integer>();
+    listeReponses.put("Question1", 1);
+    listeReponses.put("Question2", 0);
+    listeReponses.put("Question3", 1);
+    int numeroSemaine = 10;
+
+    // Ajout réponse
+    int ret = facade4.modifierReponses(new Date(), "grinpeurDu57", "azerty", listeReponses,
+        numeroSemaine);
+    assertEquals(ret, 1, "FacadeTest : L'ajout de réponses à échouer anormalement");
+
+    // Consulter réponse
+    HashMap<String, Integer> map =
+        facade4.obtenirQuestionnaireEtReponses(10, "grinpeurDu57", "azerty");
+    assertEquals(map.size(), 3, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
+    assertEquals(map.get("Question1"), 1,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    assertEquals(map.get("Question2"), 0,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    assertEquals(map.get("Question3"), 1,
+        "FacadeTest : L'ajout de réponses à échouer anormalement");
+    
+    // Cas d'erreur 
+    // paramètres incorrect
+    int ret1 = facade4.modifierReponses(null, "grinpeurDu57", "azerty", listeReponses,
+        numeroSemaine);
+    assertEquals(ret1, -2, "FacadeTest : L'ajout de réponses à échouer anormalement");
+    int ret2 = facade4.modifierReponses(new Date(), null, "azerty", listeReponses,
+        numeroSemaine);
+    assertEquals(ret2, -3, "FacadeTest : L'ajout de réponses à échouer anormalement");
+    int ret3 = facade4.modifierReponses(new Date(), "grinpeurDu57", null, listeReponses,
+        numeroSemaine);
+    assertEquals(ret3, -3, "FacadeTest : L'ajout de réponses à échouer anormalement");
+    int ret4 = facade4.modifierReponses(new Date(), "grinpeurDu57", "azerty", null,
+        numeroSemaine);
+    assertEquals(ret4, -4, "FacadeTest : L'ajout de réponses à échouer anormalement");
+    int ret5 = facade4.modifierReponses(new Date(), "grinpeurDu57", "azerty", listeReponses,
+        0);
+    assertEquals(ret5, -2, "FacadeTest : L'ajout de réponses à échouer anormalement");
+    // utiliser des sportif ou questionnaire non crée
+    int ret6 = facade4.modifierReponses(new Date(), "aaa", "azerty", listeReponses,
+        10);
+    assertEquals(ret6, -3, "FacadeTest : L'ajout de réponses à échouer anormalement");
+    int ret7 = facade4.modifierReponses(new Date(), "grinpeurDu57", "aze", listeReponses,
+        10);
+    assertEquals(ret7, -3, "FacadeTest : L'ajout de réponses à échouer anormalement");
+    
+    // consulter des reponses non crée
+    HashMap<String, Integer> map1 =
+        facade4.obtenirQuestionnaireEtReponses(10, "grinpeurDu", "azerty");
+    assertEquals(map1, null, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
+    
+    HashMap<String, Integer> map2 =
+        facade4.obtenirQuestionnaireEtReponses(10, "grinpeurDu57", "aze");
+    assertEquals(map2, null, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
+    
+    HashMap<String, Integer> map3 =
+        facade4.obtenirQuestionnaireEtReponses(11, "grinpeurDu57", "azety");
+    assertEquals(map3, null, "FacadeTest : La hashmap n'est pas conforme aux ajouts précédent");
+    
 
   }
 }

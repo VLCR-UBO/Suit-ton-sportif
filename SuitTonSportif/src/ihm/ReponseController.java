@@ -170,6 +170,7 @@ public class ReponseController implements Initializable {
       RadioButton rb = (RadioButton) hb.getChildren().get(0);
       map.put(l.getText(), rb.isSelected() ? 1 : 0);
     }
+    //System.out.println(map);
     Main.facade.modifierReponses(new Date(), this.sportifSelectioner, questionnaireSelectionner,
         map, this.semaineSelectionner);
     questionReponse = Main.facade.obtenirQuestionnaireEtReponses(this.semaineSelectionner,
